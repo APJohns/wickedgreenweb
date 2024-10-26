@@ -6,7 +6,7 @@
     }
   ],
   "functions": {
-    "/app/api/gather": {
+    "app/api/gather": {
       "maxDuration": 60
     }
   }
