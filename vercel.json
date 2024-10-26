@@ -6,7 +6,7 @@
     }
   ],
   "functions": {
-    "api/gather/gather.ts": {
+    "api/gather/gather.js": {
       "maxDuration": 60
     }
   }
