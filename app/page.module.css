@@ -16,26 +16,24 @@
   justify-items: center;
 }
 
-.urlFormLabel {
-}
-
 .urlFormInput {
   margin-top: 0.5rem;
   border: 1px solid #aaa;
   border-radius: 1rem;
   padding: 0.25rem 1rem;
-  width: 50dvw;
+  width: 75dvw;
   min-width: 300px;
+  max-width: 700px;
 }
 
 .urlFormSubmit {
-  cursor: pointer;
   border: 0;
   border-radius: 1rem;
   background: #f4f4f4;
   padding: 0.25rem 1rem;
 
-  &:hover {
+  &:hover:not(:disabled) {
+    cursor: pointer;
     border: 1px solid #aaa;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
   }

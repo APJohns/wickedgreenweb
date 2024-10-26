@@ -8,10 +8,10 @@ export default function Home() {
           <h1 className={styles.title}>
             <span className={styles.green}>Greener</span> Web
           </h1>
-          <form className={styles.urlForm}>
+          <form action="result" className={styles.urlForm}>
             <label>
               {/* <div className={styles.urlFormLabel}>Estimate your sites sustainability</div> */}
-              <input type="url" className={styles.urlFormInput} />
+              <input type="url" name="url" className={styles.urlFormInput} required />
             </label>
             <button type="submit" className={styles.urlFormSubmit}>
               Estimate Carbon
