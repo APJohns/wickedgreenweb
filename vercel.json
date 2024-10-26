@@ -1,12 +1,12 @@
 {
   "crons": [
     {
-      "path": "/api/gather",
+      "path": "/app/api/gather",
       "schedule": "0 9 * * *"
     }
   ],
   "functions": {
-    "api/gather/gather.js": {
+    "/app/api/gather": {
       "maxDuration": 60
     }
   }
