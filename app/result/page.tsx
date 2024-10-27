@@ -4,6 +4,7 @@ export default async function Result({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const url = (await searchParams).url;
+  let data;
   if (url) {
     const res = await fetch(`${process.env.API_URL}/carbon?url=${url}`, {
       headers: {
@@ -11,10 +12,13 @@ export default async function Result({
       },
     });
     console.log(res);
-    const data = await res.json();
+    data = await res.json();
+  }
 
-    return (
-      <main>
+  return (
+    <main>
+      <h1>Results</h1>
+      {data && (
         <dl>
           <dt>
             CO<sub>2</sub>
@@ -23,9 +27,7 @@ export default async function Result({
           <dt>Bytes Transferred</dt>
           <dd>{data.variables.bytes}</dd>
         </dl>
-      </main>
-    );
-  } else {
-    return <p>Something went wrong with the url.</p>;
-  }
+      )}
+    </main>
+  );
 }
