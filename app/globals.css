@@ -1,6 +1,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --fs-display: 3rem;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -39,6 +41,12 @@ button,
 input,
 textarea {
   font-size: 1rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --fs-display: 5rem;
+  }
 }
 
 /* @media (prefers-color-scheme: dark) {
