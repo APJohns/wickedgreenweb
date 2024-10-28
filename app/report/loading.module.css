@@ -17,6 +17,14 @@
   animation: rotate 2s linear infinite reverse;
 }
 
+.svgFill {
+  fill: var(--foreground);
+}
+
+.svgStroke {
+  stroke: var(--foreground);
+}
+
 .loader {
   & svg {
     vertical-align: middle;
