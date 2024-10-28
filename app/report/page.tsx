@@ -1,4 +1,12 @@
+import styles from './page.module.css';
+
 export const maxDuration = 60;
+
+interface SupportingDocument {
+  id: number;
+  title: string;
+  link: string;
+}
 
 export default async function Report({
   searchParams,
@@ -18,17 +26,47 @@ export default async function Report({
   }
 
   return (
-    <main>
-      <h1>Results</h1>
+    <main className={styles.main}>
+      <h1>Report</h1>
+      <p>{url}</p>
       {data && (
-        <dl>
-          <dt>
-            CO<sub>2</sub>
-          </dt>
-          <dd>{data.co2.toFixed(3)}</dd>
-          <dt>Bytes Transferred</dt>
-          <dd>{data.variables.bytes}</dd>
-        </dl>
+        <>
+          <p className={styles.rating}>{data.report.co2.rating}</p>
+          <div className={styles.cardGroup}>
+            <div className={styles.statCard}>
+              <h2 className={styles.heading}>Emissions</h2>
+              <p className={styles.body}>
+                <span className={styles.stat}>{data.report.co2.total.toFixed(2)}</span>
+                <span className={styles.unit}>
+                  g CO<sub>2</sub>
+                </span>
+              </p>
+            </div>
+            <div className={styles.statCard}>
+              <h2 className={styles.heading}>Page Size</h2>
+              <p className={styles.body}>
+                <span className={styles.stat}>{(data.report.variables.bytes / 1000).toFixed(2)}</span>
+                <span className={styles.unit}>kB</span>
+              </p>
+            </div>
+            <div className={styles.statCard}>
+              <h2 className={styles.heading}>Hosting</h2>
+              <p className={styles.body}>
+                <span className={styles.stat}>{data.hosting.green ? 'Green' : 'Not Green'}</span>
+                <details className={styles.hostInfo}>
+                  <summary>{data.hosting.hosted_by}</summary>
+                  <ul>
+                    {data.hosting.supporting_documents.map((doc: SupportingDocument) => (
+                      <li key={doc.id}>
+                        <a href={doc.link}>{doc.title}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </p>
+            </div>
+          </div>
+        </>
       )}
     </main>
   );

@@ -1,0 +1,70 @@
+.main {
+  padding: 4rem;
+}
+
+.rating {
+  display: inline-block;
+  margin-top: 2rem;
+  font-size: 5rem;
+}
+
+.cardGroup {
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: start;
+  justify-items: start;
+  gap: 2rem;
+  margin-top: 2rem;
+  font-family: var(--font-geist-sans);
+}
+
+.statCard {
+  & .heading {
+    font-size: var(--fs-body);
+    font-weight: normal;
+  }
+
+  & .stat {
+    font-size: 2.5rem;
+  }
+
+  & .unit {
+    margin-left: 0.5rem;
+  }
+
+  & .body {
+  }
+}
+
+.hostInfo {
+  & summary {
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  & ul {
+    position: absolute;
+    list-style: none;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    padding-top: 0.5rem;
+    background: var(--background);
+  }
+
+  & li {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .rating {
+    margin-top: 4rem;
+  }
+
+  .cardGroup {
+    grid-template-columns: auto auto;
+    gap: 3.5rem;
+  }
+}
