@@ -1,18 +1,26 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --black: #171717;
+  --white: #ffffff;
   --green: #5bc871;
+  --background: var(--white);
+  --foreground: var(--black);
+  --background-inverse: var(--black);
+  --foreground-inverse: var(--white);
 
   --fs-display: 3rem;
   --fs-body: 1.25rem;
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --black: #0a0a0a;
+    --white: #ededed;
+    --background: var(--black);
+    --foreground: var(--white);
+    --background-inverse: var(--white);
+    --foreground-inverse: var(--black);
   }
-} */
+}
 
 html,
 body {
@@ -63,9 +71,8 @@ textarea {
   }
 }
 
-/* @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
 }
- */
