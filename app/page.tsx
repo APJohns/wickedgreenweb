@@ -6,11 +6,12 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.hero}>
           <h1 className={styles.title}>
-            <span className={styles.green}>Greener</span> Web
+            <span className={styles.green}>Greener</span>
+            <span className={styles.small}>web</span>
           </h1>
           <form action="report" className={styles.urlForm}>
             <label>
-              {/* <div className={styles.urlFormLabel}>Estimate your sites sustainability</div> */}
+              <div className="visually-hidden">URL to scan</div>
               <input type="url" name="url" className={styles.urlFormInput} required />
             </label>
             <button type="submit" className={styles.urlFormSubmit}>

@@ -6,6 +6,7 @@
   display: inline-block;
   margin-top: 2rem;
   font-size: 5rem;
+  font-weight: bold;
 }
 
 .cardGroup {
@@ -15,7 +16,6 @@
   justify-items: start;
   gap: 2rem;
   margin-top: 2rem;
-  font-family: var(--font-geist-sans);
 }
 
 .statCard {

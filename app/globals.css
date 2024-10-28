@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --green: #5bc871;
 
   --fs-display: 3rem;
   --fs-body: 1.25rem;
@@ -43,9 +44,20 @@ button,
 input,
 textarea {
   font-size: 1rem;
+  font-family: inherit;
 }
 
-@media (min-width: 1024px) {
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (min-width: 768px) {
   :root {
     --fs-display: 5rem;
   }

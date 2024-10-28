@@ -3,13 +3,19 @@
   min-height: calc(100dvh - var(--fs-display) - 2rem);
   align-content: center;
 
-  & h1 {
+  & .title {
     font-size: var(--fs-display);
   }
 }
 
 .green {
-  color: green;
+  color: var(--green);
+  text-transform: uppercase;
+}
+
+.small {
+  font-size: 3.5rem;
+  font-weight: normal;
 }
 
 .urlForm {
