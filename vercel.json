@@ -4,10 +4,5 @@
       "path": "/api/gather",
       "schedule": "0 9 * * *"
     }
-  ],
-  "functions": {
-    "app/api/gather/route.ts": {
-      "maxDuration": 60
-    }
-  }
+  ]
 }

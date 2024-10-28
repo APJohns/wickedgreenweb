@@ -1,6 +1,6 @@
 export const maxDuration = 60;
 
-export default async function Result({
+export default async function Report({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
