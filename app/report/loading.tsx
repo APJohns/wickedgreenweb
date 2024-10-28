@@ -29,8 +29,8 @@ export default function Loading() {
         </svg>
       </div>
 
-      <p className={styles.loading}>{loadingMessages[getRandomInt(0, loadingMessages.length)]}...</p>
-      <p>This should only take a few seconds.</p>
+      <p className={styles.loading}>{loadingMessages[getRandomInt(0, loadingMessages.length)]}</p>
+      <p>This should only take a few seconds</p>
     </main>
   );
 }
