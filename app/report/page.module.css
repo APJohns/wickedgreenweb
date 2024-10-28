@@ -59,12 +59,9 @@
 }
 
 @media (min-width: 640px) {
-  .rating {
-    margin-top: 4rem;
-  }
-
   .cardGroup {
+    margin-top: 3rem;
     grid-template-columns: auto auto;
-    gap: 3.5rem;
+    gap: 3rem;
   }
 }
