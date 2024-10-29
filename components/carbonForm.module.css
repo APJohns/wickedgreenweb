@@ -1,0 +1,35 @@
+.urlForm {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.urlFormInput {
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  width: 75dvw;
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.urlFormSubmit {
+  border: 0;
+  border-radius: 0.5rem;
+  background: #f4f4f4;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  color: var(--black);
+
+  &:disabled {
+    color: #999;
+  }
+
+  &:hover:not(:disabled) {
+    cursor: pointer;
+    border: 1px solid #ccc;
+  }
+}
