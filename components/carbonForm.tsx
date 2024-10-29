@@ -20,7 +20,13 @@ export default function CarbonForm() {
     <form ref={formRef} action="report" className={styles.urlForm} onSubmit={onSubmit}>
       <label>
         <div className="visually-hidden">URL</div>
-        <input type="url" name="url" className={styles.urlFormInput} required />
+        <input
+          type="url"
+          name="url"
+          className={styles.urlFormInput}
+          placeholder="e.g. https://www.example.com"
+          required
+        />
       </label>
       <button type="submit" className={styles.urlFormSubmit} disabled={isSubmitting}>
         Estimate Carbon
