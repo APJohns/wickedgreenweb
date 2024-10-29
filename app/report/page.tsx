@@ -22,6 +22,9 @@ export default async function Report({
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
     });
+    if (!res.ok) {
+      throw Error(await res.text());
+    }
     console.log(res);
     data = await res.json();
   }
