@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export const maxDuration = 60;
@@ -28,7 +29,11 @@ export default async function Report({
   return (
     <main className={styles.main}>
       <h1>Report</h1>
-      <p>{url}</p>
+      {typeof url === 'string' && (
+        <Link href={url} className={styles.url}>
+          {url}
+        </Link>
+      )}
       {data.report && <p className={styles.rating}>{data.report.co2.rating}</p>}
       <div className={styles.cardGroup}>
         {data.report && (
@@ -72,6 +77,12 @@ export default async function Report({
           </div>
         )}
       </div>
+      <Link href="/" className={styles.backLink}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        Check another page
+      </Link>
     </main>
   );
 }

@@ -2,6 +2,24 @@
   padding: 4rem;
 }
 
+.backLink {
+  display: flex;
+  align-items: center;
+  margin-top: 3.5rem;
+  color: var(--foreground);
+  text-decoration: none;
+
+  & svg {
+    margin-right: 0.5rem;
+    height: 1rem;
+  }
+}
+
+.url {
+  display: block;
+  color: var(--foreground);
+}
+
 .rating {
   display: inline-block;
   margin-top: 2rem;
