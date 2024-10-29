@@ -1,3 +1,4 @@
+import carbonCapture from '../carbonCapture';
 import styles from './page.module.css';
 
 export const maxDuration = 60;
@@ -8,22 +9,18 @@ interface SupportingDocument {
   link: string;
 }
 
+interface Data {
+  hosting: any;
+  report: any;
+}
+
 export default async function Report({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const url = (await searchParams).url;
-  let data;
-  if (url) {
-    const res = await fetch(`${process.env.API_URL}/carbon?url=${url}`, {
-      headers: {
-        Authorization: `Bearer ${process.env.API_TOKEN}`,
-      },
-    });
-    console.log(res);
-    data = await res.json();
-  }
+  const data: Data = await carbonCapture(url as string);
 
   return (
     <main className={styles.main}>
@@ -54,8 +51,8 @@ export default async function Report({
         {data.hosting && (
           <div className={styles.statCard}>
             <h2 className={styles.heading}>Hosting</h2>
-            <p className={styles.body}>
-              <span className={styles.stat}>{data.hosting.green ? 'Green' : 'Dirty'}</span>
+            <div className={styles.body}>
+              <p className={styles.stat}>{data.hosting.green ? 'Green' : 'Dirty'}</p>
               {data.hosting.green && data.hosting.supporting_documents && (
                 <details className={styles.hostInfo}>
                   <summary>{data.hosting.hosted_by}</summary>
@@ -68,7 +65,7 @@ export default async function Report({
                   </ul>
                 </details>
               )}
-            </p>
+            </div>
           </div>
         )}
       </div>
