@@ -1,18 +1,7 @@
-import carbonCapture from '../carbonCapture';
+import carbonCapture, { Carbon } from '../carbonCapture';
 import styles from './page.module.css';
 
 export const maxDuration = 60;
-
-interface SupportingDocument {
-  id: number;
-  title: string;
-  link: string;
-}
-
-interface Data {
-  hosting: any;
-  report: any;
-}
 
 export default async function Report({
   searchParams,
@@ -20,7 +9,7 @@ export default async function Report({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const url = (await searchParams).url;
-  const data: Data = await carbonCapture(url as string);
+  const data: Carbon = (await carbonCapture(url as string)) as unknown as Carbon;
 
   return (
     <main className={styles.main}>
@@ -57,7 +46,7 @@ export default async function Report({
                 <details className={styles.hostInfo}>
                   <summary>{data.hosting.hosted_by}</summary>
                   <ul>
-                    {data.hosting.supporting_documents.map((doc: SupportingDocument) => (
+                    {data.hosting.supporting_documents.map((doc) => (
                       <li key={doc.id}>
                         <a href={doc.link}>{doc.title}</a>
                       </li>

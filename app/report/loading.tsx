@@ -5,9 +5,9 @@ export default function Loading() {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
-  } */
+  }
 
-  const loadingMessages = ['Counting carbon atoms'];
+  const loadingMessages = ['Counting carbon atoms']; */
 
   return (
     <main className={styles.main}>

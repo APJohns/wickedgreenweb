@@ -39,6 +39,43 @@ interface SWDOptions {
     networks?: number;
   };
 }
+export interface Carbon {
+  hosting: {
+    green: boolean;
+    hosted_by: string;
+    hosted_by_website: string;
+    partner: null | boolean;
+    url: string;
+    hosted_by_id: number;
+    modified: string;
+    supporting_documents: {
+      id: number;
+      title: string;
+      link: string;
+    }[];
+  };
+  report: {
+    co2: {
+      total: number;
+      rating: string;
+    };
+    green: boolean;
+    variables: {
+      description: string;
+      bytes: number;
+      gridIntensity: {
+        description: string;
+        device: number;
+        dataCenter: number;
+        network: number;
+      };
+      dataReloadRatio: number;
+      firstVisitPercentage: number;
+      returnVisitPercentage: number;
+      greenHostingFactor: number;
+    };
+  };
+}
 
 export default async function carbonCapture(url: string) {
   // Get size of transferred files
