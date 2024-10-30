@@ -1,7 +1,9 @@
 'use client';
 
-import { ChangeEvent, useId, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useId, useRef, useState } from 'react';
 import styles from './carbonContext.module.css';
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   co2: number;
@@ -10,6 +12,7 @@ interface Props {
 
 export default function CarbonContext(props: Props) {
   const [visits, setVisits] = useState(1000);
+  const [locale, setLocale] = useState('en-US');
 
   const visitsInput = useRef<HTMLInputElement>(null);
 
@@ -25,7 +28,7 @@ export default function CarbonContext(props: Props) {
     if (number >= 100) {
       maximumFractionDigits = 0;
     }
-    return new Intl.NumberFormat(navigator.language, { maximumFractionDigits }).format(number);
+    return new Intl.NumberFormat(locale, { maximumFractionDigits }).format(number);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +37,10 @@ export default function CarbonContext(props: Props) {
       setVisits(value);
     }
   };
+
+  useEffect(() => {
+    setLocale(navigator.language);
+  }, []);
 
   return (
     <div className={styles.context}>
