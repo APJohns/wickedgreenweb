@@ -37,10 +37,6 @@
 }
 
 .statCard {
-  border: 1px solid var(--border-color-subtle);
-  padding: 1rem;
-  background: var(--background-subtle);
-
   & .heading {
     font-size: var(--fs-body);
     font-weight: normal;
@@ -96,7 +92,14 @@
 
   .cardGroup {
     margin-top: 3rem;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     gap: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .cardGroup {
+    grid-template-columns: auto auto auto;
+    gap: 4rem;
   }
 }
