@@ -30,6 +30,37 @@ export default async function Report({
     data = await res.json();
   }
 
+  interface FormattedBytes {
+    value: number;
+    unit: string;
+  }
+
+  function formatBytes(bytes: number, decimals?: number): FormattedBytes {
+    if (bytes == 0) {
+      return {
+        value: 0,
+        unit: 'Bytes',
+      };
+    }
+    const k = 1000,
+      dm = decimals || 2,
+      sizes = ['Bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+      i = Math.floor(Math.log(bytes) / Math.log(k));
+    return {
+      value: parseFloat((bytes / Math.pow(k, i)).toFixed(dm)),
+      unit: sizes[i],
+    };
+  }
+
+  const pageWeight = formatBytes(data.report.variables.bytes);
+
+  const isMilligrams = data.report.co2.total < 0.01;
+  const emissions = {
+    value: isMilligrams ? data.report.co2.total * 1000 : data.report.co2.total,
+    unit: isMilligrams ? 'mg' : 'g',
+  };
+  console.log(data.report.co2.total, emissions);
+
   return (
     <main className={styles.main}>
       <h1>Report</h1>
@@ -44,7 +75,9 @@ export default async function Report({
           <div className={styles.statCard}>
             <h2 className={styles.heading}>Emissions</h2>
             <p className={styles.body}>
-              <span className={styles.stat}>{data.report.co2.total.toFixed(2)}</span>
+              <span className={styles.stat}>
+                {isMilligrams ? <>&lt;&thinsp;0.01</> : data.report.co2.total.toFixed(2)}
+              </span>
               <span className={styles.unit}>
                 g CO<sub>2</sub>
               </span>
@@ -54,10 +87,10 @@ export default async function Report({
         )}
         {data.report && (
           <div className={styles.statCard}>
-            <h2 className={styles.heading}>Page Size</h2>
+            <h2 className={styles.heading}>Page Weight</h2>
             <p className={styles.body}>
-              <span className={styles.stat}>{(data.report.variables.bytes / 1000).toFixed(2)}</span>
-              <span className={styles.unit}>kB</span>
+              <span className={styles.stat}>{pageWeight.value}</span>
+              <span className={styles.unit}>{pageWeight.unit}</span>
             </p>
           </div>
         )}
@@ -85,7 +118,6 @@ export default async function Report({
           </div>
         )}
       </div>
-      {/* <p>{data.report.variables.gridIntensity}</p> */}
       <CarbonContext co2={data.report.co2.total} intensity={data.report.variables.gridIntensity.device.value} />
       <Link href="/" className={styles.backLink}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
