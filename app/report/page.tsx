@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './page.module.css';
+import CarbonContext from '@/components/carbonContext';
 
 export const maxDuration = 60;
 
@@ -47,6 +48,7 @@ export default async function Report({
               <span className={styles.unit}>
                 g CO<sub>2</sub>
               </span>
+              <span className={styles.info}>per visit</span>
             </p>
           </div>
         )}
@@ -62,10 +64,10 @@ export default async function Report({
         {data.hosting && (
           <div className={styles.statCard}>
             <h2 className={styles.heading}>Hosting</h2>
-            <p className={styles.body}>
-              <span className={styles.stat}>{data.hosting.green ? 'Green' : 'Dirty'}</span>
-              {data.hosting.green && data.hosting.supporting_documents && (
-                <details className={styles.hostInfo}>
+            <div className={styles.body}>
+              <p className={styles.stat}>{data.hosting.green ? 'Green' : 'Dirty'}</p>
+              {data.hosting.green && data.hosting.supporting_documents.length > 0 && (
+                <details className={`${styles.info} ${styles.hostInfo}`}>
                   <summary>{data.hosting.hosted_by}</summary>
                   <ul>
                     {data.hosting.supporting_documents.map((doc: SupportingDocument) => (
@@ -76,10 +78,15 @@ export default async function Report({
                   </ul>
                 </details>
               )}
-            </p>
+              {data.hosting.green && data.hosting.supporting_documents.length === 0 && (
+                <p className={styles.info}>{data.hosting.hosted_by}</p>
+              )}
+            </div>
           </div>
         )}
       </div>
+      {/* <p>{data.report.variables.gridIntensity}</p> */}
+      <CarbonContext co2={data.report.co2.total} intensity={data.report.variables.gridIntensity.device.value} />
       <Link href="/" className={styles.backLink}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />

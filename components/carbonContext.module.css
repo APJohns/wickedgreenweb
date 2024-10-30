@@ -1,0 +1,26 @@
+.context {
+  margin-top: 3rem;
+}
+
+.contextVisits {
+  display: flex;
+  align-items: baseline;
+  gap: 1ch;
+  margin-top: 1rem;
+}
+
+.visitsInput {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid var(--foreground);
+  width: 10ch;
+}
+
+.contextList {
+  margin-top: 1rem;
+  padding-left: 2rem;
+
+  & output {
+    font-weight: var(--font-weight-bold);
+  }
+}
