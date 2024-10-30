@@ -8,12 +8,13 @@
 
 .urlFormInput {
   margin-top: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color-primary);
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
   width: 75dvw;
   min-width: 300px;
   max-width: 600px;
+  background: var(--background);
 }
 
 .urlFormSubmit {
@@ -30,6 +31,6 @@
 
   &:hover:not(:disabled) {
     cursor: pointer;
-    border: 1px solid #ccc;
+    border: 1px solid var(--border-color-primary);
   }
 }

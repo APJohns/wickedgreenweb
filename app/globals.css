@@ -7,10 +7,8 @@
   --background-inverse: var(--black);
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
-  --background-subtle: #fcfcfc;
 
   --border-color-primary: #ccc;
-  --border-color-subtle: #ddd;
 
   --fs-display: 3rem;
   --fs-body: 1.25rem;
@@ -28,6 +26,8 @@
     --foreground: var(--white);
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
+    --foreground-subtle: #7d7d7d;
+    --border-color-primary: #444;
   }
 }
 
