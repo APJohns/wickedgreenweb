@@ -29,7 +29,7 @@ export default function CarbonForm() {
         />
       </label>
       <button type="submit" className={styles.urlFormSubmit} disabled={isSubmitting}>
-        Estimate Carbon
+        Calculate
       </button>
     </form>
   );
