@@ -1,7 +1,6 @@
 .hero {
   text-align: center;
-  min-height: calc(100dvh - var(--fs-display) - 2rem);
-  align-content: center;
+  margin-top: 5rem;
 
   & .title {
     font-size: var(--fs-display);
