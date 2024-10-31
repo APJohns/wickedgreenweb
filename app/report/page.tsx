@@ -74,7 +74,7 @@ export default async function Report({
         {data.report && (
           <div className={styles.statCard}>
             <h2 className={styles.heading}>Emissions</h2>
-            <p className={styles.body}>
+            <div className={styles.body}>
               <span className={styles.stat}>
                 {isMilligrams ? <>&lt;&thinsp;0.01</> : data.report.co2.total.toFixed(2)}
               </span>
@@ -82,23 +82,23 @@ export default async function Report({
                 g CO<sub>2</sub>
               </span>
               <span className={styles.info}>per visit</span>
-            </p>
+            </div>
           </div>
         )}
         {data.report && (
           <div className={styles.statCard}>
             <h2 className={styles.heading}>Page Weight</h2>
-            <p className={styles.body}>
+            <div className={styles.body}>
               <span className={styles.stat}>{pageWeight.value}</span>
               <span className={styles.unit}>{pageWeight.unit}</span>
-            </p>
+            </div>
           </div>
         )}
         {data.hosting && (
           <div className={styles.statCard}>
             <h2 className={styles.heading}>Hosting</h2>
             <div className={styles.body}>
-              <p className={styles.stat}>{data.hosting.green ? 'Green' : 'Dirty'}</p>
+              <div className={styles.stat}>{data.hosting.green ? 'Green' : 'Dirty'}</div>
               {data.hosting.green && data.hosting.supporting_documents.length > 0 && (
                 <details className={`${styles.info} ${styles.hostInfo}`}>
                   <summary>{data.hosting.hosted_by}</summary>
@@ -112,7 +112,7 @@ export default async function Report({
                 </details>
               )}
               {data.hosting.green && data.hosting.supporting_documents.length === 0 && (
-                <p className={styles.info}>{data.hosting.hosted_by}</p>
+                <div className={styles.info}>{data.hosting.hosted_by}</div>
               )}
             </div>
           </div>

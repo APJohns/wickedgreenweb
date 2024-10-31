@@ -1,0 +1,17 @@
+.articleStyling {
+  & h2,
+  & h3,
+  & h4,
+  & h5 {
+    margin-top: 2rem;
+  }
+
+  & p {
+    margin-top: 1rem;
+  }
+
+  & ul {
+    margin-top: 1rem;
+    padding-left: 2rem;
+  }
+}
