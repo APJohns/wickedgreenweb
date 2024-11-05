@@ -17,7 +17,7 @@ export default function Page() {
       <ul>
         <li>Data centers: hosting the page</li>
         <li>Networks: transmitting the page</li>
-        <li>User's device: loading the page</li>
+        <li>User&apos;s device: loading the page</li>
       </ul>
       <p>
         The remaining factors include how much of the above segments are powered by renewable energy sources, and site
@@ -28,8 +28,9 @@ export default function Page() {
       <p>
         The <a href="https://sustainablewebdesign.org/digital-carbon-ratings/">rating scale</a> is also defined by SWD.
         It uses the global average of 2.4&thinsp;MB as the pass/fail threshold. Meaning anything higher than the average
-        is am "F", and anything smaller gets graded "A" through "E" depending on their score. The scale is rigorous and
-        is meant to inspire organizations and developers to improve their sustainability.
+        is am &quot;F&quot;, and anything smaller gets graded &quot;A&quot; through &quot;E&quot; depending on their
+        score. The scale is rigorous and is meant to inspire organizations and developers to improve their
+        sustainability.
       </p>
       <h2>Resources</h2>
       <ul>
