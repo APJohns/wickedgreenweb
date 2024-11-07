@@ -18,7 +18,7 @@ export default async function Report({
   const url = (await searchParams).url;
   let data;
   if (url) {
-    const res = await fetch(`${process.env.API_URL}/carbon?url=${url}`, {
+    const res = await fetch(`${process.env.API_URL}/co2?url=${url}`, {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
       },
