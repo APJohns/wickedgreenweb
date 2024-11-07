@@ -54,13 +54,6 @@ export default async function Report({
 
   const pageWeight = formatBytes(data.report.variables.bytes);
 
-  const isMilligrams = data.report.co2.total < 0.01;
-  const emissions = {
-    value: isMilligrams ? data.report.co2.total * 1000 : data.report.co2.total,
-    unit: isMilligrams ? 'mg' : 'g',
-  };
-  console.log(data.report.co2.total, emissions);
-
   return (
     <main className={styles.main}>
       <h1>Report</h1>
@@ -76,7 +69,7 @@ export default async function Report({
             <h2 className={styles.heading}>Emissions</h2>
             <div className={styles.body}>
               <span className={styles.stat}>
-                {isMilligrams ? <>&lt;&thinsp;0.01</> : data.report.co2.total.toFixed(2)}
+                {data.report.co2.total < 0.01 ? <>&lt;&thinsp;0.01</> : data.report.co2.total.toFixed(2)}
               </span>
               <span className={styles.unit}>
                 g CO<sub>2</sub>
