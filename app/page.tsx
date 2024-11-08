@@ -1,7 +1,7 @@
 import CarbonForm from '@/components/carbonForm';
 import styles from './page.module.css';
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <main className={styles.main}>
