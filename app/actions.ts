@@ -13,7 +13,6 @@ export const signUpAction = async (formData: FormData): Promise<void> => {
 
   if (!email || !password) {
     return encodedRedirect('error', '/sign-up', 'Email and password are required');
-    // return { error: 'Email and password are required' };
   }
 
   const { error } = await supabase.auth.signUp({
@@ -108,4 +107,30 @@ export const signOutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
   return redirect('/sign-in');
+};
+
+export const addURLAction = async (formData: FormData) => {
+  const rawUrl = formData.get('url') as string;
+  if (rawUrl) {
+    let url = '';
+    try {
+      url = new URL(rawUrl).href;
+    } catch (e) {
+      return encodedRedirect('error', '/dashboard/urls/add', 'Invalid URL');
+    }
+
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { error } = await supabase.from('urls').insert({ url, user_id: user.id });
+
+      if (error) {
+        console.error(error);
+      }
+    }
+  }
+  return encodedRedirect('success', '/dashboard', 'URL successfully added');
 };

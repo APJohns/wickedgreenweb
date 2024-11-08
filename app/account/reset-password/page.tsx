@@ -3,7 +3,6 @@ import { FormMessage, Message } from '@/components/formMessage';
 
 export default async function ResetPassword(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
-  console.log(searchParams);
   return (
     <main>
       <form action={resetPasswordAction}>

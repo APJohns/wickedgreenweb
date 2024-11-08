@@ -178,6 +178,15 @@ textarea {
   margin-top: 1rem;
 }
 
+.icon-action {
+  display: flex;
+  gap: 0.5rem;
+
+  svg {
+    height: 1em;
+  }
+}
+
 @media (min-width: 640px) {
   :root {
     --page-padding: 4rem;
