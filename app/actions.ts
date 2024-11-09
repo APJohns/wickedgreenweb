@@ -116,6 +116,7 @@ export const addURLAction = async (formData: FormData) => {
     try {
       url = new URL(rawUrl).href;
     } catch (e) {
+      console.error(e);
       return encodedRedirect('error', '/dashboard/urls/add', 'Invalid URL');
     }
 
