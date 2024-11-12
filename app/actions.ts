@@ -111,13 +111,17 @@ export const signOutAction = async () => {
 
 export const addURLAction = async (formData: FormData) => {
   const rawUrl = formData.get('url') as string;
+  const projectID = formData.get('project_id') as string;
+  if (!projectID) {
+    return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Invalid project id');
+  }
   if (rawUrl) {
     let url = '';
     try {
       url = new URL(rawUrl).href;
     } catch (e) {
       console.error(e);
-      return encodedRedirect('error', '/dashboard/urls/add', 'Invalid URL');
+      return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Invalid URL');
     }
 
     const supabase = await createClient();
@@ -126,12 +130,12 @@ export const addURLAction = async (formData: FormData) => {
     } = await supabase.auth.getUser();
 
     if (user) {
-      const { error } = await supabase.from('urls').insert({ url, user_id: user.id });
+      const { error } = await supabase.from('urls').insert({ url, user_id: user.id, project_id: projectID });
 
       if (error) {
         console.error(error);
       }
     }
   }
-  return encodedRedirect('success', '/dashboard', 'URL successfully added');
+  return encodedRedirect('success', `/dashboard/projects/${projectID}`, 'URL successfully added');
 };
