@@ -16,5 +16,7 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  return Response.json(await res.json());
+  return Response.json({
+    message: await res.text(),
+  });
 }
