@@ -2,7 +2,6 @@ import Breadcrumbs from '@/components/breadcrumbs';
 import { formatBytes, formatCO2, getProjectName, getURLReports } from '@/utils/utils';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import styles from './project.module.css';
 import StatCard from '@/components/statCard';
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
@@ -15,16 +14,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
-  const getAverage = (key: 'co2' | 'bytes') => {
-    if (data) {
-      const sum = data.reduce((acc, curr) => acc + curr.reports[0][key], 0);
-      return sum / data.length;
-    } else {
-      return 0;
-    }
+  const getAverage = (values: number[]) => {
+    const sum = values.reduce((acc, curr) => acc + curr, 0);
+    return sum / data.length;
   };
 
-  const bytes = formatBytes(getAverage('bytes'));
+  const latestCO2 = Array.from(data, (url) => url.reports[0].co2);
+  const bytes = formatBytes(getAverage(Array.from(data, (url) => url.reports[0].bytes)));
 
   const crumbs = [
     {
@@ -48,7 +44,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
             </>
           }
         >
-          {formatCO2(getAverage('co2'))}
+          {formatCO2(getAverage(latestCO2))}
         </StatCard>
         <StatCard heading="Average bytes" unit={bytes.unit}>
           {bytes.value}
