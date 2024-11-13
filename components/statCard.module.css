@@ -1,0 +1,28 @@
+.statCard {
+  & .heading {
+    font-size: var(--fs-body);
+    font-weight: normal;
+  }
+
+  & .stat {
+    font-size: 2.5rem;
+  }
+
+  & .unit {
+    margin-left: 0.5rem;
+  }
+
+  & .info {
+    grid-column: 1/-1;
+    font-size: var(--fs-subtle);
+    color: var(--foreground-subtle);
+  }
+
+  & .body {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: start;
+    align-items: baseline;
+    margin-top: 0.25rem;
+  }
+}

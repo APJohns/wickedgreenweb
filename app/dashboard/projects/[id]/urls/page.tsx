@@ -1,18 +1,13 @@
-import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import styles from './urls.module.css';
 import Breadcrumbs from '@/components/breadcrumbs';
-import { getProjectName } from '@/utils/utils';
+import { getProjectName, getURLReports } from '@/utils/utils';
 
 export default async function URLsPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
   const projectName = await getProjectName(projectID);
 
-  const supabase = await createClient();
-  const { data, error } = await supabase.from('urls').select();
-  if (error) {
-    console.error(error);
-  }
+  const data = await getURLReports(projectID);
 
   const crumbs = [
     {
@@ -39,16 +34,18 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
         <thead>
           <tr>
             <th className={styles.th}>URL</th>
-            <th className={styles.th}>Latest emissions</th>
-            <th className={styles.th}>Latest rating</th>
+            <th className={styles.th}>Bytes</th>
+            <th className={styles.th}>gCO2</th>
+            <th className={styles.th}>Rating</th>
           </tr>
         </thead>
         <tbody>
           {data?.map((url) => (
             <tr key={url.id}>
               <td className={styles.td}>{new URL(url.url).pathname}</td>
-              <td className={styles.td}></td>
-              <td className={styles.td}></td>
+              <td className={styles.td}>{url.reports[0].bytes}</td>
+              <td className={styles.td}>{url.reports[0].co2}</td>
+              <td className={styles.td}>{url.reports[0].rating}</td>
             </tr>
           ))}
         </tbody>

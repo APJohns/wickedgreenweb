@@ -23,45 +23,10 @@
   font-weight: var(--font-weight-bold);
 }
 
-.cardGroup {
-  display: grid;
-  grid-template-columns: auto;
-  justify-content: start;
-  justify-items: start;
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.statCard {
-  & .heading {
-    font-size: var(--fs-body);
-    font-weight: normal;
-  }
-
-  & .stat {
-    font-size: 2.5rem;
-  }
-
-  & .unit {
-    margin-left: 0.5rem;
-  }
-
-  & .info {
-    grid-column: 1/-1;
-    font-size: var(--fs-subtle);
-    color: var(--foreground-subtle);
-  }
-
-  & .body {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: start;
-    align-items: baseline;
-    margin-top: 0.25rem;
-  }
-}
-
 .hostInfo {
+  font-size: var(--fs-subtle);
+  color: var(--foreground-subtle);
+
   & summary {
     cursor: pointer;
     font-size: 1rem;
@@ -80,20 +45,5 @@
 
   & li {
     margin-top: 0.5rem;
-  }
-}
-
-@media (min-width: 640px) {
-  .cardGroup {
-    margin-top: 3rem;
-    grid-template-columns: auto auto;
-    gap: 3rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .cardGroup {
-    grid-template-columns: auto auto auto;
-    gap: 4rem;
   }
 }
