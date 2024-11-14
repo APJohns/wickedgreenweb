@@ -34,6 +34,7 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
         <thead>
           <tr>
             <th className={styles.th}>URL</th>
+            <th className={styles.th}>Hosting</th>
             <th className={styles.th}>Page weight</th>
             <th className={styles.th}>
               CO<sub>2</sub>
@@ -42,16 +43,30 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
           </tr>
         </thead>
         <tbody>
-          {data?.map((url) => (
-            <tr key={url.id}>
-              <td className={styles.td}>{new URL(url.url).pathname}</td>
-              <td className={styles.td}>
-                {formatBytes(url.reports[0].bytes).value}&thinsp;{formatBytes(url.reports[0].bytes).unit}
-              </td>
-              <td className={styles.td}>{formatCO2(url.reports[0].co2)}&thinsp;g</td>
-              <td className={styles.td}>{url.reports[0].rating}</td>
-            </tr>
-          ))}
+          {data?.map((url) => {
+            const latest = url.reports[url.reports.length - 1];
+            return (
+              <tr key={url.id}>
+                <td className={styles.td}>{new URL(url.url).pathname}</td>
+                <td className={styles.td}>{url.green_hosting_factor === 1 ? 'Green' : 'Dirty'}</td>
+                {latest ? (
+                  <>
+                    <td className={styles.td}>
+                      {formatBytes(latest.bytes).value}&thinsp;{formatBytes(latest.bytes).unit}
+                    </td>
+                    <td className={styles.td}>{formatCO2(latest.co2)}&thinsp;g</td>
+                    <td className={styles.td}>{latest.rating}</td>
+                  </>
+                ) : (
+                  <>
+                    <td className={styles.td}></td>
+                    <td className={styles.td}></td>
+                    <td className={styles.td}></td>
+                  </>
+                )}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <Link href={`/dashboard/projects/${projectID}/urls/add`} className={`icon-action ${styles.addUrl}`}>

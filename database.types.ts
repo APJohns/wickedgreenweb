@@ -86,6 +86,7 @@ export type Database = {
       urls: {
         Row: {
           created_at: string
+          green_hosting_factor: number
           id: string
           project_id: string
           url: string
@@ -93,6 +94,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          green_hosting_factor?: number
           id?: string
           project_id: string
           url: string
@@ -100,6 +102,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          green_hosting_factor?: number
           id?: string
           project_id?: string
           url?: string
