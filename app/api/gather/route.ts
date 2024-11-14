@@ -10,13 +10,13 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const url = 'https://ashpjohns.com';
-  const res = await fetch(`${process.env.API_URL}/carbon?url=${url}`, {
+  const res = await fetch(`${process.env.API_URL}/co2/gather`, {
     headers: {
       Authorization: `Bearer ${process.env.API_TOKEN}`,
     },
   });
-  const data = await res.json();
 
-  return Response.json(data);
+  return Response.json({
+    message: await res.text(),
+  });
 }

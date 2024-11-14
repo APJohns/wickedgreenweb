@@ -1,0 +1,13 @@
+.breadcrumbsList {
+  display: flex;
+  list-style: none;
+
+  .crumb:not(:last-of-type)::after {
+    content: '/';
+    margin: 0 0.5rem;
+  }
+}
+
+.currentPage {
+  font-weight: bold;
+}

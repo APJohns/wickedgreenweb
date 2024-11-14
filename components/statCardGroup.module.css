@@ -1,0 +1,36 @@
+.cardGroupContainer {
+  margin-top: 3rem;
+
+  .cardGroup {
+    margin-top: 2rem;
+  }
+}
+
+.cardGroup {
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: start;
+  justify-items: start;
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .cardGroup {
+    margin-top: 3rem;
+    grid-template-columns: auto auto;
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .cardGroup {
+    grid-template-columns: auto auto auto;
+    gap: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cardGroup {
+    grid-template-columns: auto auto auto auto;
+  }
+}

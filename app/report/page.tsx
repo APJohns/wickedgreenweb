@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import styles from './page.module.css';
 import CarbonContext from '@/components/carbonContext';
+import StatCard from '@/components/statCard';
+import { formatBytes, formatCO2 } from '@/utils/utils';
+import StatCardGroup from '@/components/statCardGroup';
 
 export const maxDuration = 60;
 
@@ -30,28 +33,6 @@ export default async function Report({
     data = await res.json();
   }
 
-  interface FormattedBytes {
-    value: number;
-    unit: string;
-  }
-
-  function formatBytes(bytes: number, decimals?: number): FormattedBytes {
-    if (bytes == 0) {
-      return {
-        value: 0,
-        unit: 'Bytes',
-      };
-    }
-    const k = 1000,
-      dm = decimals || 2,
-      sizes = ['Bytes', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-      i = Math.floor(Math.log(bytes) / Math.log(k));
-    return {
-      value: parseFloat((bytes / Math.pow(k, i)).toFixed(dm)),
-      unit: sizes[i],
-    };
-  }
-
   const pageWeight = formatBytes(data.report.variables.bytes);
 
   return (
@@ -63,54 +44,48 @@ export default async function Report({
         </Link>
       )}
       {data.report && <p className={styles.rating}>{data.report.co2.rating}</p>}
-      <div className={styles.cardGroup}>
+      <StatCardGroup>
         {data.report && (
-          <div className={styles.statCard}>
-            <h2 className={styles.heading}>Emissions</h2>
-            <div className={styles.body}>
-              <span className={styles.stat}>
-                {data.report.co2.total < 0.01 ? <>&lt;&thinsp;0.01</> : data.report.co2.total.toFixed(2)}
-              </span>
-              <span className={styles.unit}>
+          <StatCard
+            heading="Emissions"
+            unit={
+              <>
                 g CO<sub>2</sub>
-              </span>
-              <span className={styles.info}>per visit</span>
-            </div>
-          </div>
+              </>
+            }
+            info="per visit"
+          >
+            {formatCO2(data.report.co2.total)}
+          </StatCard>
         )}
+
         {data.report && (
-          <div className={styles.statCard}>
-            <h2 className={styles.heading}>Page Weight</h2>
-            <div className={styles.body}>
-              <span className={styles.stat}>{pageWeight.value}</span>
-              <span className={styles.unit}>{pageWeight.unit}</span>
-            </div>
-          </div>
+          <StatCard heading="Page weight" unit={pageWeight.unit}>
+            {pageWeight.value}
+          </StatCard>
         )}
+
         {data.hosting && (
-          <div className={styles.statCard}>
-            <h2 className={styles.heading}>Hosting</h2>
-            <div className={styles.body}>
-              <div className={styles.stat}>{data.hosting.green ? 'Green' : 'Dirty'}</div>
-              {data.hosting.green && data.hosting.supporting_documents.length > 0 && (
-                <details className={`${styles.info} ${styles.hostInfo}`}>
-                  <summary>{data.hosting.hosted_by}</summary>
-                  <ul>
-                    {data.hosting.supporting_documents.map((doc: SupportingDocument) => (
-                      <li key={doc.id}>
-                        <a href={doc.link}>{doc.title}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </details>
-              )}
-              {data.hosting.green && data.hosting.supporting_documents.length === 0 && (
-                <div className={styles.info}>{data.hosting.hosted_by}</div>
-              )}
-            </div>
-          </div>
+          <StatCard heading="Hosting">
+            {data.hosting.green ? 'Green' : 'Dirty'}
+            {data.hosting.green && data.hosting.supporting_documents.length > 0 && (
+              <details className={`${styles.info} ${styles.hostInfo}`}>
+                <summary>{data.hosting.hosted_by}</summary>
+                <ul>
+                  {data.hosting.supporting_documents.map((doc: SupportingDocument) => (
+                    <li key={doc.id}>
+                      <a href={doc.link}>{doc.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            )}
+            {data.hosting.green && data.hosting.supporting_documents.length === 0 && (
+              <div className={styles.info}>{data.hosting.hosted_by}</div>
+            )}
+          </StatCard>
         )}
-      </div>
+      </StatCardGroup>
       <CarbonContext co2={data.report.co2.total} intensity={data.report.variables.gridIntensity.device.value} />
       <Link href="/" className={styles.backLink}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

@@ -2,6 +2,13 @@
   --black: #171717;
   --white: #ffffff;
   --green: #5bc871;
+  --gradeAp: var(--green);
+  --gradeA: #b1de3f;
+  --gradeB: #ebf138;
+  --gradeC: #fabf3f;
+  --gradeD: #fa803f;
+  --gradeE: #f64434;
+  --gradeF: #c80000;
   --background: var(--white);
   --foreground: var(--black);
   --background-inverse: var(--black);
@@ -13,6 +20,7 @@
   --fs-display: 3rem;
   --fs-body: 1.25rem;
   --fs-subtle: 1rem;
+  --fs-tiny: 0.75rem;
 
   --font-weight-normal: 400;
   --font-weight-bold: 700;
@@ -70,6 +78,9 @@ textarea {
 }
 
 .nav {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
   padding: 2rem var(--page-padding);
 }
 
@@ -101,15 +112,205 @@ textarea {
   width: 1px;
 }
 
+.dropdown {
+  position: relative;
+
+  &.collapsed {
+    .dropdown-trigger svg {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      display: none;
+    }
+  }
+}
+
+.dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+
+  svg {
+    height: 1.25rem;
+  }
+}
+
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: max-content;
+  margin-top: 0.5rem;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 0.5rem;
+  list-style: none;
+  background: var(--background);
+  z-index: 10;
+
+  li:first-of-type .dropdown-item {
+    border-radius: calc(0.5rem - 1px) calc(0.5rem - 1px) 0 0;
+  }
+
+  li:last-of-type .dropdown-item {
+    border-radius: 0 0 calc(0.5rem - 1px) calc(0.5rem - 1px);
+  }
+}
+
+.dropdown-item {
+  display: block;
+  border: 0;
+  padding: 0.5rem 1.25rem;
+  width: 100%;
+  color: var(--foreground);
+  text-decoration: none;
+  text-align: left;
+  line-height: 1.5;
+  background: var(--background);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--background);
+    background: var(--green);
+  }
+}
+
+.form-control,
+.form-submit {
+  display: block;
+  margin-top: 1rem;
+}
+
+.icon-action,
+.form-control-inline {
+  display: flex;
+  gap: 0.5rem;
+
+  svg {
+    height: 1em;
+  }
+}
+
+.chart-card {
+  border: 1px solid var(--border-color-primary);
+  padding: 1rem;
+  background: var(--background);
+  aspect-ratio: 2/1;
+
+  .chart-card-heading {
+    font-size: var(--fs-body);
+    font-weight: normal;
+  }
+
+  .chart-container {
+    margin-top: 1rem;
+  }
+}
+
+.chart-container {
+  height: 100%;
+  width: auto;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.point {
+  fill: var(--background);
+  stroke: var(--foreground);
+  stroke-width: 2px;
+}
+
+.line {
+  stroke: var(--foreground);
+}
+
+.domain {
+  color: var(--foreground-subtle);
+}
+
+.tick {
+  color: var(--foreground-subtle);
+  font-size: var(--fs-tiny);
+}
+
+.overlay {
+  .percentile {
+    opacity: 0.3;
+    transition: opacity 0.1s ease-out;
+  }
+}
+
+.percentile {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.fifth_percentile {
+  fill: var(--gradeAp);
+}
+
+.tenth_percentile {
+  fill: var(--gradeA);
+}
+
+.twentieth_percentile {
+  fill: var(--gradeB);
+}
+
+.thirtieth_percentile {
+  fill: var(--gradeC);
+}
+
+.fortieth_percentile {
+  fill: var(--gradeD);
+}
+
+.fiftieth_percentile {
+  fill: var(--gradeE);
+}
+
+.f_percentile {
+  fill: var(--gradeF);
+}
+
+.cardGroup {
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: start;
+  justify-items: start;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
 @media (min-width: 640px) {
   :root {
     --page-padding: 4rem;
+  }
+
+  .cardGroup {
+    margin-top: 3rem;
+    grid-template-columns: auto auto;
+    gap: 3rem;
   }
 }
 
 @media (min-width: 768px) {
   :root {
     --fs-display: 5rem;
+  }
+
+  .cardGroup {
+    grid-template-columns: auto auto auto;
+    gap: 4rem;
   }
 }
 

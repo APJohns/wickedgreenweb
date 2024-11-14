@@ -1,0 +1,19 @@
+.urlTable {
+  margin-top: 3rem;
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+
+  .th,
+  .td {
+    border-bottom: 1px solid var(--border-color-primary);
+    padding: 0.5rem 1rem;
+  }
+
+  .td {
+  }
+}
+
+.addUrl {
+  margin-top: 0.5rem;
+}
