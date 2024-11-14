@@ -139,7 +139,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
       .attr('cx', (d) => x(new Date(d.date)))
       .attr('cy', (d) => y(d.co2))
       .attr('r', 3);
-  }, [props.data, width]);
+  }, [props.data, width, height]);
 
   useEffect(() => {
     const resizeChart = () => {

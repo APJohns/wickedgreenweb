@@ -56,8 +56,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   const latestCO2 = Array.from(data, (url) => url.reports[0].co2);
   const bytes = formatBytes(getAverage(Array.from(data, (url) => url.reports[0].bytes)));
 
-  const projectURL = new URL(data[0].url).origin;
-
   const crumbs = [
     {
       text: 'Dashboard',
