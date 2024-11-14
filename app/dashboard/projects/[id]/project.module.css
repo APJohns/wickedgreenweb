@@ -1,7 +1,11 @@
+.urls {
+  margin-top: 1rem;
+}
+
 .chartGroup {
   display: grid;
   grid-template-columns: 1fr;
-  margin-top: 2rem;
+  margin-top: 3rem;
 }
 
 @media (min-width: 1024px) {

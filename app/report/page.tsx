@@ -3,6 +3,7 @@ import styles from './page.module.css';
 import CarbonContext from '@/components/carbonContext';
 import StatCard from '@/components/statCard';
 import { formatBytes, formatCO2 } from '@/utils/utils';
+import StatCardGroup from '@/components/statCardGroup';
 
 export const maxDuration = 60;
 
@@ -43,7 +44,7 @@ export default async function Report({
         </Link>
       )}
       {data.report && <p className={styles.rating}>{data.report.co2.rating}</p>}
-      <div className="cardGroup">
+      <StatCardGroup>
         {data.report && (
           <StatCard
             heading="Emissions"
@@ -84,7 +85,7 @@ export default async function Report({
             )}
           </StatCard>
         )}
-      </div>
+      </StatCardGroup>
       <CarbonContext co2={data.report.co2.total} intensity={data.report.variables.gridIntensity.device.value} />
       <Link href="/" className={styles.backLink}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">

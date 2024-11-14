@@ -6,6 +6,7 @@ import StatCard from '@/components/statCard';
 import styles from './project.module.css';
 import CO2Chart from './co2Chart';
 import { SWDMV4_PERCENTILES, SWDMV4_RATINGS } from '@/utils/constants';
+import StatCardGroup from '@/components/statCardGroup';
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
@@ -41,6 +42,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     };
   });
 
+  averages.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf());
+
   function getRating(co2: number) {
     for (const percentile in SWDMV4_RATINGS) {
       const p = SWDMV4_PERCENTILES[percentile as keyof typeof SWDMV4_PERCENTILES];
@@ -52,6 +55,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
   const latestCO2 = Array.from(data, (url) => url.reports[0].co2);
   const bytes = formatBytes(getAverage(Array.from(data, (url) => url.reports[0].bytes)));
+
+  const projectURL = new URL(data[0].url).origin;
 
   const crumbs = [
     {
@@ -67,14 +72,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     <>
       <h1>{projectName}</h1>
       <Breadcrumbs crumbs={crumbs} />
-      <div className="cardGroup">
-        <StatCard heading="Average rating">{getRating(getAverage(latestCO2))}</StatCard>
+      <div className={styles.urls}>
+        <p>Last updated on {new Date(averages[averages.length - 1].date).toLocaleDateString()}</p>
+        <Link href={`/dashboard/projects/${projectID}/urls`}>See all {data.length} URLs</Link>
+      </div>
+      <StatCardGroup heading="Averages">
+        <StatCard heading="Rating" headingLevel="h3">
+          {getRating(getAverage(latestCO2))}
+        </StatCard>
         <StatCard
-          heading={
-            <>
-              Average CO<sub>2</sub>
-            </>
-          }
+          heading="Emissions"
+          headingLevel="h3"
+          info="per visit"
           unit={
             <>
               g CO<sub>2</sub>
@@ -83,14 +92,13 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         >
           {formatCO2(getAverage(latestCO2))}
         </StatCard>
-        <StatCard heading="Average bytes" unit={bytes.unit}>
+        <StatCard heading="Page weight" headingLevel="h3" unit={bytes.unit}>
           {bytes.value}
         </StatCard>
-      </div>
+      </StatCardGroup>
       <div className={styles.chartGroup}>
         <CO2Chart data={averages} />
       </div>
-      <Link href={`/dashboard/projects/${projectID}/urls`}>See all URLs</Link>
     </>
   );
 }

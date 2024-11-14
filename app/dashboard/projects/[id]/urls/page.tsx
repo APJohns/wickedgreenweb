@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styles from './urls.module.css';
 import Breadcrumbs from '@/components/breadcrumbs';
-import { getProjectName, getURLReports } from '@/utils/utils';
+import { formatBytes, formatCO2, getProjectName, getURLReports } from '@/utils/utils';
 
 export default async function URLsPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
@@ -34,8 +34,10 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
         <thead>
           <tr>
             <th className={styles.th}>URL</th>
-            <th className={styles.th}>Bytes</th>
-            <th className={styles.th}>gCO2</th>
+            <th className={styles.th}>Page weight</th>
+            <th className={styles.th}>
+              CO<sub>2</sub>
+            </th>
             <th className={styles.th}>Rating</th>
           </tr>
         </thead>
@@ -43,8 +45,10 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
           {data?.map((url) => (
             <tr key={url.id}>
               <td className={styles.td}>{new URL(url.url).pathname}</td>
-              <td className={styles.td}>{url.reports[0].bytes}</td>
-              <td className={styles.td}>{url.reports[0].co2}</td>
+              <td className={styles.td}>
+                {formatBytes(url.reports[0].bytes).value}&thinsp;{formatBytes(url.reports[0].bytes).unit}
+              </td>
+              <td className={styles.td}>{formatCO2(url.reports[0].co2)}&thinsp;g</td>
               <td className={styles.td}>{url.reports[0].rating}</td>
             </tr>
           ))}

@@ -13,9 +13,7 @@ export default function CO2Chart({ data }: { data: CO2Point[] }) {
 
   return (
     <div className={`chart-card${showOverlay ? ' overlay' : ''}`}>
-      <h2 className="chart-card-heading">
-        Average CO<sub>2</sub> over time
-      </h2>
+      <h2 className="chart-card-heading">Emissions over time</h2>
       <Chart data={data} />
       <label className="form-control-inline">
         <input type="checkbox" onChange={() => setShowOverlay(!showOverlay)} />

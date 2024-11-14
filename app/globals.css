@@ -14,7 +14,6 @@
   --background-inverse: var(--black);
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
-  --background-subtle: #f4f4f4;
 
   --border-color-primary: #ccc;
 
@@ -38,7 +37,6 @@
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
     --foreground-subtle: #7d7d7d;
-    --background-subtle: #060606;
     --border-color-primary: #444;
   }
 }
@@ -201,7 +199,7 @@ textarea {
 .chart-card {
   border: 1px solid var(--border-color-primary);
   padding: 1rem;
-  background: var(--background-subtle);
+  background: var(--background);
   aspect-ratio: 2/1;
 
   .chart-card-heading {
@@ -226,7 +224,7 @@ textarea {
 }
 
 .point {
-  fill: var(--background-subtle);
+  fill: var(--background);
   stroke: var(--foreground);
   stroke-width: 2px;
 }
