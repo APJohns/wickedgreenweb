@@ -3,6 +3,7 @@ import { formatBytes, formatCO2, getProjectName, getURLReports } from '@/utils/u
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatCard from '@/components/statCard';
+import Chart from '@/components/chart';
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
@@ -18,6 +19,25 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     const sum = values.reduce((acc, curr) => acc + curr, 0);
     return sum / data.length;
   };
+
+  const byDate: { [key: string]: number[] } = {};
+  data.forEach((url) => {
+    url.reports.forEach((report) => {
+      const date = new Date(report.created_at).toDateString();
+      if (byDate[date]) {
+        byDate[date].push(report.co2);
+      } else {
+        byDate[date] = [report.co2];
+      }
+    });
+  });
+
+  const averages = Object.keys(byDate).map((date) => {
+    return {
+      date,
+      co2: getAverage(byDate[date]),
+    };
+  });
 
   const latestCO2 = Array.from(data, (url) => url.reports[0].co2);
   const bytes = formatBytes(getAverage(Array.from(data, (url) => url.reports[0].bytes)));
@@ -50,6 +70,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
           {bytes.value}
         </StatCard>
       </div>
+      <Chart data={averages} />
       <Link href={`/dashboard/projects/${projectID}/urls`}>See all URLs</Link>
     </>
   );

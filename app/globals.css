@@ -13,6 +13,7 @@
   --fs-display: 3rem;
   --fs-body: 1.25rem;
   --fs-subtle: 1rem;
+  --fs-tiny: 0.75rem;
 
   --font-weight-normal: 400;
   --font-weight-bold: 700;
@@ -185,6 +186,19 @@ textarea {
   svg {
     height: 1em;
   }
+}
+
+.line {
+  stroke: black;
+}
+
+.domain {
+  color: var(--foreground-subtle);
+}
+
+.tick {
+  color: var(--foreground-subtle);
+  font-size: var(--fs-tiny);
 }
 
 .cardGroup {
