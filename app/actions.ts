@@ -143,7 +143,7 @@ export const addURLAction = async (formData: FormData) => {
     } = await supabase.auth.getUser();
 
     if (user) {
-      const getGreenCheck = async (): Promise<any> => {
+      const getGreenCheck = async (): Promise<{ green: boolean }> => {
         // Check if host is green
         console.log('Getting host information from greencheck API');
         const res = await fetch(
