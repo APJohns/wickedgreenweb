@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
+import { SWDMV4_PERCENTILES } from '@/utils/constants';
 
 interface Averages {
   date: string;
@@ -17,12 +18,13 @@ export default function Chart(props: LineChartProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [width, setWidth] = useState(928);
+  const [height, setHeight] = useState(232);
 
   useEffect(() => {
     if (svgRef.current) {
       svgRef.current.innerHTML = '';
     }
-    const height = width / 4 >= 32 ? width / 4 : 32;
+    // const height = width / 4 >= 32 ? width / 4 : 32;
     const marginTop = 20;
     const marginRight = 30;
     const marginBottom = 40;
@@ -35,7 +37,16 @@ export default function Chart(props: LineChartProps): JSX.Element {
 
     // Declare the y (vertical position) scale.
     const yExtent = d3.extent(props.data, (d) => d.co2) as [number, number];
-    const y = d3.scaleLinear([0, yExtent[1] + 0.01], [height - marginBottom, marginTop]).nice();
+    let next = yExtent[1];
+    for (const percentile in SWDMV4_PERCENTILES) {
+      const p = SWDMV4_PERCENTILES[percentile as keyof typeof SWDMV4_PERCENTILES];
+      if (p - next > 0) {
+        next = p;
+        break;
+      }
+    }
+
+    const y = d3.scaleLinear([0, next], [height - marginBottom, marginTop]).nice();
 
     // Declare the line generator.
     const line = d3
@@ -80,17 +91,42 @@ export default function Chart(props: LineChartProps): JSX.Element {
           .attr('stroke-opacity', 0.1)
       );
     /* .call((g) =>
-        g
-          .append('text')
-          .attr('x', -marginLeft)
-          .attr('y', 10)
-          .attr('fill', 'currentColor')
-          .attr('text-anchor', 'start')
-          .text('↑ Daily close ($)')
-      ); */
+    g
+    .append('text')
+    .attr('x', -marginLeft)
+    .attr('y', 10)
+    .attr('fill', 'currentColor')
+    .attr('text-anchor', 'start')
+    .text('↑ Daily close ($)')
+    ); */
+
+    let prevHeight = y(0);
+    for (const percentile in SWDMV4_PERCENTILES) {
+      const p = SWDMV4_PERCENTILES[percentile as keyof typeof SWDMV4_PERCENTILES];
+      if (next >= p) {
+        svg
+          .append('rect')
+          .attr('class', 'percentile ' + percentile.toLowerCase())
+          .attr('width', width - marginLeft - marginRight)
+          .attr('height', prevHeight - y(p))
+          .attr('x', marginLeft)
+          .attr('y', y(p));
+        prevHeight = y(p);
+      }
+    }
+
+    if (next > SWDMV4_PERCENTILES.FIFTIETH_PERCENTILE) {
+      svg
+        .append('rect')
+        .attr('class', 'percentile f_percentile')
+        .attr('width', width - marginLeft - marginRight)
+        .attr('height', y(SWDMV4_PERCENTILES.FIFTIETH_PERCENTILE) - y(next))
+        .attr('x', marginLeft)
+        .attr('y', y(next));
+    }
 
     // Append a path for the line.
-    svg.append('path').attr('class', 'line').attr('fill', 'none').attr('stroke-width', 1.5).attr('d', line(props.data));
+    svg.append('path').attr('class', 'line').attr('fill', 'none').attr('stroke-width', 1).attr('d', line(props.data));
 
     // Append points
     svg
@@ -107,8 +143,9 @@ export default function Chart(props: LineChartProps): JSX.Element {
 
   useEffect(() => {
     const resizeChart = () => {
-      if (containerRef.current?.clientWidth) {
+      if (containerRef.current) {
         setWidth(containerRef.current?.clientWidth);
+        setHeight(containerRef.current?.clientHeight);
       }
     };
 
@@ -121,8 +158,8 @@ export default function Chart(props: LineChartProps): JSX.Element {
   }, []);
 
   return (
-    <div ref={containerRef} className="docs-chart-container">
-      <svg ref={svgRef} className="docs-spark-chart" />
+    <div ref={containerRef} className="chart-container">
+      <svg ref={svgRef} className="chart" />
     </div>
   );
 }

@@ -2,11 +2,19 @@
   --black: #171717;
   --white: #ffffff;
   --green: #5bc871;
+  --gradeAp: var(--green);
+  --gradeA: #b1de3f;
+  --gradeB: #ebf138;
+  --gradeC: #fabf3f;
+  --gradeD: #fa803f;
+  --gradeE: #f64434;
+  --gradeF: #c80000;
   --background: var(--white);
   --foreground: var(--black);
   --background-inverse: var(--black);
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
+  --background-subtle: #f4f4f4;
 
   --border-color-primary: #ccc;
 
@@ -30,6 +38,7 @@
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
     --foreground-subtle: #7d7d7d;
+    --background-subtle: #060606;
     --border-color-primary: #444;
   }
 }
@@ -179,7 +188,8 @@ textarea {
   margin-top: 1rem;
 }
 
-.icon-action {
+.icon-action,
+.form-control-inline {
   display: flex;
   gap: 0.5rem;
 
@@ -188,8 +198,41 @@ textarea {
   }
 }
 
+.chart-card {
+  border: 1px solid var(--border-color-primary);
+  padding: 1rem;
+  background: var(--background-subtle);
+  aspect-ratio: 2/1;
+
+  .chart-card-heading {
+    font-size: var(--fs-body);
+    font-weight: normal;
+  }
+
+  .chart-container {
+    margin-top: 1rem;
+  }
+}
+
+.chart-container {
+  height: 100%;
+  width: auto;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.point {
+  fill: var(--background-subtle);
+  stroke: var(--foreground);
+  stroke-width: 2px;
+}
+
 .line {
-  stroke: black;
+  stroke: var(--foreground);
 }
 
 .domain {
@@ -199,6 +242,46 @@ textarea {
 .tick {
   color: var(--foreground-subtle);
   font-size: var(--fs-tiny);
+}
+
+.overlay {
+  .percentile {
+    opacity: 0.3;
+    transition: opacity 0.1s ease-out;
+  }
+}
+
+.percentile {
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.fifth_percentile {
+  fill: var(--gradeAp);
+}
+
+.tenth_percentile {
+  fill: var(--gradeA);
+}
+
+.twentieth_percentile {
+  fill: var(--gradeB);
+}
+
+.thirtieth_percentile {
+  fill: var(--gradeC);
+}
+
+.fortieth_percentile {
+  fill: var(--gradeD);
+}
+
+.fiftieth_percentile {
+  fill: var(--gradeE);
+}
+
+.f_percentile {
+  fill: var(--gradeF);
 }
 
 .cardGroup {
