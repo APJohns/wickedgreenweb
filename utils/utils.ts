@@ -71,6 +71,7 @@ export const getURLReports = cache(async (projectID: string) => {
       `
       id,
       url,
+      green_hosting_factor,
       reports(
         co2,
         rating,

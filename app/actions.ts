@@ -125,12 +125,38 @@ export const addURLAction = async (formData: FormData) => {
     }
 
     const supabase = await createClient();
+
+    const { data, error: urlError } = await supabase.from('urls').select('url');
+    if (urlError) {
+      console.error(urlError);
+    }
+    if (data && Array.from(data, (d) => d.url).includes(url)) {
+      return encodedRedirect(
+        'error',
+        `/dashboard/projects/${projectID}/urls/add`,
+        'URL already exists in one of your projects'
+      );
+    }
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
     if (user) {
-      const { error } = await supabase.from('urls').insert({ url, user_id: user.id, project_id: projectID });
+      const getGreenCheck = async (): Promise<any> => {
+        // Check if host is green
+        console.log('Getting host information from greencheck API');
+        const res = await fetch(
+          `https://api.thegreenwebfoundation.org/greencheck/${new URL(url).host.replace('www.', '')}`
+        );
+        return await res.json();
+      };
+
+      const green_hosting_factor = (await getGreenCheck()).green ? 1 : 0;
+
+      const { error } = await supabase
+        .from('urls')
+        .insert({ url, green_hosting_factor, user_id: user.id, project_id: projectID });
 
       if (error) {
         console.error(error);

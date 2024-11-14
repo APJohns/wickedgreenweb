@@ -18,6 +18,43 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
+  const crumbs = [
+    {
+      text: 'Dashboard',
+      href: '/dashboard',
+    },
+    {
+      text: projectName,
+    },
+  ];
+
+  if (data.length === 0) {
+    return (
+      <>
+        <h1>{projectName}</h1>
+        <Breadcrumbs crumbs={crumbs} />
+        <div className={styles.urls}>
+          <p>Welcome! Let&apos;s add some URLs to this project.</p>
+          <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
+        </div>
+      </>
+    );
+  }
+
+  if (Array.from(data, (d) => d.reports).flat().length === 0) {
+    return (
+      <>
+        <h1>{projectName}</h1>
+        <Breadcrumbs crumbs={crumbs} />
+        <div className={styles.urls}>
+          {/* TODO: Change "tomorrow" to match cadence of final crawl rate */}
+          <p>Check back after the next scan tomorrow to see your results.</p>
+          <Link href={`/dashboard/projects/${projectID}/urls`}>See all {data.length} URLs</Link>
+        </div>
+      </>
+    );
+  }
+
   const getAverage = (values: number[]) => {
     const sum = values.reduce((acc, curr) => acc + curr, 0);
     return sum / data.length;
@@ -55,16 +92,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
   const latestCO2 = Array.from(data, (url) => url.reports[0].co2);
   const bytes = formatBytes(getAverage(Array.from(data, (url) => url.reports[0].bytes)));
-
-  const crumbs = [
-    {
-      text: 'Dashboard',
-      href: '/dashboard',
-    },
-    {
-      text: projectName,
-    },
-  ];
 
   return (
     <>
