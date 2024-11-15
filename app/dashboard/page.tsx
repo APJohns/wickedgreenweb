@@ -23,6 +23,7 @@ export default async function DashboardPage(props: { searchParams: Promise<Messa
           </li>
         ))}
       </ul>
+      <Link href="/dashboard/projects/new">New project</Link>
       <FormMessage message={searchParams} />
     </main>
   );

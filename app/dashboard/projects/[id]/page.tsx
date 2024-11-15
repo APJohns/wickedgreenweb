@@ -96,7 +96,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   return (
     <>
       <h1>{projectName}</h1>
-      <Breadcrumbs crumbs={crumbs} />
+      {/* <Breadcrumbs crumbs={crumbs} /> */}
       <div className={styles.urls}>
         <p>Last updated on {new Date(averages[averages.length - 1].date).toLocaleDateString()}</p>
         <Link href={`/dashboard/projects/${projectID}/urls`}>See all {data.length} URLs</Link>

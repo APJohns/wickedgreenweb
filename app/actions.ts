@@ -165,3 +165,63 @@ export const addURLAction = async (formData: FormData) => {
   }
   return encodedRedirect('success', `/dashboard/projects/${projectID}`, 'URL successfully added');
 };
+
+export const createProjectAction = async (formData: FormData) => {
+  const name = formData.get('name') as string;
+  const rawUrl = formData.get('domain') as string;
+  if (!name || name === 'new') {
+    return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid project name');
+  }
+  let domain = '';
+  if (rawUrl) {
+    try {
+      domain = new URL(rawUrl).href;
+    } catch (e) {
+      console.error(e);
+      return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid domain');
+    }
+  }
+
+  const supabase = await createClient();
+
+  const { data, error: urlError } = await supabase.from('projects').select('name, domain');
+  if (urlError) {
+    console.error(urlError);
+  }
+  data?.forEach((d) => {
+    if (domain === d.domain) {
+      return encodedRedirect('error', `/dashboard/projects/new`, 'Project with the same domain already exists');
+    }
+    if (name === d.name) {
+      return encodedRedirect('error', `/dashboard/projects/new`, 'Project with the same name already exists');
+    }
+  });
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    const { error } = await supabase.from('projects').insert({ name, domain, user_id: user.id });
+
+    if (error) {
+      console.error(error);
+    }
+  }
+
+  return encodedRedirect('success', `/dashboard`, 'URL successfully added');
+};
+
+export const deleteProjectAction = async (formData: FormData) => {
+  const projectID = formData.get('projectID') as string;
+  if (projectID) {
+    const supabase = await createClient();
+    const { error } = await supabase.from('projects').delete().eq('id', projectID);
+    if (error) {
+      return encodedRedirect('error', `/dashboard`, 'Something went wrong deleting your project');
+    }
+    return encodedRedirect('success', `/dashboard`, 'Project deleted');
+  } else {
+    return encodedRedirect('error', `/dashboard`, 'Invalid project ID');
+  }
+};

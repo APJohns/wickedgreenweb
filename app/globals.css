@@ -14,6 +14,7 @@
   --background-inverse: var(--black);
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
+  --background-subtle: #b5e0be;
 
   --border-color-primary: #ccc;
 
@@ -37,6 +38,7 @@
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
     --foreground-subtle: #7d7d7d;
+    --background-subtle: #b5e0be;
     --border-color-primary: #444;
   }
 }
@@ -61,8 +63,38 @@ body {
   margin: 0;
 }
 
-main {
+main,
+.content-area {
   padding: 2rem var(--page-padding);
+}
+
+.content-area {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4rem;
+
+  main {
+    padding: 0;
+  }
+}
+
+.nav-secondary {
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .back-to {
+    margin-bottom: 1rem;
+  }
+
+  .nav-link.active {
+    font-weight: var(--font-weight-bold);
+    /* color: var(--foreground-inverse);
+    background: var(--background-subtle); */
+  }
 }
 
 p,
@@ -95,7 +127,8 @@ textarea {
   text-decoration: none;
   color: var(--foreground);
 
-  &:hover {
+  &:hover,
+  &.active {
     text-decoration: underline;
     text-decoration-color: var(--green);
     text-decoration-thickness: 2px;
@@ -189,6 +222,7 @@ textarea {
 .icon-action,
 .form-control-inline {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
 
   svg {
@@ -307,7 +341,7 @@ textarea {
 }
 
 .table-responsive {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 @media (min-width: 640px) {
