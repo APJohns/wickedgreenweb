@@ -7,7 +7,7 @@ export default async function NewProjectPage(props: {
 }) {
   const searchParams = await props.searchParams;
   return (
-    <>
+    <main>
       <h1>New project</h1>
       <form action={createProjectAction}>
         <label className="form-control">
@@ -23,6 +23,6 @@ export default async function NewProjectPage(props: {
         </button>
         <FormMessage message={searchParams} />
       </form>
-    </>
+    </main>
   );
 }

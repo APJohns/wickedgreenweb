@@ -1,4 +1,3 @@
-import Breadcrumbs from '@/components/breadcrumbs';
 import { formatBytes, formatCO2, getProjectName, getURLReports } from '@/utils/utils';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -18,21 +17,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     notFound();
   }
 
-  const crumbs = [
-    {
-      text: 'Dashboard',
-      href: '/dashboard',
-    },
-    {
-      text: projectName,
-    },
-  ];
-
   if (data.length === 0) {
     return (
       <>
         <h1>{projectName}</h1>
-        <Breadcrumbs crumbs={crumbs} />
         <div className={styles.urls}>
           <p>Welcome! Let&apos;s add some URLs to this project.</p>
           <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
@@ -45,7 +33,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     return (
       <>
         <h1>{projectName}</h1>
-        <Breadcrumbs crumbs={crumbs} />
         <div className={styles.urls}>
           {/* TODO: Change "tomorrow" to match cadence of final crawl rate */}
           <p>Check back after the next scan tomorrow to see your results.</p>
@@ -96,11 +83,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   return (
     <>
       <h1>{projectName}</h1>
-      {/* <Breadcrumbs crumbs={crumbs} /> */}
-      <div className={styles.urls}>
-        <p>Last updated on {new Date(averages[averages.length - 1].date).toLocaleDateString()}</p>
-        <Link href={`/dashboard/projects/${projectID}/urls`}>See all {data.length} URLs</Link>
-      </div>
+      <p>Last updated on {new Date(averages[averages.length - 1].date).toLocaleDateString()}</p>
       <StatCardGroup heading="Averages">
         <StatCard heading="Rating" headingLevel="h3">
           {getRating(getAverage(latestCO2))}

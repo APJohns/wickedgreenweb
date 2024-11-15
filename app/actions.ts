@@ -225,3 +225,16 @@ export const deleteProjectAction = async (formData: FormData) => {
     return encodedRedirect('error', `/dashboard`, 'Invalid project ID');
   }
 };
+
+export const deleteURLsAction = async (formData: FormData) => {
+  const supabase = await createClient();
+  formData.forEach(async (isOn, urlID) => {
+    if (isOn === 'on') {
+      const { error } = await supabase.from('urls').delete().eq('id', urlID);
+      if (error) {
+        console.error(error);
+      }
+    }
+  });
+  return encodedRedirect('success', `/dashboard`, `Deleted URL(s)`);
+};
