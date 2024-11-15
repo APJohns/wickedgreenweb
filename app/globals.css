@@ -204,7 +204,7 @@ textarea {
 
   .chart-card-heading {
     font-size: var(--fs-body);
-    font-weight: normal;
+    font-weight: var(--font-weight-normal);
   }
 
   .chart-container {
@@ -282,13 +282,32 @@ textarea {
   fill: var(--gradeF);
 }
 
-.cardGroup {
+.page-header {
   display: grid;
   grid-template-columns: auto;
-  justify-content: start;
   justify-items: start;
-  gap: 2rem;
-  margin-top: 2rem;
+  gap: 1rem;
+  align-items: center;
+}
+
+.page-header-action {
+  border: 1px solid var(--background-inverse);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground);
+  border-color: var(--background-inverse);
+  background: var(--background);
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--background-inverse);
+  }
+}
+
+.table-responsive {
+  overflow-x: scroll;
 }
 
 @media (min-width: 640px) {
@@ -296,21 +315,14 @@ textarea {
     --page-padding: 4rem;
   }
 
-  .cardGroup {
-    margin-top: 3rem;
-    grid-template-columns: auto auto;
-    gap: 3rem;
+  .page-header {
+    grid-template-columns: 1fr auto;
   }
 }
 
 @media (min-width: 768px) {
   :root {
     --fs-display: 5rem;
-  }
-
-  .cardGroup {
-    grid-template-columns: auto auto auto;
-    gap: 4rem;
   }
 }
 

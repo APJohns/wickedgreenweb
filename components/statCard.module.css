@@ -1,7 +1,7 @@
 .statCard {
   & .heading {
     font-size: var(--fs-body);
-    font-weight: normal;
+    font-weight: var(--font-weight-normal);
   }
 
   & .stat {
