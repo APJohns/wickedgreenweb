@@ -1,12 +1,4 @@
-.table {
-  margin-top: 3rem;
-  border-collapse: collapse;
-  width: 100%;
-  text-align: left;
-
-  .th,
-  .td {
-    border-bottom: 1px solid var(--border-color-primary);
-    padding: 0.5rem 1rem;
-  }
+.nextRun {
+  color: var(--foreground-subtle);
+  font-size: var(--fs-subtle);
 }

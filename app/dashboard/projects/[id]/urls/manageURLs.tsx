@@ -3,6 +3,7 @@
 import { Tables } from '@/database.types';
 import { deleteURLsAction } from '@/app/actions';
 import Delete from './delete';
+import styles from './urls.module.css';
 
 type U = Pick<Tables<'urls'>, 'id' | 'url' | 'green_hosting_factor'>;
 
@@ -19,7 +20,9 @@ interface Props {
 export default function ManageURLs(props: Props) {
   return (
     <form action={deleteURLsAction}>
-      <Delete />
+      <div className={styles.tableActions}>
+        <Delete />
+      </div>
       <div className="table-responsive">
         <table className="table">
           <thead>

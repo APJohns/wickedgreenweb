@@ -2,6 +2,7 @@ import { formatBytes, formatCO2, getProjectName } from '@/utils/utils';
 import { notFound } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
+import styles from './reports.module.css';
 
 export default async function URLsPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
@@ -46,12 +47,8 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
   return (
     <>
       <h1>Reports</h1>
-      <dl>
-        <dt>Last run:</dt>
-        <dd>{min.toLocaleDateString()}</dd>
-        <dt>Next run:</dt>
-        <dd>{max.toLocaleDateString()}</dd>
-      </dl>
+      <p>Last updated on {min.toLocaleDateString()}</p>
+      <p className={styles.nextRun}>Next report on {max.toLocaleDateString()}</p>
       <div className="table-responsive">
         <table className="table">
           <caption className="visually-hidden">
