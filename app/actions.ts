@@ -292,3 +292,24 @@ export const deleteURLsAction = async (formData: FormData) => {
   });
   return encodedRedirect('success', `/dashboard`, `Deleted URL(s)`);
 };
+
+export const getReports = async (batchID: string, projectID: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('reports')
+    .select('*, urls!inner(*)')
+    .eq('batch_id', batchID)
+    .eq('urls.project_id', projectID);
+
+  console.log(data);
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (data) {
+    data.sort((a, b) => (a.urls.url > b.urls.url ? 1 : -1));
+  }
+
+  return data;
+};

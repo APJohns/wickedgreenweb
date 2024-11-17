@@ -1,4 +1,4 @@
-import { formatBytes, formatCO2, getProjectName, getURLReports } from '@/utils/utils';
+import { formatBytes, formatCO2 } from '@/utils/utils';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatCard from '@/components/statCard';
@@ -6,6 +6,7 @@ import styles from './project.module.css';
 import CO2Chart from './co2Chart';
 import { SWDMV4_PERCENTILES, SWDMV4_RATINGS } from '@/utils/constants';
 import StatCardGroup from '@/components/statCardGroup';
+import { getProjectName, getURLReports } from '@/utils/supabase/server';
 
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
@@ -77,8 +78,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     }
   }
 
-  const latestCO2 = Array.from(data, (url) => url.reports[0].co2);
-  const bytes = formatBytes(getAverage(Array.from(data, (url) => url.reports[0].bytes)));
+  const latestCO2 = Array.from(data, (url) => (url.reports[0] ? url.reports[0].co2 : undefined)).filter(
+    (d) => d !== undefined
+  );
+  const bytes = formatBytes(
+    getAverage(
+      Array.from(data, (url) => (url.reports[0] ? url.reports[0].bytes : undefined)).filter((d) => d !== undefined)
+    )
+  );
 
   return (
     <>

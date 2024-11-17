@@ -8,39 +8,6 @@
   text-align: center;
 }
 
-.innerOrbit {
-  transform-origin: center center;
-  animation: rotate 2s linear infinite;
-}
-
-.outerOrbit {
-  transform-origin: center center;
-  animation: rotate 2s linear infinite reverse;
-}
-
-.svgFill {
-  fill: var(--foreground);
-}
-
-.svgStroke {
-  stroke: var(--foreground);
-}
-
-.loader {
-  & svg {
-    vertical-align: middle;
-  }
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .loading {
   font-size: 2rem;
 }

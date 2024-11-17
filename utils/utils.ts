@@ -1,7 +1,4 @@
-import { notFound, redirect } from 'next/navigation';
-import { cache } from 'react';
-import { createClient } from './supabase/server';
-
+import { redirect } from 'next/navigation';
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
  * @param {('error' | 'success')} type - The type of message, either 'error' or 'success'.
@@ -50,40 +47,3 @@ export function formatBytes(bytes: number, decimals?: number): FormattedBytes {
 export function formatCO2(co2: number) {
   return co2 < 0.01 ? '<\u20090.01' : co2.toFixed(2);
 }
-
-export const getProjectName = cache(async (id: string): Promise<string> => {
-  console.log('fetching name');
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.from('projects').select().eq('id', id);
-  if (error) {
-    console.error(error);
-  }
-  if (!data) notFound();
-  return data[0].name;
-});
-
-export const getURLReports = cache(async (projectID: string) => {
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('urls')
-    .select(
-      `
-      id,
-      url,
-      green_hosting_factor,
-      reports(
-        co2,
-        rating,
-        bytes,
-        created_at
-      )
-    `
-    )
-    .eq(`project_id`, projectID)
-    .order('created_at', { referencedTable: 'reports', ascending: false });
-  if (error) {
-    console.error(error);
-  }
-  return data;
-});
