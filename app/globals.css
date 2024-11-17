@@ -65,6 +65,7 @@ body {
 
 main,
 .content-area {
+  overflow-x: auto;
   padding: 2rem var(--page-padding);
 }
 
