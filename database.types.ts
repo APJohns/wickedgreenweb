@@ -9,24 +9,50 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      batches: {
+        Row: {
+          created_at: string
+          id: string
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "batches_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           created_at: string
-          domain: string
           id: string
           name: string
           user_id: string
         }
         Insert: {
           created_at?: string
-          domain: string
           id?: string
           name: string
           user_id: string
         }
         Update: {
           created_at?: string
-          domain?: string
           id?: string
           name?: string
           user_id?: string

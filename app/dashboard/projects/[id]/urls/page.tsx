@@ -13,10 +13,11 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
       id,
       url,
       green_hosting_factor,
+      projects!inner(id),
       reports(count)
     `
     )
-    .eq(`project_id`, projectID)
+    .eq('projects.id', projectID)
     .order('url', { ascending: true });
   if (error) {
     console.error(error);
