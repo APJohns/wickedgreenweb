@@ -1,5 +1,4 @@
 import NavSecondary from '@/components/navSecondary';
-import Link from 'next/link';
 
 export default async function ProjectLayout({
   params,

@@ -3,29 +3,20 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import styles from './reports.module.css';
+import DateTime from '@/components/date';
 
 export default async function URLsPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
   const projectName = await getProjectName(projectID);
 
   const supabase = await createClient();
-  const { data: dates } = await supabase
-    .from('reports')
-    .select('created_at, urls!inner(project_id)')
-    .eq('urls.project_id', projectID)
-    .order('created_at', { ascending: false });
+  const { data: batches } = await supabase
+    .from('batches')
+    .select()
+    .eq('project_id', projectID)
+    .order('date', { ascending: false });
 
-  const reportDates: string[] = [];
-  dates?.forEach((date) => {
-    const day = new Date(new Date(date.created_at).toDateString()).toISOString();
-    if (reportDates.at(-1) !== day) {
-      reportDates.push(day);
-    }
-  });
-
-  const latestReportDate = reportDates[0];
-
-  if (!latestReportDate) {
+  if (!batches) {
     return (
       <>
         <h1>Reports</h1>
@@ -35,42 +26,38 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
     );
   }
 
-  const min = new Date(latestReportDate);
-  min.setUTCHours(min.getUTCHours() - 1);
-
-  const max = new Date(min);
-  max.setDate(max.getDate() + 1);
+  const lastBatch = new Date(batches[0].created_at);
+  const nextBatch = new Date(lastBatch);
+  nextBatch.setDate(nextBatch.getDate() + 1);
 
   const { data } = await supabase
     .from('reports')
     .select('*, urls!inner(*)')
-    .eq('urls.project_id', projectID)
-    .gte('created_at', min.toISOString())
-    .lt('created_at', max.toISOString());
+    .eq('batch_id', batches[0].id)
+    .eq('urls.project_id', projectID);
 
   if (!data) {
     notFound();
   }
 
-  const formateDateValue = (d: string): string => {
-    return new Date(d).toISOString().split('T')[0];
-  };
+  data.sort((a, b) => (a.urls.url > b.urls.url ? 1 : -1));
 
   return (
     <>
       <h1>Reports</h1>
-      <p>Last updated on {min.toLocaleDateString()}</p>
-      <p className={styles.nextRun}>Next report on {max.toLocaleDateString()}</p>
+      <p>
+        Last updated on <DateTime date={lastBatch} />
+      </p>
+      <p className={styles.nextRun}>
+        Next report on <DateTime date={nextBatch} />
+      </p>
       <select>
-        {reportDates.map((day) => (
-          <option key={day} value={day}>
-            {new Date(day).toLocaleDateString()}
+        {batches.map((batch) => (
+          <option key={batch.id} value={batch.id}>
+            <DateTime date={new Date(batch.created_at)} />
           </option>
         ))}
       </select>
-      {reportDates.length > 0 && (
-        <input type="date" min={formateDateValue(reportDates.at(-1)!)} max={formateDateValue(reportDates[0])} />
-      )}
       <div className="table-responsive">
         <table className="table">
           <caption className="visually-hidden">
@@ -103,7 +90,9 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
                   </td>
                   <td>{formatCO2(report.co2)}&thinsp;g</td>
                   <td>{report.rating}</td>
-                  <td>{new Date(report.created_at).toLocaleString()}</td>
+                  <td>
+                    <DateTime datetime={new Date(report.created_at)} options={{ timeZoneName: 'short' }} />
+                  </td>
                 </tr>
               );
             })}
