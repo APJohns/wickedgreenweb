@@ -1,0 +1,24 @@
+.or {
+  display: inline-block;
+  position: relative;
+  margin: 3rem 3ch;
+  width: 6ch;
+  text-align: center;
+  /* color: var(--foreground-subtle); */
+  background: var(--background);
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: calc(100% + 6ch);
+    left: -3ch;
+    top: 50%;
+    border-bottom: 1px solid var(--border-color-primary);
+    z-index: -1;
+  }
+}
+
+.sitemapTextarea {
+  resize: vertical;
+  min-height: 1.5rem;
+}

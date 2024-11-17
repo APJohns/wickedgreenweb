@@ -219,6 +219,12 @@ textarea {
   margin-top: 1rem;
 }
 
+.form-control-input {
+  display: block;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
 .icon-action,
 .form-control-inline {
   display: flex;
