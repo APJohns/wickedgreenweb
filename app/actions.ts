@@ -131,21 +131,29 @@ export const addURLAction = async (formData: FormData) => {
   }
   const existingURLs = dbURLs ? Array.from(dbURLs, (d) => d.url) : [];
 
-  const validateURL = (unvalidatedURL: string) => {
+  const validateURL = (unvalidatedURL: string, quiet = false) => {
     let url = '';
     try {
       url = new URL(unvalidatedURL).href;
     } catch (e) {
       console.error(e);
-      return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Invalid URL');
+      if (!quiet) {
+        return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Invalid URL');
+      } else {
+        return null;
+      }
     }
 
     if (existingURLs.includes(url)) {
-      return encodedRedirect(
-        'error',
-        `/dashboard/projects/${projectID}/urls/add`,
-        'URL already exists in one of your projects'
-      );
+      if (!quiet) {
+        return encodedRedirect(
+          'error',
+          `/dashboard/projects/${projectID}/urls/add`,
+          'URL already exists in one of your projects'
+        );
+      } else {
+        return null;
+      }
     }
     return url;
   };
@@ -161,21 +169,23 @@ export const addURLAction = async (formData: FormData) => {
 
   if (rawUrl) {
     const url = validateURL(rawUrl);
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    if (url) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    if (user) {
-      const green_hosting_factor = (await getGreenCheck(url)).green ? 1 : 0;
+      if (user) {
+        const green_hosting_factor = (await getGreenCheck(url)).green ? 1 : 0;
 
-      const { error } = await supabase
-        .from('urls')
-        .insert({ url, green_hosting_factor, user_id: user.id, project_id: projectID });
+        const { error } = await supabase
+          .from('urls')
+          .insert({ url, green_hosting_factor, user_id: user.id, project_id: projectID });
 
-      if (error) {
-        console.error(error);
+        if (error) {
+          console.error(error);
+        }
+        return encodedRedirect('success', `/dashboard/projects/${projectID}/urls`, 'URL successfully added');
       }
-      return encodedRedirect('success', `/dashboard/projects/${projectID}`, 'URL successfully added');
     }
   }
 
@@ -188,10 +198,9 @@ export const addURLAction = async (formData: FormData) => {
         dom.window.document.querySelectorAll('url loc'),
         (loc: Element) => loc.textContent || ''
       );
-      console.log(sitemapURLs);
     } catch (e) {
       console.error(e);
-      return encodedRedirect('error', `/dashboard/projects/${projectID}`, 'Error parsing sitemap');
+      return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Error parsing sitemap');
     }
 
     const {
@@ -200,36 +209,42 @@ export const addURLAction = async (formData: FormData) => {
 
     if (user) {
       const urls: Omit<Tables<'urls'>, 'id' | 'created_at'>[] = [];
-      const greenChecks = sitemapURLs.map((sitemapURL) => {
-        const url = validateURL(sitemapURL);
-        const greenCheck = getGreenCheck(url);
-        greenCheck.then(
-          (value) => {
-            console.log(value);
-            urls.push({
-              url,
-              green_hosting_factor: value.green ? 1 : 0,
-              user_id: user.id,
-              project_id: projectID,
-            });
-          },
-          (reason) => {
-            console.error(reason);
+      const greenChecks = sitemapURLs
+        .map((sitemapURL) => {
+          const url = validateURL(sitemapURL, true);
+          if (url) {
+            const greenCheck = getGreenCheck(url);
+            greenCheck.then(
+              (value) => {
+                urls.push({
+                  url,
+                  green_hosting_factor: value.green ? 1 : 0,
+                  user_id: user.id,
+                  project_id: projectID,
+                });
+              },
+              (reason) => {
+                console.error(reason);
+              }
+            );
+            return greenCheck;
+          } else {
+            return null;
           }
-        );
-        return greenCheck;
-      });
+        })
+        .filter((d) => d !== null);
 
-      Promise.allSettled(greenChecks).then(async () => {
+      await Promise.allSettled(greenChecks).then(async () => {
         const { error } = await supabase.from('urls').insert(urls);
 
         if (error) {
           console.error(error);
         }
-        return encodedRedirect('success', `/dashboard/projects/${projectID}`, 'URLs successfully added');
+        return encodedRedirect('success', `/dashboard/projects/${projectID}/urls`, 'URLs successfully added');
       });
+    } else {
+      return encodedRedirect('error', `/dashboard/projects/${projectID}/urls`, 'Failed to validate user');
     }
-    return encodedRedirect('error', `/dashboard/projects/${projectID}`, 'Failed to validate user');
   }
 };
 

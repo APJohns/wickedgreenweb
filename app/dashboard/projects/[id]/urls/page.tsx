@@ -1,9 +1,11 @@
 import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
 import ManageURLs from './manageURLs';
+import { FormMessage, Message } from '@/components/formMessage';
 
-export default async function URLsPage({ params }: { params: Promise<{ id: string }> }) {
-  const projectID = (await params).id;
+export default async function URLsPage(props: { params: Promise<{ id: string }>; searchParams: Promise<Message> }) {
+  const projectID = (await props.params).id;
+  const searchParams = await props.searchParams;
 
   const supabase = await createClient();
   const { data, error } = await supabase
@@ -25,6 +27,7 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
 
   return (
     <>
+      <FormMessage message={searchParams} />
       <div className="page-header">
         <div className="page-header-location">
           <h1>URLs</h1>
