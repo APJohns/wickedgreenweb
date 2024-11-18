@@ -1,0 +1,52 @@
+.deleteModalTrigger {
+  margin-top: 1rem;
+  border: 0;
+  color: var(--gradeF);
+  background: none;
+  cursor: pointer;
+}
+
+.modal {
+  margin: auto;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 640px;
+}
+
+.modalBody {
+  margin-top: 2rem;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modalActionCancel {
+  display: block;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.modalActionAffirm {
+  display: block;
+  border: none;
+  border-radius: 8px;
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+
+  &.negative {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--foreground-inverse);
+    background: var(--gradeF);
+
+    &:hover {
+      background: var(--gradeD);
+    }
+  }
+}

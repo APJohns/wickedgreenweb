@@ -9,24 +9,53 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      batches: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          project_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          project_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          project_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "batches_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           created_at: string
-          domain: string
           id: string
           name: string
           user_id: string
         }
         Insert: {
           created_at?: string
-          domain: string
           id?: string
           name: string
           user_id: string
         }
         Update: {
           created_at?: string
-          domain?: string
           id?: string
           name?: string
           user_id?: string
@@ -35,6 +64,7 @@ export type Database = {
       }
       reports: {
         Row: {
+          batch_id: string | null
           bytes: number
           co2: number
           created_at: string
@@ -48,6 +78,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          batch_id?: string | null
           bytes: number
           co2: number
           created_at?: string
@@ -61,6 +92,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          batch_id?: string | null
           bytes?: number
           co2?: number
           created_at?: string
@@ -74,6 +106,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "reports_batch_id_fkey"
+            columns: ["batch_id"]
+            isOneToOne: false
+            referencedRelation: "batches"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "reports_url_id_fkey"
             columns: ["url_id"]

@@ -54,11 +54,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
       .x((d) => x(new Date(d.date)))
       .y((d) => y(d.co2));
 
-    const svg = d3
-      .select(svgRef.current)
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', [0, 0, width, height]);
+    const svg = d3.select(svgRef.current).attr('viewBox', [0, 0, width, height]);
 
     // Add the x-axis.
     svg
@@ -90,15 +86,6 @@ export default function Chart(props: LineChartProps): JSX.Element {
           .attr('x2', width - marginLeft - marginRight)
           .attr('stroke-opacity', 0.1)
       );
-    /* .call((g) =>
-    g
-    .append('text')
-    .attr('x', -marginLeft)
-    .attr('y', 10)
-    .attr('fill', 'currentColor')
-    .attr('text-anchor', 'start')
-    .text('↑ Daily close ($)')
-    ); */
 
     let prevHeight = y(0);
     for (const percentile in SWDMV4_PERCENTILES) {

@@ -14,6 +14,7 @@
   --background-inverse: var(--black);
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
+  --background-subtle: hsl(0, 0%, 94%);
 
   --border-color-primary: #ccc;
 
@@ -37,6 +38,7 @@
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
     --foreground-subtle: #7d7d7d;
+    --background-subtle: hsl(260, 10%, 8%);
     --border-color-primary: #444;
   }
 }
@@ -61,8 +63,75 @@ body {
   margin: 0;
 }
 
-main {
-  padding: 2rem var(--page-padding);
+main,
+.content-area {
+  overflow-x: auto;
+  padding: 0 var(--page-padding);
+}
+
+.content-area {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+
+  main {
+    padding: 2rem 0;
+  }
+}
+
+.menu-open {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--border-color-primary);
+  padding: 0.5rem 0;
+  background: none;
+  cursor: pointer;
+
+  svg {
+    display: block;
+    height: 2rem;
+  }
+}
+
+.back-to {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+.nav-secondary {
+  display: grid;
+  grid-template-rows: 0fr;
+  padding: 0 1.5rem;
+  width: 100%;
+  height: 100%;
+  background: var(--background-subtle);
+  transition: grid-template-rows 0.2s, padding 0.2s;
+
+  > div {
+    overflow: hidden;
+  }
+
+  &.open {
+    grid-template-rows: 1fr;
+    padding: 1.5rem;
+    transition: grid-template-rows 0.2s, padding 0.2s;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .nav-link {
+    &.active {
+      font-weight: var(--font-weight-bold);
+    }
+  }
 }
 
 p,
@@ -95,7 +164,8 @@ textarea {
   text-decoration: none;
   color: var(--foreground);
 
-  &:hover {
+  &:hover,
+  &.active {
     text-decoration: underline;
     text-decoration-color: var(--green);
     text-decoration-thickness: 2px;
@@ -186,9 +256,16 @@ textarea {
   margin-top: 1rem;
 }
 
+.form-control-input {
+  display: block;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
 .icon-action,
 .form-control-inline {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
 
   svg {
@@ -197,24 +274,33 @@ textarea {
 }
 
 .chart-card {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border-color-primary);
   padding: 1rem;
   background: var(--background);
-  aspect-ratio: 2/1;
+  width: 100%;
+  height: 30rem;
 
   .chart-card-heading {
     font-size: var(--fs-body);
-    font-weight: normal;
+    font-weight: var(--font-weight-normal);
   }
 
   .chart-container {
     margin-top: 1rem;
+    flex: 1;
   }
 }
 
 .chart-container {
-  height: 100%;
-  width: auto;
+  position: relative;
+
+  .chart {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 .chart {
@@ -282,13 +368,45 @@ textarea {
   fill: var(--gradeF);
 }
 
-.cardGroup {
+.page-header {
   display: grid;
   grid-template-columns: auto;
-  justify-content: start;
   justify-items: start;
-  gap: 2rem;
-  margin-top: 2rem;
+  gap: 1rem;
+  align-items: center;
+}
+
+.page-header-action {
+  border: 1px solid var(--background-inverse);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: var(--font-weight-bold);
+  color: var(--foreground);
+  border-color: var(--background-inverse);
+  background: var(--background);
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--background-inverse);
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+
+  th,
+  td {
+    border-bottom: 1px solid var(--border-color-primary);
+    padding: 0.5rem 1rem;
+  }
 }
 
 @media (min-width: 640px) {
@@ -296,10 +414,8 @@ textarea {
     --page-padding: 4rem;
   }
 
-  .cardGroup {
-    margin-top: 3rem;
-    grid-template-columns: auto auto;
-    gap: 3rem;
+  .page-header {
+    grid-template-columns: 1fr auto;
   }
 }
 
@@ -308,9 +424,31 @@ textarea {
     --fs-display: 5rem;
   }
 
-  .cardGroup {
-    grid-template-columns: auto auto auto;
+  .content-area {
+    grid-template-columns: auto 1fr;
     gap: 4rem;
+    padding: 2rem var(--page-padding);
+
+    main {
+      padding-top: 0;
+    }
+  }
+
+  .menu-open,
+  .menu-close {
+    display: none;
+  }
+
+  .menu-top {
+    border-bottom: 1px solid var(--border-color-primary);
+  }
+
+  .nav-secondary {
+    position: relative;
+    grid-template-rows: 1fr;
+    background: none;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 

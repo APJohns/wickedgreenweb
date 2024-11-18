@@ -1,0 +1,10 @@
+.nextRun {
+  color: var(--foreground-subtle);
+  font-size: var(--fs-subtle);
+}
+
+.tableLoader {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}

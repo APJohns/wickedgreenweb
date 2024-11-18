@@ -1,0 +1,38 @@
+.projectList {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project {
+  display: block;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  color: var(--foreground);
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--green);
+  }
+}
+
+@media (min-width: 640px) {
+  .projectList {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .projectList {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .projectList {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}

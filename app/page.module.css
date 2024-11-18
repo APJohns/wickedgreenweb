@@ -14,5 +14,5 @@
 
 .small {
   font-size: 3.5rem;
-  font-weight: normal;
+  font-weight: var(--font-weight-normal);
 }

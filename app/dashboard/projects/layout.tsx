@@ -3,5 +3,5 @@ export default async function ProjectLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main>{children}</main>;
+  return <>{children}</>;
 }
