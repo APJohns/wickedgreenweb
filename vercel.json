@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/gather",
-      "schedule": "0 9 * * *"
+      "schedule": "0 7 * * *"
     }
   ]
 }
