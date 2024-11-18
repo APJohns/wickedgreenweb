@@ -8,8 +8,8 @@ import { JSDOM } from 'jsdom';
 import { Tables } from '@/database.types';
 
 export const signUpAction = async (formData: FormData): Promise<void> => {
-  const email = formData.get('email')?.toString();
-  const password = formData.get('password')?.toString();
+  const email = formData.get('email')?.toString().trim();
+  const password = formData.get('password')?.toString().trim();
   const supabase = await createClient();
   const origin = (await headers()).get('origin');
 
@@ -38,8 +38,8 @@ export const signUpAction = async (formData: FormData): Promise<void> => {
 };
 
 export const signInAction = async (formData: FormData) => {
-  const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
+  const email = (formData.get('email') as string).trim();
+  const password = (formData.get('password') as string).trim();
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -55,10 +55,10 @@ export const signInAction = async (formData: FormData) => {
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
-  const email = formData.get('email')?.toString();
+  const email = formData.get('email')?.toString().trim();
   const supabase = await createClient();
   const origin = (await headers()).get('origin');
-  const callbackUrl = formData.get('callbackUrl')?.toString();
+  const callbackUrl = formData.get('callbackUrl')?.toString().trim();
 
   if (!email) {
     return encodedRedirect('error', '/forgot-password', 'Email is required');
@@ -83,8 +83,8 @@ export const forgotPasswordAction = async (formData: FormData) => {
 export const resetPasswordAction = async (formData: FormData) => {
   const supabase = await createClient();
 
-  const password = formData.get('password') as string;
-  const confirmPassword = formData.get('confirmPassword') as string;
+  const password = (formData.get('password') as string).trim();
+  const confirmPassword = (formData.get('confirmPassword') as string).trim();
 
   if (!password || !confirmPassword) {
     encodedRedirect('error', '/account/reset-password', 'Password and confirm password are required');
@@ -112,9 +112,9 @@ export const signOutAction = async () => {
 };
 
 export const addURLAction = async (formData: FormData) => {
-  const rawUrl = formData.get('url') as string;
-  const sitemap = formData.get('sitemap') as string;
-  const projectID = formData.get('project_id') as string;
+  const rawUrl = (formData.get('url') as string).trim();
+  const sitemap = (formData.get('sitemap') as string).trim();
+  const projectID = (formData.get('project_id') as string).trim();
 
   if (!projectID) {
     return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Invalid project id');
@@ -249,7 +249,7 @@ export const addURLAction = async (formData: FormData) => {
 };
 
 export const createProjectAction = async (formData: FormData) => {
-  const name = formData.get('name') as string;
+  const name = (formData.get('name') as string).trim();
   if (!name || name === 'new') {
     return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid project name');
   }
@@ -282,7 +282,7 @@ export const createProjectAction = async (formData: FormData) => {
 };
 
 export const deleteProjectAction = async (formData: FormData) => {
-  const projectID = formData.get('projectID') as string;
+  const projectID = (formData.get('projectID') as string).trim();
   if (projectID) {
     const supabase = await createClient();
     const { error } = await supabase.from('projects').delete().eq('id', projectID);
