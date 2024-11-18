@@ -14,7 +14,7 @@
   --background-inverse: var(--black);
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
-  --background-subtle: #b5e0be;
+  --background-subtle: hsl(0, 0%, 94%);
 
   --border-color-primary: #ccc;
 
@@ -38,7 +38,7 @@
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
     --foreground-subtle: #7d7d7d;
-    --background-subtle: #b5e0be;
+    --background-subtle: hsl(260, 10%, 8%);
     --border-color-primary: #444;
   }
 }
@@ -66,20 +66,60 @@ body {
 main,
 .content-area {
   overflow-x: auto;
-  padding: 2rem var(--page-padding);
+  padding: 0 var(--page-padding);
 }
 
 .content-area {
+  position: relative;
   display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 4rem;
+  grid-template-columns: 1fr;
+  align-items: start;
 
   main {
-    padding: 0;
+    padding: 2rem 0;
   }
 }
 
+.menu-open {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 0;
+  border-bottom: 1px solid var(--border-color-primary);
+  padding: 0.5rem 0;
+  background: none;
+  cursor: pointer;
+
+  svg {
+    display: block;
+    height: 2rem;
+  }
+}
+
+.back-to {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
 .nav-secondary {
+  display: grid;
+  grid-template-rows: 0fr;
+  padding: 0 1.5rem;
+  width: 100%;
+  height: 100%;
+  background: var(--background-subtle);
+  transition: grid-template-rows 0.2s, padding 0.2s;
+
+  > div {
+    overflow: hidden;
+  }
+
+  &.open {
+    grid-template-rows: 1fr;
+    padding: 1.5rem;
+    transition: grid-template-rows 0.2s, padding 0.2s;
+  }
+
   ul {
     display: flex;
     flex-direction: column;
@@ -87,14 +127,10 @@ main,
     list-style: none;
   }
 
-  .back-to {
-    margin-bottom: 1rem;
-  }
-
-  .nav-link.active {
-    font-weight: var(--font-weight-bold);
-    /* color: var(--foreground-inverse);
-    background: var(--background-subtle); */
+  .nav-link {
+    &.active {
+      font-weight: var(--font-weight-bold);
+    }
   }
 }
 
@@ -386,6 +422,33 @@ textarea {
 @media (min-width: 768px) {
   :root {
     --fs-display: 5rem;
+  }
+
+  .content-area {
+    grid-template-columns: auto 1fr;
+    gap: 4rem;
+    padding: 2rem var(--page-padding);
+
+    main {
+      padding-top: 0;
+    }
+  }
+
+  .menu-open,
+  .menu-close {
+    display: none;
+  }
+
+  .menu-top {
+    border-bottom: 1px solid var(--border-color-primary);
+  }
+
+  .nav-secondary {
+    position: relative;
+    grid-template-rows: 1fr;
+    background: none;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
