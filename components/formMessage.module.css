@@ -1,0 +1,32 @@
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.toast {
+  position: fixed;
+  top: 2rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  animation: fadeOut 1s linear 5s forwards;
+}
+
+.success,
+.error,
+.message {
+  border-radius: 8px;
+  border: 2px solid var(--foreground);
+  padding: 1rem 2rem;
+  max-width: 640px;
+}
+
+.success {
+  color: var(--foreground-inverse);
+  background: var(--green);
+}
