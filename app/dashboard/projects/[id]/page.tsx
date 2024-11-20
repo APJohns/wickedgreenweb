@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
   const getAverage = (values: number[]) => {
     const sum = values.reduce((acc, curr) => acc + curr, 0);
-    return sum / data.length;
+    return sum / values.length;
   };
 
   const byDate: { [key: string]: number[] } = {};
