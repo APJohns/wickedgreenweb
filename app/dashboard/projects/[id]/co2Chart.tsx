@@ -1,11 +1,11 @@
 'use client';
 
-import Chart from '@/components/chart';
+import Chart from '@/app/dashboard/projects/[id]/chart';
 import { useState } from 'react';
 
 export interface CO2Point {
   co2: number;
-  date: string;
+  date: string | Date;
 }
 
 export default function CO2Chart({ data }: { data: CO2Point[] }) {

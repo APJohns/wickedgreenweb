@@ -12,7 +12,7 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
     .from('batches')
     .select()
     .eq('project_id', projectID)
-    .order('date', { ascending: false });
+    .order('created_at', { ascending: false });
 
   if (!batches) {
     return (

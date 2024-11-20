@@ -64,7 +64,7 @@ export type Database = {
       }
       reports: {
         Row: {
-          batch_id: string | null
+          batch_id: string
           bytes: number
           co2: number
           created_at: string
@@ -78,7 +78,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          batch_id?: string | null
+          batch_id: string
           bytes: number
           co2: number
           created_at?: string
@@ -92,7 +92,7 @@ export type Database = {
           user_id: string
         }
         Update: {
-          batch_id?: string | null
+          batch_id?: string
           bytes?: number
           co2?: number
           created_at?: string

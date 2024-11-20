@@ -3,14 +3,10 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { SWDMV4_PERCENTILES } from '@/utils/constants';
-
-interface Averages {
-  date: string;
-  co2: number;
-}
+import { CO2Point } from './co2Chart';
 
 interface LineChartProps {
-  data: Averages[];
+  data: CO2Point[];
 }
 
 export default function Chart(props: LineChartProps): JSX.Element {
@@ -50,7 +46,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
 
     // Declare the line generator.
     const line = d3
-      .line<Averages>()
+      .line<CO2Point>()
       .x((d) => x(new Date(d.date)))
       .y((d) => y(d.co2));
 
