@@ -5,7 +5,7 @@ import { createClient } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { JSDOM } from 'jsdom';
-import { Tables } from '@/database.types';
+import { Tables, TablesUpdate } from '@/database.types';
 
 export const signUpAction = async (formData: FormData): Promise<void> => {
   const email = formData.get('email')?.toString().trim();
@@ -271,14 +271,15 @@ export const createProjectAction = async (formData: FormData) => {
   } = await supabase.auth.getUser();
 
   if (user) {
-    const { error } = await supabase.from('projects').insert({ name, user_id: user.id });
+    const { data, error } = await supabase.from('projects').insert({ name, user_id: user.id }).select().single();
 
     if (error) {
       console.error(error);
     }
+    return encodedRedirect('success', `/dashboard${data?.id}/urls/add`, 'Project successfully created');
+  } else {
+    return encodedRedirect('error', `/dashboard/project/new`, `Couldn't validate user`);
   }
-
-  return encodedRedirect('success', `/dashboard`, 'Project successfully created');
 };
 
 export const deleteProjectAction = async (formData: FormData) => {
@@ -292,6 +293,29 @@ export const deleteProjectAction = async (formData: FormData) => {
     return encodedRedirect('success', `/dashboard`, 'Project deleted');
   } else {
     return encodedRedirect('error', `/dashboard`, 'Invalid project ID');
+  }
+};
+
+export const updateProjectAction = async (formData: FormData) => {
+  const projectID = (formData.get('projectID') as string).trim();
+  const reportFrequency = formData.get('reportFrequency') as string;
+  if (projectID) {
+    const updatedProject: TablesUpdate<'projects'> = {};
+    if (reportFrequency) {
+      updatedProject.report_frequency = reportFrequency;
+    }
+    const supabase = await createClient();
+    const { error } = await supabase.from('projects').update(updatedProject).eq('id', projectID);
+    if (error) {
+      return encodedRedirect(
+        'error',
+        `/dashboard/projects/${projectID}/settings`,
+        'Something went wrong deleting your project'
+      );
+    }
+    return encodedRedirect('success', `/dashboard/projects/${projectID}/settings`, 'Project settings saved');
+  } else {
+    return encodedRedirect('error', `/dashboard/projects/${projectID}/settings`, 'Invalid project ID');
   }
 };
 
