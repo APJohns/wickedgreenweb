@@ -19,7 +19,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     .from('batches')
     .select()
     .eq('project_id', projectID)
-    .order('date', { ascending: false });
+    .order('created_at', { ascending: false });
 
   const { data, error } = await supabase
     .from('reports')
