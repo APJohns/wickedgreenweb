@@ -340,8 +340,6 @@ export const getReports = async (batchID: string, projectID: string) => {
     .eq('batch_id', batchID)
     .eq('urls.project_id', projectID);
 
-  console.log(data);
-
   if (error) {
     console.error(error);
   }

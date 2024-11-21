@@ -47,7 +47,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   if (!data || !batches) {
     notFound();
   }
-  console.log(data);
 
   const latestBatchReports = data?.filter((report) => report.batch_id === batches[0].id);
 
@@ -89,7 +88,6 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
       byBatch[report.batch_id] = [report.co2];
     }
   });
-  console.log(byBatch);
 
   const averages: CO2Point[] = Object.keys(byBatch).map((batchID) => {
     const date = new Date(batches.find((b) => b.id === batchID)!.created_at);

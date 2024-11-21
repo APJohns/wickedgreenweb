@@ -8,6 +8,13 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
   const projectID = (await params).id;
 
   const supabase = await createClient();
+
+  const { data: reportFrequency } = await supabase
+    .from('projects')
+    .select('report_frequency')
+    .eq('id', projectID)
+    .single();
+
   const { data: batches } = await supabase
     .from('batches')
     .select()
@@ -26,7 +33,24 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
 
   const lastBatch = new Date(batches[0].created_at);
   const nextBatch = new Date(lastBatch);
-  nextBatch.setDate(nextBatch.getDate() + 1);
+
+  switch (reportFrequency?.report_frequency) {
+    case 'daily':
+      nextBatch.setDate(nextBatch.getDate() + 1);
+      break;
+    case 'weekly':
+      while (nextBatch.getDay() !== 1) {
+        nextBatch.setDate(nextBatch.getDate() + 1);
+      }
+      break;
+    case 'monthly':
+      nextBatch.setMonth(nextBatch.getMonth() + 1);
+      nextBatch.setDate(1);
+      break;
+
+    default:
+      break;
+  }
 
   return (
     <>

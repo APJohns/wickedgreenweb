@@ -29,7 +29,6 @@ export default async function Report({
     if (!res.ok) {
       throw Error(await res.text());
     }
-    console.log(res);
     data = await res.json();
   }
 
