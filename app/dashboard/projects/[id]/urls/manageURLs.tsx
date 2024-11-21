@@ -29,6 +29,7 @@ export default function ManageURLs(props: Props) {
             <tr>
               <th></th>
               <th>URL</th>
+              <th>Hosting</th>
               <th>Total reports</th>
             </tr>
           </thead>
@@ -39,6 +40,7 @@ export default function ManageURLs(props: Props) {
                   <input type="checkbox" name={url.id} />
                 </td>
                 <td>{url.url}</td>
+                <td>{url.green_hosting_factor === 1 ? 'Green' : 'Dirty'}</td>
                 <td>{url.reports[0].count}</td>
               </tr>
             ))}

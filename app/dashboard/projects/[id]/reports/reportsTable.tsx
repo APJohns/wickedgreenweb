@@ -58,7 +58,6 @@ export default function ReportsTable({ projectID, batches }: Props) {
             <thead>
               <tr>
                 <th>URL</th>
-                <th>Hosting</th>
                 <th>Page weight</th>
                 <th>
                   CO<sub>2</sub>
@@ -71,12 +70,7 @@ export default function ReportsTable({ projectID, batches }: Props) {
               {reports.map((report) => {
                 return (
                   <tr key={report.id}>
-                    {report.urls && (
-                      <>
-                        <td>{new URL(report.urls.url).pathname}</td>
-                        <td>{report.urls.green_hosting_factor === 1 ? 'Green' : 'Dirty'}</td>
-                      </>
-                    )}
+                    {report.urls && <td>{new URL(report.urls.url).pathname}</td>}
                     <td>
                       {formatBytes(report.bytes).value}&thinsp;{formatBytes(report.bytes).unit}
                     </td>

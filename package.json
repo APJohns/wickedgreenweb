@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest",
     "gen-types": "bun run supabase gen types --lang=typescript --project-id nrbuiyvrhjmyjrpqzwdu --schema public > database.types.ts"
   },
   "dependencies": {
@@ -19,13 +20,21 @@
     "react-dom": "19.0.0-rc-69d4b800-20241021"
   },
   "devDependencies": {
+    "@happy-dom/global-registrator": "^15.11.6",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/d3": "^7.4.3",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^4.3.3",
     "eslint-config-next": "15.0.1",
     "supabase": "^1.219.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5.1.3",
+    "vitest": "^2.1.5"
   }
 }
