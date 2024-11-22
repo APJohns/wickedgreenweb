@@ -1,0 +1,65 @@
+.plans {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 1rem 2rem;
+}
+
+.price {
+  margin-top: 1rem;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--fs-big);
+}
+
+.priceFrequency {
+  font-weight: var(--font-weight-normal);
+  font-size: var(--fs-body);
+  color: var(--foreground-subtle);
+}
+
+.featuresList {
+  margin-top: 2rem;
+  margin-left: 1.5rem;
+  /* list-style: none; */
+  font-size: var(--fs-subtle);
+}
+
+.action {
+  margin-top: auto;
+}
+
+.cta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1.5rem;
+  color: var(--foreground-inverse);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  background: var(--green);
+
+  & svg {
+    height: 1rem;
+  }
+
+  &:hover {
+    background: var(--background-inverse);
+  }
+}
+
+.ctaSoon {
+  margin-top: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-weight: var(--font-weight-bold);
+}

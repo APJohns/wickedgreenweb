@@ -38,6 +38,21 @@ export type Database = {
           },
         ]
       }
+      permissions: {
+        Row: {
+          plan: string
+          user_id: string
+        }
+        Insert: {
+          plan?: string
+          user_id: string
+        }
+        Update: {
+          plan?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       projects: {
         Row: {
           created_at: string
