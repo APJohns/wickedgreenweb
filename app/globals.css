@@ -18,6 +18,8 @@
 
   --border-color-primary: #ccc;
 
+  --font-family-body: var(--font-annon);
+
   --fs-display: 3rem;
   --fs-body: 1.25rem;
   --fs-subtle: 1rem;
@@ -63,6 +65,13 @@ body {
   margin: 0;
 }
 
+input,
+textarea,
+select {
+  font-size: var(--fs-body);
+  font-family: var(--font-family-body);
+}
+
 main,
 .content-area {
   overflow-x: auto;
@@ -76,7 +85,7 @@ main,
   align-items: start;
 
   main {
-    padding: 2rem 0;
+    padding: 2rem 0.5rem;
   }
 }
 
@@ -264,7 +273,37 @@ textarea {
 .form-control-input {
   display: block;
   margin-top: 0.5rem;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 0.5rem;
   width: 100%;
+  font-size: var(--fs-subtle);
+  background: var(--background);
+
+  &.inline {
+    width: max-content;
+  }
+}
+
+select.form-control-input {
+  padding-right: 1.75rem;
+  appearance: none;
+  background-image: url('../assets/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: center right 0.5rem;
+  background-size: 1rem;
+}
+
+.form-submit {
+  cursor: pointer;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  background: var(--background-subtle);
+
+  &:hover {
+    background: var(--green);
+  }
 }
 
 .icon-action,
@@ -432,7 +471,7 @@ textarea {
   .content-area {
     grid-template-columns: auto 1fr;
     gap: 4rem;
-    padding: 2rem var(--page-padding);
+    padding: 2rem calc(var(--page-padding) - 0.5rem) 2rem var(--page-padding);
 
     main {
       padding-top: 0;
@@ -454,6 +493,10 @@ textarea {
     background: none;
     padding-left: 0;
     padding-right: 0;
+
+    > div {
+      overflow: unset;
+    }
   }
 }
 

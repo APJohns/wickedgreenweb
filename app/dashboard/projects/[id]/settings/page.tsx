@@ -3,6 +3,7 @@ import Delete from './delete';
 import { notFound } from 'next/navigation';
 import { FormMessage, Message } from '@/components/formMessage';
 import { updateProjectAction } from '@/app/actions';
+import styles from './settings.module.css';
 
 export default async function SettingsPage({
   params,
@@ -23,10 +24,10 @@ export default async function SettingsPage({
     <>
       <h1>Settings</h1>
       <FormMessage message={messageParams} />
-      <form action={updateProjectAction}>
+      <form action={updateProjectAction} className={styles.updateProjectForm}>
         <label className="form-control">
           <div className="form-control-label">Report frequency</div>
-          <select name="reportFrequency" className="form" defaultValue={data.report_frequency}>
+          <select name="reportFrequency" className="form-control-input" defaultValue={data.report_frequency}>
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
@@ -37,9 +38,10 @@ export default async function SettingsPage({
           Save
         </button>
       </form>
-
-      <h2>Danger zone</h2>
-      <Delete projectID={projectID} />
+      <div className={styles.dangerZone}>
+        <h2>Danger zone</h2>
+        <Delete projectID={projectID} />
+      </div>
     </>
   );
 }

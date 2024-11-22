@@ -38,13 +38,18 @@ export default function ReportsTable({ projectID, batches }: Props) {
 
   return (
     <div>
-      <select onChange={(e) => updateReports(e.target.value)}>
-        {batches.map((batch) => (
-          <option key={batch.id} value={batch.id}>
-            <DateTime date={new Date(batch.created_at)} />
-          </option>
-        ))}
-      </select>
+      <div className={styles.filters}>
+        <label className="form-control">
+          <div className="form-control-label">Report date</div>
+          <select className="form-control-input inline" onChange={(e) => updateReports(e.target.value)}>
+            {batches.map((batch) => (
+              <option key={batch.id} value={batch.id}>
+                <DateTime date={new Date(batch.created_at)} />
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
       {isLoading ? (
         <div className={styles.tableLoader}>
           <Loader />

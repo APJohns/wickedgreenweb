@@ -8,3 +8,8 @@
   justify-content: center;
   margin-top: 4rem;
 }
+
+.filters {
+  display: grid;
+  gap: 1rem;
+}
