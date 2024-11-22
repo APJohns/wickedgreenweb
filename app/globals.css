@@ -302,6 +302,7 @@ select.form-control-input {
   background: var(--background-subtle);
 
   &:hover {
+    color: var(--foreground-inverse);
     background: var(--green);
   }
 }
