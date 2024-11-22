@@ -114,6 +114,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
   const latestCO2 = Array.from(latestBatchReports, (report) => report.co2);
   const bytes = formatBytes(getAverage(Array.from(latestBatchReports, (report) => report.bytes)));
+  let totalChange: number | null = null;
+  let annualChange: number | null = null;
+  const earliestAllTime = averages.at(-1);
+  const earliestThisYear = averages.filter((d) => new Date(d.date).getFullYear() === new Date().getFullYear()).at(-1);
+  if (earliestAllTime) {
+    totalChange = (averages[0].co2 / earliestAllTime.co2) * 100 - 100;
+  }
+  if (earliestThisYear) {
+    annualChange = (averages[0].co2 / earliestThisYear.co2) * 100 - 100;
+  }
 
   return (
     <>
@@ -139,6 +149,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         </StatCard>
         <StatCard heading="Page weight" headingLevel="h3" unit={bytes.unit}>
           {bytes.value}
+        </StatCard>
+        <StatCard heading="Annual change" headingLevel="h3" unit="%" info="this year">
+          {totalChange?.toFixed(2)}
+        </StatCard>
+        <StatCard heading="Net change" headingLevel="h3" unit="%" info="since start">
+          {annualChange?.toFixed(2)}
         </StatCard>
       </StatCardGroup>
       <div className={styles.chartGroup}>

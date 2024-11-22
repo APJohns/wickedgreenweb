@@ -24,13 +24,19 @@
 
 @media (min-width: 768px) {
   .cardGroup {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
     gap: 4rem;
   }
 }
 
 @media (min-width: 1024px) {
   .cardGroup {
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .cardGroup {
+    grid-template-columns: auto auto auto auto auto;
   }
 }
