@@ -12,6 +12,7 @@ interface NavItem {
 
 interface Props {
   navItems: NavItem[];
+  header?: string;
 }
 
 export default function NavSecondary(props: Props) {
@@ -63,7 +64,8 @@ export default function NavSecondary(props: Props) {
             </svg>
             Dashboard
           </Link>
-          <ul>
+          {props.header && <div className="nav-header">{props.header}</div>}
+          <ul className="nav-list">
             {props.navItems.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className={`nav-link icon-action${item.href === pathname ? ' active' : ''}`}>

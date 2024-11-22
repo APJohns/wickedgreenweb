@@ -120,11 +120,16 @@ main,
     transition: grid-template-rows 0.2s, padding 0.2s;
   }
 
-  ul {
+  .nav-header {
+    color: var(--foreground-subtle);
+  }
+
+  .nav-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     list-style: none;
+    margin-top: 0.5rem;
   }
 
   .nav-link {
