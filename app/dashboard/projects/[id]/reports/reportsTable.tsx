@@ -7,6 +7,7 @@ import { formatBytes, formatCO2 } from '@/utils/utils';
 import { useCallback, useEffect, useState } from 'react';
 import styles from './reports.module.css';
 import { getReports } from '@/app/actions';
+import Select from '@/components/select';
 
 interface Reports extends Tables<'reports'> {
   urls: Tables<'urls'>;
@@ -39,16 +40,13 @@ export default function ReportsTable({ projectID, batches }: Props) {
   return (
     <div>
       <div className={styles.filters}>
-        <label className="form-control">
-          <div className="form-control-label">Report date</div>
-          <select className="form-control-input inline" onChange={(e) => updateReports(e.target.value)}>
-            {batches.map((batch) => (
-              <option key={batch.id} value={batch.id}>
-                <DateTime date={new Date(batch.created_at)} />
-              </option>
-            ))}
-          </select>
-        </label>
+        <Select label="Report date" onChange={(e) => updateReports(e.target.value)} inline>
+          {batches.map((batch) => (
+            <option key={batch.id} value={batch.id}>
+              <DateTime date={new Date(batch.created_at)} />
+            </option>
+          ))}
+        </Select>
       </div>
       {isLoading ? (
         <div className={styles.tableLoader}>
