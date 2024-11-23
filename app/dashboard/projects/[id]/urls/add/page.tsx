@@ -29,7 +29,8 @@ export default async function AddUrlPage(props: { searchParams: Promise<Message>
           <Link href="/pricing">Upgrade to Pro</Link> to add more URLs.
         </p> */}
         <p>
-          Features are limited as we roll out GreenerWeb. You may only have 10 URLs. We'll update you when this changes.
+          Features are limited as we roll out GreenerWeb. You may only have 10 URLs. We&apos;ll update you when this
+          changes.
         </p>
       </>
     );
