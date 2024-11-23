@@ -74,12 +74,12 @@ export default function ReportsTable({ projectID, batches }: Props) {
                 return (
                   <tr key={report.id}>
                     {report.urls && <td>{new URL(report.urls.url).pathname}</td>}
-                    <td className="font-mono">
+                    <td>
                       {formatBytes(report.bytes).value}&thinsp;{formatBytes(report.bytes).unit}
                     </td>
-                    <td className="font-mono">{formatCO2(report.co2)}&thinsp;g</td>
+                    <td>{formatCO2(report.co2)}&thinsp;g</td>
                     <td>{report.rating}</td>
-                    <td className="font-mono">
+                    <td>
                       <DateTime datetime={new Date(report.created_at)} options={{ timeZoneName: 'short' }} />
                     </td>
                   </tr>
