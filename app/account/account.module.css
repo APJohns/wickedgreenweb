@@ -10,7 +10,16 @@
 .descriptionList {
   display: grid;
   grid-template-columns: auto auto;
+  align-items: baseline;
   gap: var(--space-xs) var(--space-sm);
   margin-top: var(--space-sm);
   width: max-content;
+
+  & dt {
+    color: var(--foreground-subtle);
+  }
+
+  & dd {
+    font-family: var(--font-family-mono);
+  }
 }
