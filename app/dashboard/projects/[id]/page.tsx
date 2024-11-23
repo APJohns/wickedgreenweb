@@ -36,13 +36,10 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     `
     )
     .eq(`batches.project_id`, projectID);
-  // .order('created_at', { ascending: false });
-  // .order('created_at', { referencedTable: 'reports', ascending: false });
+
   if (error) {
     console.error(error);
   }
-
-  // const data = await getURLReports(projectID);
 
   if (!data || !batches) {
     notFound();
@@ -54,26 +51,11 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
     return (
       <>
         <h1>{projectName}</h1>
-        <div className={styles.urls}>
-          <p>Welcome! Let&apos;s add some URLs to this project.</p>
-          <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
-        </div>
+        <p>Welcome! It may look a little empty now, but check back once your first reports are in!</p>
+        <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
       </>
     );
   }
-
-  /* if (Array.from(data, (d) => d.reports).flat().length === 0) {
-    return (
-      <>
-        <h1>{projectName}</h1>
-        <div className={styles.urls}>
-          TODO: Change "tomorrow" to match cadence of final crawl rate
-          <p>Check back after the next scan tomorrow to see your results.</p>
-          <Link href={`/dashboard/projects/${projectID}/urls`}>See all {data.length} URLs</Link>
-        </div>
-      </>
-    );
-  } */
 
   const getAverage = (values: number[]) => {
     const sum = values.reduce((acc, curr) => acc + curr, 0);

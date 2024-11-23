@@ -15,3 +15,5 @@ export const SWDMV4_RATINGS = {
   FORTIETH_PERCENTILE: 'D',
   FIFTIETH_PERCENTILE: 'E',
 };
+
+export const FREQUENCIES = ['daily', 'weekly', 'monthly'];

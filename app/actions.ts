@@ -6,6 +6,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { JSDOM } from 'jsdom';
 import { Tables, TablesUpdate } from '@/database.types';
+import { FREQUENCIES } from '@/utils/constants';
 
 export const signUpAction = async (formData: FormData): Promise<void> => {
   const email = formData.get('email')?.toString().trim();
@@ -49,9 +50,13 @@ export const signUpAction = async (formData: FormData): Promise<void> => {
 };
 
 export const signInAction = async (formData: FormData) => {
-  const email = (formData.get('email') as string).trim();
-  const password = (formData.get('password') as string).trim();
+  const email = formData.get('email')?.toString().trim();
+  const password = formData.get('password')?.toString().trim();
   const supabase = await createClient();
+
+  if (!email || !password) {
+    return encodedRedirect('error', '/sign-in', 'Invalid email or password');
+  }
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -94,8 +99,8 @@ export const forgotPasswordAction = async (formData: FormData) => {
 export const resetPasswordAction = async (formData: FormData) => {
   const supabase = await createClient();
 
-  const password = (formData.get('password') as string).trim();
-  const confirmPassword = (formData.get('confirmPassword') as string).trim();
+  const password = formData.get('password')?.toString().trim();
+  const confirmPassword = formData.get('confirmPassword')?.toString().trim();
 
   if (!password || !confirmPassword) {
     encodedRedirect('error', '/account/reset-password', 'Password and confirm password are required');
@@ -123,9 +128,9 @@ export const signOutAction = async () => {
 };
 
 export const addURLAction = async (formData: FormData) => {
-  const rawUrl = (formData.get('url') as string).trim();
-  const sitemap = (formData.get('sitemap') as string).trim();
-  const projectID = (formData.get('project_id') as string).trim();
+  const rawUrl = formData.get('url')?.toString().trim();
+  const sitemap = formData.get('sitemap')?.toString().trim();
+  const projectID = formData.get('project_id')?.toString().trim();
 
   if (!projectID) {
     return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Invalid project id');
@@ -260,9 +265,13 @@ export const addURLAction = async (formData: FormData) => {
 };
 
 export const createProjectAction = async (formData: FormData) => {
-  const name = (formData.get('name') as string).trim();
+  const name = formData.get('name')?.toString().trim();
+  const reportFrequency = formData.get('reportFrequency')?.toString();
   if (!name || name === 'new') {
     return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid project name');
+  }
+  if (reportFrequency && !FREQUENCIES.includes(reportFrequency)) {
+    return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid report frequency');
   }
 
   const supabase = await createClient();
@@ -282,19 +291,23 @@ export const createProjectAction = async (formData: FormData) => {
   } = await supabase.auth.getUser();
 
   if (user) {
-    const { data, error } = await supabase.from('projects').insert({ name, user_id: user.id }).select().single();
+    const { data, error } = await supabase
+      .from('projects')
+      .insert({ name, report_frequency: reportFrequency, user_id: user.id })
+      .select()
+      .single();
 
     if (error) {
       console.error(error);
     }
-    return encodedRedirect('success', `/dashboard${data?.id}/urls/add`, 'Project successfully created');
+    return encodedRedirect('success', `/dashboard/projects/${data?.id}/urls/add`, 'Project successfully created');
   } else {
     return encodedRedirect('error', `/dashboard/project/new`, `Couldn't validate user`);
   }
 };
 
 export const deleteProjectAction = async (formData: FormData) => {
-  const projectID = (formData.get('projectID') as string).trim();
+  const projectID = formData.get('projectID')?.toString().trim();
   if (projectID) {
     const supabase = await createClient();
     const { error } = await supabase.from('projects').delete().eq('id', projectID);
@@ -308,8 +321,11 @@ export const deleteProjectAction = async (formData: FormData) => {
 };
 
 export const updateProjectAction = async (formData: FormData) => {
-  const projectID = (formData.get('projectID') as string).trim();
-  const reportFrequency = formData.get('reportFrequency') as string;
+  const projectID = formData.get('projectID')?.toString().trim();
+  const reportFrequency = formData.get('reportFrequency')?.toString();
+  if (reportFrequency && !FREQUENCIES.includes(reportFrequency)) {
+    return encodedRedirect('error', `/dashboard/projects/${projectID}/settings`, 'Invalid report frequency');
+  }
   if (projectID) {
     const updatedProject: TablesUpdate<'projects'> = {};
     if (reportFrequency) {

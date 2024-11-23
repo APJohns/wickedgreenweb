@@ -24,7 +24,7 @@ export default async function AddUrlPage(props: { searchParams: Promise<Message>
   if (plan === 'free' && count >= 10) {
     return (
       <>
-        <h1>Add URL</h1>
+        <h1>Add URLs</h1>
         <p>
           <Link href="/pricing">Upgrade to Pro</Link> to add more URLs.
         </p>
@@ -34,7 +34,7 @@ export default async function AddUrlPage(props: { searchParams: Promise<Message>
 
   return (
     <>
-      <h1>Add URL</h1>
+      <h1>Add URLs</h1>
       <form action={addURLAction}>
         <label className="form-control">
           <div className="form-control-label">Single URL</div>

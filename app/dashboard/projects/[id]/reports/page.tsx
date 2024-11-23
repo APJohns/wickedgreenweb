@@ -21,17 +21,7 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
     .eq('project_id', projectID)
     .order('created_at', { ascending: false });
 
-  if (!batches) {
-    return (
-      <>
-        <h1>Reports</h1>
-        <p>Welcome! Let&apos;s add some URLs to this project.</p>
-        <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
-      </>
-    );
-  }
-
-  const lastBatch = new Date(batches[0].created_at);
+  const lastBatch = batches && batches.length > 0 ? new Date(batches[0].created_at) : new Date();
   const nextBatch = new Date(lastBatch);
 
   switch (reportFrequency?.report_frequency) {
@@ -50,6 +40,18 @@ export default async function URLsPage({ params }: { params: Promise<{ id: strin
 
     default:
       break;
+  }
+
+  if (!batches || batches.length === 0) {
+    return (
+      <>
+        <h1>Reports</h1>
+        <p>
+          After you add some URLs, your reports will show up here on <DateTime date={nextBatch} />.
+        </p>
+        <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
+      </>
+    );
   }
 
   return (

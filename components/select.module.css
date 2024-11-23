@@ -1,0 +1,25 @@
+.select {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  margin-top: 0.5rem;
+
+  &.inline {
+    width: max-content;
+  }
+}
+
+.selectInput {
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 0;
+}
+
+.chevron {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+  justify-self: end;
+  height: 1rem;
+  margin-right: 0.5rem;
+}

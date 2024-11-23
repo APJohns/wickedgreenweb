@@ -47,3 +47,7 @@ export function formatBytes(bytes: number, decimals?: number): FormattedBytes {
 export function formatCO2(co2: number) {
   return co2 < 0.01 ? '<\u20090.01' : co2.toFixed(2);
 }
+
+export const cleanValue = (value: string | undefined): string | undefined => {
+  return value !== undefined ? value.trim() : undefined;
+};
