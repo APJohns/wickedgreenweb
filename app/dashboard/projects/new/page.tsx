@@ -1,10 +1,10 @@
 import { createProjectAction } from '@/app/actions';
 import { FormMessage, Message } from '@/components/formMessage';
 import { createClient, getPlan } from '@/utils/supabase/server';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import styles from './newProject.module.css';
 import Select from '@/components/select';
+import { PLANS } from '@/utils/constants';
 
 export default async function NewProjectPage(props: {
   searchParams: Promise<Message>;
@@ -16,20 +16,24 @@ export default async function NewProjectPage(props: {
   const supabase = await createClient();
   const { count, error } = await supabase.from('projects').select('*', { count: 'exact', head: true });
 
-  if (count === undefined || count === null) {
-    notFound();
-  }
-
   if (error) {
     console.error(error);
   }
 
-  if (plan === 'free' && count >= 5) {
+  if (count === undefined || count === null) {
+    notFound();
+  }
+
+  if (plan === 'free' && count >= PLANS.FREE.PROJECTS) {
     return (
       <main>
         <h1>New project</h1>
-        <p>
+        {/* <p>
           <Link href="/pricing">Upgrade to Pro</Link> to add more projects.
+        </p> */}
+        <p>
+          Features are limited as we roll out GreenerWeb. You may only have 1 project. We'll update you when this
+          changes.
         </p>
       </main>
     );

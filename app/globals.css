@@ -30,6 +30,13 @@
   --font-weight-bold: 700;
 
   --page-padding: 2rem;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-xxl: 4rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -88,6 +95,10 @@ main,
   main {
     padding: 2rem 0.5rem;
   }
+}
+
+.text-subtle {
+  font-size: var(--fs-subtle);
 }
 
 .menu-open {
@@ -284,15 +295,6 @@ textarea {
   &.inline {
     width: max-content;
   }
-}
-
-select.form-control-input {
-  padding-right: 1.75rem;
-  appearance: none;
-  background-image: url('../assets/chevron-down.svg');
-  background-repeat: no-repeat;
-  background-position: center right 0.5rem;
-  background-size: 1rem;
 }
 
 .form-submit {

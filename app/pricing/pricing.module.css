@@ -1,6 +1,6 @@
 .plans {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 2rem;
   margin-top: 3rem;
 }
@@ -62,4 +62,10 @@
   margin-top: 2rem;
   padding: 0.5rem 1.5rem;
   font-weight: var(--font-weight-bold);
+}
+
+@media (min-width: 768px) {
+  .plans {
+    grid-template-columns: 1fr 1fr;
+  }
 }

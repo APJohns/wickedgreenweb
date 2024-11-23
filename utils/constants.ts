@@ -17,3 +17,10 @@ export const SWDMV4_RATINGS = {
 };
 
 export const FREQUENCIES = ['daily', 'weekly', 'monthly'];
+
+export const PLANS = {
+  FREE: {
+    URLS: 10,
+    PROJECTS: 1,
+  },
+};

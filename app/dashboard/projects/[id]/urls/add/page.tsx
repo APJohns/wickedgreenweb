@@ -3,7 +3,7 @@ import { FormMessage, Message } from '@/components/formMessage';
 import styles from './add.module.css';
 import { createClient, getPlan } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { PLANS } from '@/utils/constants';
 
 export default async function AddUrlPage(props: { searchParams: Promise<Message>; params: Promise<{ id: string }> }) {
   const searchParams = await props.searchParams;
@@ -13,20 +13,23 @@ export default async function AddUrlPage(props: { searchParams: Promise<Message>
   const supabase = await createClient();
   const { count, error } = await supabase.from('urls').select('*', { count: 'exact', head: true });
 
-  if (count === undefined || count === null) {
-    notFound();
-  }
-
   if (error) {
     console.error(error);
   }
 
-  if (plan === 'free' && count >= 10) {
+  if (count === undefined || count === null) {
+    notFound();
+  }
+
+  if (plan === 'free' && count >= PLANS.FREE.URLS) {
     return (
       <>
         <h1>Add URLs</h1>
-        <p>
+        {/* <p>
           <Link href="/pricing">Upgrade to Pro</Link> to add more URLs.
+        </p> */}
+        <p>
+          Features are limited as we roll out GreenerWeb. You may only have 10 URLs. We'll update you when this changes.
         </p>
       </>
     );
