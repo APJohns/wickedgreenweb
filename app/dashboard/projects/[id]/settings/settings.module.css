@@ -3,6 +3,10 @@
   width: max-content;
 }
 
+.saveChanges {
+  margin-top: var(--space-lg);
+}
+
 .dangerZone {
   margin-top: 3rem;
 }

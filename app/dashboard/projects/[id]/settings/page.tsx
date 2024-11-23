@@ -32,7 +32,7 @@ export default async function SettingsPage({
           <option value="monthly">Monthly</option>
         </Select>
         <input type="hidden" name="projectID" value={projectID} />
-        <button type="submit" className="form-submit">
+        <button type="submit" className={`form-submit ${styles.saveChanges}`}>
           Save
         </button>
       </form>
