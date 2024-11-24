@@ -1,12 +1,12 @@
 'use server';
 
 import { encodedRedirect } from '@/utils/utils';
-import { createClient } from '@/utils/supabase/server';
+import { createClient, getPlan } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { JSDOM } from 'jsdom';
 import { Tables, TablesUpdate } from '@/database.types';
-import { FREQUENCIES } from '@/utils/constants';
+import { FREQUENCIES, PLANS } from '@/utils/constants';
 
 export const signUpAction = async (formData: FormData): Promise<void> => {
   const email = formData.get('email')?.toString().trim();
@@ -146,6 +146,7 @@ export const addURLAction = async (formData: FormData) => {
     console.error(urlError);
   }
   const existingURLs = dbURLs ? Array.from(dbURLs, (d) => d.url) : [];
+  const plan = await getPlan();
 
   const validateURL = (unvalidatedURL: string, quiet = false) => {
     let url = '';
@@ -190,6 +191,14 @@ export const addURLAction = async (formData: FormData) => {
         data: { user },
       } = await supabase.auth.getUser();
 
+      if (existingURLs.length >= PLANS[plan.toUpperCase() as keyof typeof PLANS].URLS) {
+        return encodedRedirect(
+          'error',
+          `/dashboard/projects/${projectID}/urls/add`,
+          'Error: URL limit already reached'
+        );
+      }
+
       if (user) {
         const green_hosting_factor = (await getGreenCheck(url)).green ? 1 : 0;
 
@@ -217,6 +226,10 @@ export const addURLAction = async (formData: FormData) => {
     } catch (e) {
       console.error(e);
       return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Error parsing sitemap');
+    }
+
+    if (existingURLs.length + sitemapURLs.length > PLANS[plan.toUpperCase() as keyof typeof PLANS].URLS) {
+      return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Too many URLs in sitemap');
     }
 
     const {

@@ -27,11 +27,12 @@
 }
 
 .success {
-  color: var(--foreground-inverse);
+  color: var(--white);
   background: var(--green);
 }
 
 .error {
+  color: var(--white);
   background: var(--gradeF);
 }
 
