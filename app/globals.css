@@ -104,8 +104,13 @@ main,
   font-family: var(--font-family-mono);
 }
 
+.fs-subtle {
+  font-size: var(--fs-subtle);
+}
+
 .text-subtle {
   font-size: var(--fs-subtle);
+  color: var(--foreground-subtle);
 }
 
 .menu-open {

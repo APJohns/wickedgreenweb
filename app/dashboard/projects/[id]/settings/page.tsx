@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, getPlan } from '@/utils/supabase/server';
 import Delete from './delete';
 import { notFound } from 'next/navigation';
 import { FormMessage, Message } from '@/components/formMessage';
@@ -21,16 +21,22 @@ export default async function SettingsPage({
     notFound();
   }
 
+  const plan = await getPlan();
+
   return (
     <>
       <h1>Settings</h1>
       <FormMessage message={messageParams} />
       <form action={updateProjectAction} className={styles.updateProjectForm}>
         <Select label="Report frequency" name="reportFrequency" defaultValue={data.report_frequency} inline>
-          <option value="daily">Daily</option>
+          <option value="daily" disabled={plan === 'free'}>
+            Daily
+          </option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </Select>
+        {/* TODO: Change language to "Upgrade to Pro" when Pro is available */}
+        {plan === 'free' && <p className="text-subtle">Daily reports unavailable on free tier</p>}
         <input type="hidden" name="projectID" value={projectID} />
         <button type="submit" className={`form-submit ${styles.saveChanges}`}>
           Save

@@ -340,8 +340,16 @@ export const updateProjectAction = async (formData: FormData) => {
     return encodedRedirect('error', `/dashboard/projects/${projectID}/settings`, 'Invalid report frequency');
   }
   if (projectID) {
+    const plan = await getPlan();
     const updatedProject: TablesUpdate<'projects'> = {};
     if (reportFrequency) {
+      if (reportFrequency === 'daily' && plan === 'free') {
+        return encodedRedirect(
+          'error',
+          `/dashboard/projects/${projectID}/settings`,
+          'Daily reports unavailable in free tier'
+        );
+      }
       updatedProject.report_frequency = reportFrequency;
     }
     const supabase = await createClient();

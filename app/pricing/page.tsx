@@ -16,6 +16,8 @@ export default function PricingPage() {
           <ul className={styles.featuresList}>
             <li>1 project</li>
             <li>10 URLs</li>
+            <li>5 manual report runs</li>
+            <li>Weekly & monthly reports</li>
           </ul>
           <div className={styles.action}>
             <Link href="sign-up" className={styles.cta}>
@@ -41,7 +43,8 @@ export default function PricingPage() {
           <ul className={styles.featuresList}>
             <li>10 projects</li>
             <li>100 URLs</li>
-            <li>Configure report frequency</li>
+            <li>30 Manual reports</li>
+            <li>Daily reports</li>
             <li>Configure model variables</li>
           </ul>
           <div className={styles.action}>

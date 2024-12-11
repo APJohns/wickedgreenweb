@@ -41,7 +41,7 @@ export default async function AccountPage() {
         <dd>
           {plan}
           {/* {' '}
-          <Link href="/pricing" className="text-subtle">
+          <Link href="/pricing" className="fs-subtle">
             Upgrade
           </Link> */}
         </dd>
