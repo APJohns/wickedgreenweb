@@ -19,12 +19,23 @@ export default async function AccountPage() {
     .from('projects')
     .select('*', { count: 'exact', head: true });
 
+  const today = new Date();
+  const { count: manualCount, error: manualError } = await supabase
+    .from('batches')
+    .select('*', { count: 'exact', head: true })
+    .eq('source', 'manual')
+    .gte('created_at', `${today.getFullYear()}-${today.getMonth() + 1}-1`);
+
   if (urlError) {
     console.error(urlError);
   }
 
   if (projectError) {
     console.error(projectError);
+  }
+
+  if (manualError) {
+    console.error(manualError);
   }
 
   if (urlCount === undefined || urlCount === null || projectCount === undefined || projectCount === null) {
@@ -60,6 +71,10 @@ export default async function AccountPage() {
         <dt>URLs:</dt>
         <dd>
           {urlCount}/{PLANS.FREE.URLS}
+        </dd>
+        <dt>Manual reports:</dt>
+        <dd>
+          {manualCount}/{PLANS.FREE.MANUAL_REPORTS}
         </dd>
       </dl>
     </main>
