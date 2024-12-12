@@ -7,6 +7,7 @@ import { formatBytes, formatCO2 } from '@/utils/utils';
 import { useCallback, useEffect, useState } from 'react';
 import styles from './reports.module.css';
 import { getReports } from '@/app/actions';
+import Select from '@/components/select';
 
 interface Reports extends Tables<'reports'> {
   urls: Tables<'urls'>;
@@ -38,13 +39,15 @@ export default function ReportsTable({ projectID, batches }: Props) {
 
   return (
     <div>
-      <select onChange={(e) => updateReports(e.target.value)}>
-        {batches.map((batch) => (
-          <option key={batch.id} value={batch.id}>
-            <DateTime date={new Date(batch.created_at)} />
-          </option>
-        ))}
-      </select>
+      <div className={styles.filters}>
+        <Select label="Report date" onChange={(e) => updateReports(e.target.value)} inline>
+          {batches.map((batch) => (
+            <option key={batch.id} value={batch.id}>
+              <DateTime date={new Date(batch.created_at)} />
+            </option>
+          ))}
+        </Select>
+      </div>
       {isLoading ? (
         <div className={styles.tableLoader}>
           <Loader />
@@ -58,7 +61,6 @@ export default function ReportsTable({ projectID, batches }: Props) {
             <thead>
               <tr>
                 <th>URL</th>
-                <th>Hosting</th>
                 <th>Page weight</th>
                 <th>
                   CO<sub>2</sub>
@@ -71,12 +73,7 @@ export default function ReportsTable({ projectID, batches }: Props) {
               {reports.map((report) => {
                 return (
                   <tr key={report.id}>
-                    {report.urls && (
-                      <>
-                        <td>{new URL(report.urls.url).pathname}</td>
-                        <td>{report.urls.green_hosting_factor === 1 ? 'Green' : 'Dirty'}</td>
-                      </>
-                    )}
+                    {report.urls && <td>{new URL(report.urls.url).pathname}</td>}
                     <td>
                       {formatBytes(report.bytes).value}&thinsp;{formatBytes(report.bytes).unit}
                     </td>

@@ -1,4 +1,5 @@
 import NavSecondary from '@/components/navSecondary';
+import { getProjectName } from '@/utils/supabase/server';
 
 export default async function ProjectLayout({
   params,
@@ -8,6 +9,7 @@ export default async function ProjectLayout({
   children: React.ReactNode;
 }>) {
   const projectID = (await params).id;
+  const projectName = await getProjectName(projectID);
   const navItems = [
     {
       icon: (
@@ -65,7 +67,7 @@ export default async function ProjectLayout({
 
   return (
     <div className="content-area">
-      <NavSecondary navItems={navItems} />
+      <NavSecondary navItems={navItems} header={projectName} />
       <main>{children}</main>
     </div>
   );

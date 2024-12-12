@@ -67,3 +67,14 @@ export const getURLReports = cache(async (projectID: string) => {
   }
   return data;
 });
+
+export const getPlan = cache(async () => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from('permissions').select().single();
+  if (error) {
+    console.error(error);
+  }
+  if (!data) notFound();
+  return data.plan;
+});

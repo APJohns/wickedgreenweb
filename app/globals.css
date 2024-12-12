@@ -19,14 +19,23 @@
   --border-color-primary: #ccc;
 
   --fs-display: 3rem;
+  --fs-big: 2.5rem;
   --fs-body: 1.25rem;
-  --fs-subtle: 1rem;
+  --fs-subtle: 1.125rem;
+  --fs-small: 1rem;
   --fs-tiny: 0.75rem;
 
   --font-weight-normal: 400;
   --font-weight-bold: 700;
 
   --page-padding: 2rem;
+
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-xxl: 4rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -63,6 +72,13 @@ body {
   margin: 0;
 }
 
+input,
+textarea,
+select {
+  font-size: var(--fs-body);
+  font-family: var(--font-family-body);
+}
+
 main,
 .content-area {
   overflow-x: auto;
@@ -76,8 +92,25 @@ main,
   align-items: start;
 
   main {
-    padding: 2rem 0;
+    padding: 2rem 0.5rem;
   }
+}
+
+.font-body {
+  font-family: var(--font-family-body);
+}
+
+.font-mono {
+  font-family: var(--font-family-mono);
+}
+
+.fs-subtle {
+  font-size: var(--fs-subtle);
+}
+
+.text-subtle {
+  font-size: var(--fs-subtle);
+  color: var(--foreground-subtle);
 }
 
 .menu-open {
@@ -120,11 +153,16 @@ main,
     transition: grid-template-rows 0.2s, padding 0.2s;
   }
 
-  ul {
+  .nav-header {
+    color: var(--foreground-subtle);
+  }
+
+  .nav-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
     list-style: none;
+    margin-top: 0.5rem;
   }
 
   .nav-link {
@@ -259,7 +297,29 @@ textarea {
 .form-control-input {
   display: block;
   margin-top: 0.5rem;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 0.5rem;
   width: 100%;
+  font-size: var(--fs-subtle);
+  background: var(--background);
+
+  &.inline {
+    width: max-content;
+  }
+}
+
+.form-submit {
+  cursor: pointer;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  background: var(--background-subtle);
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--green);
+  }
 }
 
 .icon-action,
@@ -307,6 +367,10 @@ textarea {
   display: block;
   width: 100%;
   height: 100%;
+
+  text {
+    font-family: var(--font-family-mono);
+  }
 }
 
 .point {
@@ -394,6 +458,7 @@ textarea {
 
 .table-responsive {
   overflow-x: auto;
+  white-space: nowrap;
 }
 
 .table {
@@ -406,6 +471,11 @@ textarea {
   td {
     border-bottom: 1px solid var(--border-color-primary);
     padding: 0.5rem 1rem;
+  }
+
+  tbody {
+    font-family: var(--font-family-mono);
+    font-size: var(--fs-subtle);
   }
 }
 
@@ -427,7 +497,7 @@ textarea {
   .content-area {
     grid-template-columns: auto 1fr;
     gap: 4rem;
-    padding: 2rem var(--page-padding);
+    padding: 2rem calc(var(--page-padding) - 0.5rem) 2rem var(--page-padding);
 
     main {
       padding-top: 0;
@@ -449,6 +519,10 @@ textarea {
     background: none;
     padding-left: 0;
     padding-right: 0;
+
+    > div {
+      overflow: unset;
+    }
   }
 }
 

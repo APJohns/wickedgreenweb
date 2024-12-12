@@ -1,12 +1,15 @@
 import type { Metadata } from 'next';
-import { Anonymous_Pro } from 'next/font/google';
+import { Figtree, Space_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
 import { signOutAction } from './actions';
 import Dropdown from '@/components/dropdown';
 
-const anonPro = Anonymous_Pro({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-anon' });
+const figtree = Figtree({ weight: ['400', '600', '700'], subsets: ['latin'], variable: '--font-family-body' });
+
+const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-family-mono' });
 
 export const metadata: Metadata = {
   title: 'GreenerWeb',
@@ -26,7 +29,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${anonPro.className} ${anonPro.variable}`}>
+      <body className={`${figtree.className} ${figtree.variable} ${spaceMono.variable}`}>
         <header>
           <nav className="nav">
             <ul className="nav-list">
@@ -70,6 +73,7 @@ export default async function RootLayout({
           </nav>
         </header>
         {children}
+        <Analytics />
       </body>
     </html>
   );

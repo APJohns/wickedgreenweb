@@ -8,7 +8,7 @@ export default async function DashboardPage(props: { searchParams: Promise<Messa
   const searchParams = await props.searchParams;
 
   const supabase = await createClient();
-  const { data, error } = await supabase.from('projects').select();
+  const { data, error } = await supabase.from('projects').select().order('name');
   if (error) {
     console.error(error);
   }

@@ -12,21 +12,18 @@ export type Database = {
       batches: {
         Row: {
           created_at: string
-          date: string
           id: string
           project_id: string
           user_id: string
         }
         Insert: {
           created_at?: string
-          date: string
           id?: string
           project_id: string
           user_id: string
         }
         Update: {
           created_at?: string
-          date?: string
           id?: string
           project_id?: string
           user_id?: string
@@ -41,30 +38,48 @@ export type Database = {
           },
         ]
       }
+      permissions: {
+        Row: {
+          plan: string
+          user_id: string
+        }
+        Insert: {
+          plan?: string
+          user_id: string
+        }
+        Update: {
+          plan?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       projects: {
         Row: {
           created_at: string
           id: string
           name: string
+          report_frequency: string
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           name: string
+          report_frequency?: string
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
           name?: string
+          report_frequency?: string
           user_id?: string
         }
         Relationships: []
       }
       reports: {
         Row: {
-          batch_id: string | null
+          batch_id: string
           bytes: number
           co2: number
           created_at: string
@@ -78,7 +93,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          batch_id?: string | null
+          batch_id: string
           bytes: number
           co2: number
           created_at?: string
@@ -92,7 +107,7 @@ export type Database = {
           user_id: string
         }
         Update: {
-          batch_id?: string | null
+          batch_id?: string
           bytes?: number
           co2?: number
           created_at?: string

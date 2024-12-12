@@ -1,11 +1,12 @@
 'use server';
 
 import { encodedRedirect } from '@/utils/utils';
-import { createClient } from '@/utils/supabase/server';
+import { createClient, getPlan } from '@/utils/supabase/server';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { JSDOM } from 'jsdom';
-import { Tables } from '@/database.types';
+import { Tables, TablesUpdate } from '@/database.types';
+import { FREQUENCIES, PLANS } from '@/utils/constants';
 
 export const signUpAction = async (formData: FormData): Promise<void> => {
   const email = formData.get('email')?.toString().trim();
@@ -17,7 +18,7 @@ export const signUpAction = async (formData: FormData): Promise<void> => {
     return encodedRedirect('error', '/sign-up', 'Email and password are required');
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -29,18 +30,33 @@ export const signUpAction = async (formData: FormData): Promise<void> => {
     console.error(error.code + ' ' + error.message);
     return encodedRedirect('error', '/sign-up', error.message);
   } else {
-    return encodedRedirect(
-      'success',
-      '/sign-up',
-      'Thanks for signing up! Please check your email for a verification link.'
-    );
+    if (data.user) {
+      const { error: permError } = await supabase.from('permissions').insert({
+        user_id: data.user.id,
+        plan: 'free',
+      });
+      if (permError) {
+        return encodedRedirect('error', '/sign-up', permError.message);
+      }
+      return encodedRedirect(
+        'success',
+        '/sign-up',
+        'Thanks for signing up! Please check your email for a verification link.'
+      );
+    } else {
+      return encodedRedirect('error', '/sign-up', 'Failed to create user');
+    }
   }
 };
 
 export const signInAction = async (formData: FormData) => {
-  const email = (formData.get('email') as string).trim();
-  const password = (formData.get('password') as string).trim();
+  const email = formData.get('email')?.toString().trim();
+  const password = formData.get('password')?.toString().trim();
   const supabase = await createClient();
+
+  if (!email || !password) {
+    return encodedRedirect('error', '/sign-in', 'Invalid email or password');
+  }
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -83,8 +99,8 @@ export const forgotPasswordAction = async (formData: FormData) => {
 export const resetPasswordAction = async (formData: FormData) => {
   const supabase = await createClient();
 
-  const password = (formData.get('password') as string).trim();
-  const confirmPassword = (formData.get('confirmPassword') as string).trim();
+  const password = formData.get('password')?.toString().trim();
+  const confirmPassword = formData.get('confirmPassword')?.toString().trim();
 
   if (!password || !confirmPassword) {
     encodedRedirect('error', '/account/reset-password', 'Password and confirm password are required');
@@ -112,9 +128,9 @@ export const signOutAction = async () => {
 };
 
 export const addURLAction = async (formData: FormData) => {
-  const rawUrl = (formData.get('url') as string).trim();
-  const sitemap = (formData.get('sitemap') as string).trim();
-  const projectID = (formData.get('project_id') as string).trim();
+  const rawUrl = formData.get('url')?.toString().trim();
+  const sitemap = formData.get('sitemap')?.toString().trim();
+  const projectID = formData.get('project_id')?.toString().trim();
 
   if (!projectID) {
     return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Invalid project id');
@@ -130,6 +146,7 @@ export const addURLAction = async (formData: FormData) => {
     console.error(urlError);
   }
   const existingURLs = dbURLs ? Array.from(dbURLs, (d) => d.url) : [];
+  const plan = await getPlan();
 
   const validateURL = (unvalidatedURL: string, quiet = false) => {
     let url = '';
@@ -174,6 +191,14 @@ export const addURLAction = async (formData: FormData) => {
         data: { user },
       } = await supabase.auth.getUser();
 
+      if (existingURLs.length >= PLANS[plan.toUpperCase() as keyof typeof PLANS].URLS) {
+        return encodedRedirect(
+          'error',
+          `/dashboard/projects/${projectID}/urls/add`,
+          'Error: URL limit already reached'
+        );
+      }
+
       if (user) {
         const green_hosting_factor = (await getGreenCheck(url)).green ? 1 : 0;
 
@@ -201,6 +226,10 @@ export const addURLAction = async (formData: FormData) => {
     } catch (e) {
       console.error(e);
       return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Error parsing sitemap');
+    }
+
+    if (existingURLs.length + sitemapURLs.length > PLANS[plan.toUpperCase() as keyof typeof PLANS].URLS) {
+      return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Too many URLs in sitemap');
     }
 
     const {
@@ -249,9 +278,13 @@ export const addURLAction = async (formData: FormData) => {
 };
 
 export const createProjectAction = async (formData: FormData) => {
-  const name = (formData.get('name') as string).trim();
+  const name = formData.get('name')?.toString().trim();
+  const reportFrequency = formData.get('reportFrequency')?.toString();
   if (!name || name === 'new') {
     return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid project name');
+  }
+  if (reportFrequency && !FREQUENCIES.includes(reportFrequency)) {
+    return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid report frequency');
   }
 
   const supabase = await createClient();
@@ -271,18 +304,23 @@ export const createProjectAction = async (formData: FormData) => {
   } = await supabase.auth.getUser();
 
   if (user) {
-    const { error } = await supabase.from('projects').insert({ name, user_id: user.id });
+    const { data, error } = await supabase
+      .from('projects')
+      .insert({ name, report_frequency: reportFrequency, user_id: user.id })
+      .select()
+      .single();
 
     if (error) {
       console.error(error);
     }
+    return encodedRedirect('success', `/dashboard/projects/${data?.id}/urls/add`, 'Project successfully created');
+  } else {
+    return encodedRedirect('error', `/dashboard/project/new`, `Couldn't validate user`);
   }
-
-  return encodedRedirect('success', `/dashboard`, 'Project successfully created');
 };
 
 export const deleteProjectAction = async (formData: FormData) => {
-  const projectID = (formData.get('projectID') as string).trim();
+  const projectID = formData.get('projectID')?.toString().trim();
   if (projectID) {
     const supabase = await createClient();
     const { error } = await supabase.from('projects').delete().eq('id', projectID);
@@ -292,6 +330,40 @@ export const deleteProjectAction = async (formData: FormData) => {
     return encodedRedirect('success', `/dashboard`, 'Project deleted');
   } else {
     return encodedRedirect('error', `/dashboard`, 'Invalid project ID');
+  }
+};
+
+export const updateProjectAction = async (formData: FormData) => {
+  const projectID = formData.get('projectID')?.toString().trim();
+  const reportFrequency = formData.get('reportFrequency')?.toString();
+  if (reportFrequency && !FREQUENCIES.includes(reportFrequency)) {
+    return encodedRedirect('error', `/dashboard/projects/${projectID}/settings`, 'Invalid report frequency');
+  }
+  if (projectID) {
+    const plan = await getPlan();
+    const updatedProject: TablesUpdate<'projects'> = {};
+    if (reportFrequency) {
+      if (reportFrequency === 'daily' && plan === 'free') {
+        return encodedRedirect(
+          'error',
+          `/dashboard/projects/${projectID}/settings`,
+          'Daily reports unavailable in free tier'
+        );
+      }
+      updatedProject.report_frequency = reportFrequency;
+    }
+    const supabase = await createClient();
+    const { error } = await supabase.from('projects').update(updatedProject).eq('id', projectID);
+    if (error) {
+      return encodedRedirect(
+        'error',
+        `/dashboard/projects/${projectID}/settings`,
+        'Something went wrong deleting your project'
+      );
+    }
+    return encodedRedirect('success', `/dashboard/projects/${projectID}/settings`, 'Project settings saved');
+  } else {
+    return encodedRedirect('error', `/dashboard/projects/${projectID}/settings`, 'Invalid project ID');
   }
 };
 
@@ -315,8 +387,6 @@ export const getReports = async (batchID: string, projectID: string) => {
     .select('*, urls!inner(*)')
     .eq('batch_id', batchID)
     .eq('urls.project_id', projectID);
-
-  console.log(data);
 
   if (error) {
     console.error(error);
