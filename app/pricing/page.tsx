@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './pricing.module.css';
+import { PLANS } from '@/utils/constants';
 
 export default function PricingPage() {
   return (
@@ -14,9 +15,9 @@ export default function PricingPage() {
             $0<span className={styles.priceFrequency}> per month</span>
           </div>
           <ul className={styles.featuresList}>
-            <li>1 project</li>
-            <li>10 URLs</li>
-            <li>5 manual report runs</li>
+            <li>{PLANS.FREE.PROJECTS} project</li>
+            <li>{PLANS.FREE.URLS} URLs</li>
+            <li>{PLANS.FREE.MANUAL_REPORTS} manual report runs</li>
             <li>Weekly & monthly reports</li>
           </ul>
           <div className={styles.action}>
@@ -41,9 +42,9 @@ export default function PricingPage() {
             TBD<span className={styles.priceFrequency}> per month</span>
           </div>
           <ul className={styles.featuresList}>
-            <li>10 projects</li>
-            <li>100 URLs</li>
-            <li>30 Manual reports</li>
+            <li>{PLANS.PRO.PROJECTS} projects</li>
+            <li>{PLANS.PRO.URLS} URLs</li>
+            <li>{PLANS.PRO.MANUAL_REPORTS} Manual reports</li>
             <li>Daily reports</li>
             <li>Configure model variables</li>
           </ul>
