@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Figtree, Space_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
@@ -72,6 +73,7 @@ export default async function RootLayout({
           </nav>
         </header>
         {children}
+        <Analytics />
       </body>
     </html>
   );
