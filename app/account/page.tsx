@@ -11,7 +11,7 @@ export default async function AccountPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const plan = getPlan();
+  const plan = await getPlan();
 
   const { count: urlCount, error: urlError } = await supabase.from('urls').select('*', { count: 'exact', head: true });
 
@@ -42,6 +42,8 @@ export default async function AccountPage() {
     notFound();
   }
 
+  const planKey = plan.toUpperCase() as keyof typeof PLANS;
+
   return (
     <main>
       <h1>Account</h1>
@@ -66,15 +68,15 @@ export default async function AccountPage() {
       <dl className={styles.descriptionList}>
         <dt>Projects:</dt>
         <dd>
-          {projectCount}/{PLANS.FREE.PROJECTS}
+          {projectCount}/{PLANS[planKey].PROJECTS}
         </dd>
         <dt>URLs:</dt>
         <dd>
-          {urlCount}/{PLANS.FREE.URLS}
+          {urlCount}/{PLANS[planKey].URLS}
         </dd>
         <dt>Manual reports:</dt>
         <dd>
-          {manualCount}/{PLANS.FREE.MANUAL_REPORTS}
+          {manualCount}/{PLANS[planKey].MANUAL_REPORTS}
         </dd>
       </dl>
     </main>
