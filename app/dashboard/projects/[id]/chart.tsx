@@ -59,6 +59,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
       .call(
         d3
           .axisBottom(x)
+          .ticks(width / 120)
           // .ticks(d3.timeDay.every(1))
           .tickSizeOuter(0)
       );
