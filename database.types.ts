@@ -14,18 +14,21 @@ export type Database = {
           created_at: string
           id: string
           project_id: string
+          source: string
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           project_id: string
+          source?: string
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
           project_id?: string
+          source?: string
           user_id?: string
         }
         Relationships: [
