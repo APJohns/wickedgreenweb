@@ -1,9 +1,9 @@
 'use client';
 
 import { Tables } from '@/database.types';
-import { deleteURLsAction } from '@/app/actions';
 import Delete from './delete';
 import styles from './urls.module.css';
+import { deleteURLsAction } from '@/app/actions/urls';
 
 type U = Pick<Tables<'urls'>, 'id' | 'url' | 'green_hosting_factor'>;
 

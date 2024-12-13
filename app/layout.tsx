@@ -4,8 +4,8 @@ import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
-import { signOutAction } from './actions';
 import Dropdown from '@/components/dropdown';
+import { signOutAction } from '@/app/actions/auth';
 
 const figtree = Figtree({ weight: ['400', '600', '700'], subsets: ['latin'], variable: '--font-family-body' });
 

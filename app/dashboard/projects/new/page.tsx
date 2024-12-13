@@ -1,4 +1,4 @@
-import { createProjectAction } from '@/app/actions';
+import { createProjectAction } from '@/app/actions/projects';
 import { FormMessage, Message } from '@/components/formMessage';
 import { createClient, getPlan } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';

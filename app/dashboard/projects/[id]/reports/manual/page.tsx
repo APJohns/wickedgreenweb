@@ -1,4 +1,4 @@
-import { manualReport } from '@/app/actions';
+import { manualReport } from '@/app/actions/reports';
 import { PLANS } from '@/utils/constants';
 import { createClient, getPlan } from '@/utils/supabase/server';
 

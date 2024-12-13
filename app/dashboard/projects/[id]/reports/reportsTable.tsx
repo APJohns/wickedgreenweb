@@ -6,8 +6,8 @@ import { Tables } from '@/database.types';
 import { formatBytes, formatCO2 } from '@/utils/utils';
 import { useCallback, useEffect, useState } from 'react';
 import styles from './reports.module.css';
-import { getReports } from '@/app/actions';
 import Select from '@/components/select';
+import { getReports } from '@/app/actions/reports';
 
 interface Reports extends Tables<'reports'> {
   urls: Tables<'urls'>;

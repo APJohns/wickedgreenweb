@@ -1,4 +1,4 @@
-import { addURLAction } from '@/app/actions';
+import { addURLAction } from '@/app/actions/urls';
 import { FormMessage, Message } from '@/components/formMessage';
 import styles from './add.module.css';
 import { createClient, getPlan } from '@/utils/supabase/server';
