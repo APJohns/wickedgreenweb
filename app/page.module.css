@@ -1,10 +1,6 @@
 .hero {
   text-align: center;
   margin-top: 5rem;
-
-  & .title {
-    font-size: var(--fs-display);
-  }
 }
 
 .green {
