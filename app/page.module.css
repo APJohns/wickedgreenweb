@@ -19,7 +19,15 @@
 
 .title {
   & svg {
-    height: 10rem;
+    height: 8rem;
     width: auto;
+  }
+}
+
+@media (min-width: 640px) {
+  .title {
+    & svg {
+      height: 10rem;
+    }
   }
 }
