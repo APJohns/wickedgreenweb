@@ -58,7 +58,12 @@ export default async function RootLayout({
                 </li>
                 <li>
                   <Link href="/account" className="dropdown-item">
-                    Account Settings
+                    Account settings
+                  </Link>
+                </li>
+                <li>
+                  <Link href="https://forms.gle/uYqhTrC33fTRTXTY9" target="_blank" className="dropdown-item">
+                    Give feedback
                   </Link>
                 </li>
                 <li>
