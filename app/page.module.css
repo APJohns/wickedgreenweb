@@ -19,7 +19,7 @@
 
 .title {
   & svg {
-    height: 8rem;
+    height: 10rem;
     width: auto;
   }
 }
