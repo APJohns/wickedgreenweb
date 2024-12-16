@@ -479,6 +479,10 @@ textarea {
   }
 }
 
+.logo-text {
+  fill: var(--foreground);
+}
+
 @media (min-width: 640px) {
   :root {
     --page-padding: 4rem;

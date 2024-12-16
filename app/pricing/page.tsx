@@ -6,7 +6,7 @@ export default function PricingPage() {
   return (
     <main>
       <h1>Pricing</h1>
-      <p>GreenerWeb is in beta. Plan details and pricing are subject to change.</p>
+      <p>Wicked Green Web is in beta. Plan details and pricing are subject to change.</p>
       <div className={styles.plans}>
         <div className={styles.plan}>
           <h2>Free</h2>

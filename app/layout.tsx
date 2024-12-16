@@ -12,7 +12,7 @@ const figtree = Figtree({ weight: ['400', '600', '700'], subsets: ['latin'], var
 const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-family-mono' });
 
 export const metadata: Metadata = {
-  title: 'GreenerWeb',
+  title: 'Wicked Green Web',
   description: "Estimate your web page's sustainability.",
 };
 
