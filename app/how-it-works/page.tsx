@@ -2,9 +2,8 @@ import styles from './page.module.css';
 
 export default function Page() {
   return (
-    <main className={styles.articleStyling}>
+    <main className={`${styles.articleStyling} ${styles.article}`}>
       <h1>How it works</h1>
-      <p></p>
       <h2>Sustainability Web Model</h2>
       <p>
         Wicked Green Web uses version 4 of the{' '}
