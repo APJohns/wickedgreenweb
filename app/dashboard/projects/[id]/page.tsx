@@ -70,15 +70,7 @@ export default async function ProjectPage({
     return sum / values.length;
   };
 
-  const byBatch: { [key: string]: number[] } = {};
-  data.forEach((report) => {
-    if (byBatch[report.batch_id]) {
-      byBatch[report.batch_id].push(report.co2);
-    } else {
-      byBatch[report.batch_id] = [report.co2];
-    }
-  });
-
+  const byBatch = Object.groupBy(data, (report) => report.batch_id);
   const averages: CO2Point[] = Object.keys(byBatch).map((batchID) => {
     const date = new Date(batches.find((b) => b.id === batchID)!.created_at);
     date.setHours(0);
@@ -87,7 +79,7 @@ export default async function ProjectPage({
     date.setMilliseconds(0);
     return {
       date,
-      co2: getAverage(byBatch[batchID]),
+      co2: getAverage(Array.from(byBatch[batchID] || [], (d) => d.co2)),
     };
   });
 
