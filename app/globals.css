@@ -18,7 +18,6 @@
 
   --border-color-primary: #ccc;
 
-  --fs-display: 3rem;
   --fs-big: 2.5rem;
   --fs-body: 1.25rem;
   --fs-subtle: 1.125rem;
@@ -479,6 +478,10 @@ textarea {
   }
 }
 
+.logo-text {
+  fill: var(--foreground);
+}
+
 @media (min-width: 640px) {
   :root {
     --page-padding: 4rem;
@@ -490,10 +493,6 @@ textarea {
 }
 
 @media (min-width: 768px) {
-  :root {
-    --fs-display: 5rem;
-  }
-
   .content-area {
     grid-template-columns: auto 1fr;
     gap: 4rem;

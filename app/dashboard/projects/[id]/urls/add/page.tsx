@@ -1,4 +1,4 @@
-import { addURLAction } from '@/app/actions';
+import { addURLAction } from '@/app/actions/urls';
 import { FormMessage, Message } from '@/components/formMessage';
 import styles from './add.module.css';
 import { createClient, getPlan } from '@/utils/supabase/server';
@@ -29,8 +29,8 @@ export default async function AddUrlPage(props: { searchParams: Promise<Message>
           <Link href="/pricing">Upgrade to Pro</Link> to add more URLs.
         </p> */}
         <p>
-          Features are limited as we roll out GreenerWeb. You may only have 10 URLs. We&apos;ll update you when this
-          changes.
+          Features are limited as we roll out Wicked Green Web. You may only have 10 URLs. We&apos;ll update you when
+          this changes.
         </p>
       </>
     );

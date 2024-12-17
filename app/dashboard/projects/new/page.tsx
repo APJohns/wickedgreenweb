@@ -1,4 +1,4 @@
-import { createProjectAction } from '@/app/actions';
+import { createProjectAction } from '@/app/actions/projects';
 import { FormMessage, Message } from '@/components/formMessage';
 import { createClient, getPlan } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
@@ -32,8 +32,8 @@ export default async function NewProjectPage(props: {
           <Link href="/pricing">Upgrade to Pro</Link> to add more projects.
         </p> */}
         <p>
-          Features are limited as we roll out GreenerWeb. You may only have 1 project. We&apos;ll update you when this
-          changes.
+          Features are limited as we roll out Wicked Green Web. You may only have 1 project. We&apos;ll update you when
+          this changes.
         </p>
       </main>
     );

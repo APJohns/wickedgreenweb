@@ -7,7 +7,7 @@ export default function Page() {
       <p></p>
       <h2>Sustainability Web Model</h2>
       <p>
-        Greener Web uses version 4 of the{' '}
+        Wicked Green Web uses version 4 of the{' '}
         <a href="https://sustainablewebdesign.org/estimating-digital-emissions/">Sustainable Web Design Model (SWD)</a>.
       </p>
       <p>

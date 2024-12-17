@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteProjectAction } from '@/app/actions';
+import { deleteProjectAction } from '@/app/actions/projects';
 import { useRef } from 'react';
 import styles from '@/components/modal.module.css';
 

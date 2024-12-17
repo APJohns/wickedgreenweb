@@ -8,8 +8,16 @@ import { SWDMV4_PERCENTILES, SWDMV4_RATINGS } from '@/utils/constants';
 import StatCardGroup from '@/components/statCardGroup';
 import { createClient, getProjectName } from '@/utils/supabase/server';
 import DateTime from '@/components/datetime';
+import { FormMessage, Message } from '@/components/formMessage';
 
-export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ProjectPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<Message>;
+}) {
+  const searchParameters = await searchParams;
   const projectID = (await params).id;
   const projectName = await getProjectName(projectID);
 
@@ -109,6 +117,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
   return (
     <>
+      <FormMessage message={searchParameters} />
       <h1>{projectName}</h1>
       <p>
         Last updated on <DateTime date={new Date(averages[averages.length - 1].date)} />

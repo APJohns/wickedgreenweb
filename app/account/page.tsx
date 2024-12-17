@@ -11,13 +11,20 @@ export default async function AccountPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const plan = getPlan();
+  const plan = await getPlan();
 
   const { count: urlCount, error: urlError } = await supabase.from('urls').select('*', { count: 'exact', head: true });
 
   const { count: projectCount, error: projectError } = await supabase
     .from('projects')
     .select('*', { count: 'exact', head: true });
+
+  const today = new Date();
+  const { count: manualCount, error: manualError } = await supabase
+    .from('batches')
+    .select('*', { count: 'exact', head: true })
+    .eq('source', 'manual')
+    .gte('created_at', `${today.getFullYear()}-${today.getMonth() + 1}-1`);
 
   if (urlError) {
     console.error(urlError);
@@ -27,9 +34,15 @@ export default async function AccountPage() {
     console.error(projectError);
   }
 
+  if (manualError) {
+    console.error(manualError);
+  }
+
   if (urlCount === undefined || urlCount === null || projectCount === undefined || projectCount === null) {
     notFound();
   }
+
+  const planKey = plan.toUpperCase() as keyof typeof PLANS;
 
   return (
     <main>
@@ -55,11 +68,15 @@ export default async function AccountPage() {
       <dl className={styles.descriptionList}>
         <dt>Projects:</dt>
         <dd>
-          {projectCount}/{PLANS.FREE.PROJECTS}
+          {projectCount}/{PLANS[planKey].PROJECTS}
         </dd>
         <dt>URLs:</dt>
         <dd>
-          {urlCount}/{PLANS.FREE.URLS}
+          {urlCount}/{PLANS[planKey].URLS}
+        </dd>
+        <dt>Manual reports:</dt>
+        <dd>
+          {manualCount}/{PLANS[planKey].MANUAL_REPORTS}
         </dd>
       </dl>
     </main>

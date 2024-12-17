@@ -2,7 +2,7 @@ import { createClient, getPlan } from '@/utils/supabase/server';
 import Delete from './delete';
 import { notFound } from 'next/navigation';
 import { FormMessage, Message } from '@/components/formMessage';
-import { updateProjectAction } from '@/app/actions';
+import { updateProjectAction } from '@/app/actions/projects';
 import styles from './settings.module.css';
 import Select from '@/components/select';
 

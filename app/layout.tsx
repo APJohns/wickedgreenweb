@@ -4,15 +4,15 @@ import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
-import { signOutAction } from './actions';
 import Dropdown from '@/components/dropdown';
+import { signOutAction } from '@/app/actions/auth';
 
 const figtree = Figtree({ weight: ['400', '600', '700'], subsets: ['latin'], variable: '--font-family-body' });
 
 const spaceMono = Space_Mono({ weight: ['400', '700'], subsets: ['latin'], variable: '--font-family-mono' });
 
 export const metadata: Metadata = {
-  title: 'GreenerWeb',
+  title: 'Wicked Green Web',
   description: "Estimate your web page's sustainability.",
 };
 
@@ -58,7 +58,12 @@ export default async function RootLayout({
                 </li>
                 <li>
                   <Link href="/account" className="dropdown-item">
-                    Account Settings
+                    Account settings
+                  </Link>
+                </li>
+                <li>
+                  <Link href="https://forms.gle/uYqhTrC33fTRTXTY9" target="_blank" className="dropdown-item">
+                    Give feedback
                   </Link>
                 </li>
                 <li>

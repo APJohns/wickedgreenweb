@@ -22,5 +22,11 @@ export const PLANS = {
   FREE: {
     URLS: 10,
     PROJECTS: 1,
+    MANUAL_REPORTS: 5,
+  },
+  PRO: {
+    URLS: 100,
+    PROJECTS: 10,
+    MANUAL_REPORTS: 30,
   },
 };
