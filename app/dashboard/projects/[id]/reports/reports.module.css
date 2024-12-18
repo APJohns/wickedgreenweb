@@ -6,10 +6,40 @@
 .tableLoader {
   display: flex;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: var(--space-xxl);
 }
 
 .filters {
-  display: grid;
-  gap: 1rem;
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-end;
+}
+
+.fieldset {
+  border: 0;
+}
+
+.fieldsetInputs {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.applyFilters {
+  cursor: pointer;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--border-color-primary);
+  padding: 0.5rem;
+  font-size: var(--fs-subtle);
+  background: var(--background-subtle);
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--green);
+  }
+}
+
+.or {
+  padding: 0.5rem;
+  border: 1px solid transparent;
 }
