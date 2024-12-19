@@ -11,8 +11,8 @@
 
 .filters {
   display: flex;
+  flex-direction: column;
   gap: var(--space-sm);
-  align-items: flex-end;
 }
 
 .fieldset {
@@ -20,8 +20,9 @@
 }
 
 .fieldsetInputs {
-  display: flex;
-  gap: var(--space-sm);
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0 var(--space-sm);
 }
 
 .applyFilters {
@@ -42,4 +43,16 @@
 .or {
   padding: 0.5rem;
   border: 1px solid transparent;
+}
+
+@media (min-width: 640px) {
+  .filters {
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .fieldsetInputs {
+    display: flex;
+  }
 }

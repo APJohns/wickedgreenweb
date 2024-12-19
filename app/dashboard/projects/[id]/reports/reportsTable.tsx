@@ -151,30 +151,30 @@ export default function ReportsTable({ projectID, batches }: Props) {
     <div>
       <div className={styles.filters}>
         <fieldset className={styles.fieldset}>
-          <legend>Batch</legend>
+          <legend className="visually-hidden">Batch</legend>
           <div className={styles.fieldsetInputs}>
-            <Select label="Year" value={batchYear} onChange={(e) => setBatchYear(e.target.value)} inline>
+            <Select label="Year" value={batchYear} onChange={(e) => setBatchYear(e.target.value)}>
               {batchYears.toReversed().map((year) => (
                 <option key={year} value={year}>
                   {year}
                 </option>
               ))}
             </Select>
-            <Select label="Month" value={batchMonth} onChange={(e) => setBatchMonth(e.target.value)} inline>
+            <Select label="Month" value={batchMonth} onChange={(e) => setBatchMonth(e.target.value)}>
               {batchMonths.toReversed().map((month) => (
                 <option key={month} value={month}>
                   {new Date(`2024-${month}-1`).toLocaleDateString(undefined, { month: 'long' })}
                 </option>
               ))}
             </Select>
-            <Select label="Day" value={batchDate} onChange={(e) => setBatchDate(e.target.value)} inline>
+            <Select label="Day" value={batchDate} onChange={(e) => setBatchDate(e.target.value)}>
               {batchDates.toReversed().map((date) => (
                 <option key={date} value={date}>
                   {date}
                 </option>
               ))}
             </Select>
-            <Select label="Time" value={batchTime} onChange={(e) => setBatchTime(e.target.value)} inline>
+            <Select label="Time" value={batchTime} onChange={(e) => setBatchTime(e.target.value)}>
               {batchTimes.toReversed().map((time) => (
                 <option key={time} value={time}>
                   {new Date(`2024-01-01T${time}`).toLocaleTimeString(undefined, {
