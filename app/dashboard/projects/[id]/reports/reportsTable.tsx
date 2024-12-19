@@ -129,11 +129,11 @@ export default function ReportsTable({ projectID, batches }: Props) {
   }, [batchDate, dates]);
 
   useEffect(() => {
-    if (batchTime) {
+    if (batchYear && batchMonth && batchDate && batchTime) {
       const batchID = batches.find(
         (batch) =>
           new Date(batch.created_at).toISOString() ===
-          new Date(`${batchMonth} ${batchDate} ${batchYear} ${batchTime}`).toISOString()
+          new Date(`${batchYear}-${batchMonth.padStart(2, '0')}-${batchDate}T${batchTime}`).toISOString()
       )?.id;
       if (batchID) {
         setBatchID(batchID);
