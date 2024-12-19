@@ -133,7 +133,9 @@ export default function ReportsTable({ projectID, batches }: Props) {
       const batchID = batches.find(
         (batch) =>
           new Date(batch.created_at).toISOString() ===
-          new Date(`${batchYear}-${batchMonth.padStart(2, '0')}-${batchDate}T${batchTime}`).toISOString()
+          new Date(
+            `${batchYear}-${batchMonth.padStart(2, '0')}-${batchDate.padStart(2, '0')}T${batchTime}`
+          ).toISOString()
       )?.id;
       if (batchID) {
         setBatchID(batchID);
