@@ -3,9 +3,17 @@ import Link from 'next/link';
 import styles from './reports.module.css';
 import DateTime from '@/components/datetime';
 import ReportsTable from './reportsTable';
+import { FormMessage, Message } from '@/components/formMessage';
 
-export default async function ReportsPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ReportsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<Message>;
+}) {
   const projectID = (await params).id;
+  const messageParams = await searchParams;
 
   const supabase = await createClient();
 
@@ -42,20 +50,9 @@ export default async function ReportsPage({ params }: { params: Promise<{ id: st
       break;
   }
 
-  if (!batches || batches.length === 0) {
-    return (
-      <>
-        <h1>Reports</h1>
-        <p>
-          After you add some URLs, your reports will show up here on <DateTime date={nextBatch} />.
-        </p>
-        <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
-      </>
-    );
-  }
-
   return (
     <>
+      <FormMessage message={messageParams} />
       <div className="page-header">
         <div className="page-header-location">
           <h1>Reports</h1>
@@ -75,13 +72,25 @@ export default async function ReportsPage({ params }: { params: Promise<{ id: st
           Run report
         </Link>
       </div>
-      <p>
-        Last updated on <DateTime date={lastBatch} />
-      </p>
+      {!(!batches || batches.length === 0) && (
+        <p>
+          Last updated on <DateTime date={lastBatch} />
+        </p>
+      )}
       <p className={styles.nextRun}>
         Next report on <DateTime date={nextBatch} />
       </p>
-      <ReportsTable projectID={projectID} batches={batches} />
+      {!batches || batches.length === 0 ? (
+        <>
+          <p>
+            After you add some URLs, your reports will show up here on <DateTime date={nextBatch} /> or when you run
+            your next manual report.
+          </p>
+          <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>
+        </>
+      ) : (
+        <ReportsTable projectID={projectID} batches={batches} />
+      )}
     </>
   );
 }
