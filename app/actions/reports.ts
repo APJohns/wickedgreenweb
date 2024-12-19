@@ -3,13 +3,33 @@
 import { createClient } from '@/utils/supabase/server';
 import { encodedRedirect } from '@/utils/utils';
 
-export const getReports = async (batchID: string, projectID: string) => {
+export const getReportsByBatch = async (batchID: string, projectID: string) => {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from('reports')
     .select('*, urls!inner(*)')
     .eq('batch_id', batchID)
     .eq('urls.project_id', projectID);
+
+  if (error) {
+    console.error(error);
+  }
+
+  if (data) {
+    data.sort((a, b) => (a.urls.url > b.urls.url ? 1 : -1));
+  }
+
+  return data;
+};
+
+export const getReports = async (projectID: string, from: string, to: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('reports')
+    .select('*, urls!inner(*)')
+    .eq('urls.project_id', projectID)
+    .gte('created_at', from)
+    .lt('created_at', to);
 
   if (error) {
     console.error(error);

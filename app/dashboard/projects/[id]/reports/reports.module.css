@@ -6,10 +6,53 @@
 .tableLoader {
   display: flex;
   justify-content: center;
-  margin-top: 4rem;
+  margin-top: var(--space-xxl);
 }
 
 .filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.fieldset {
+  border: 0;
+}
+
+.fieldsetInputs {
   display: grid;
-  gap: 1rem;
+  grid-template-columns: auto auto;
+  gap: 0 var(--space-sm);
+}
+
+.applyFilters {
+  cursor: pointer;
+  display: block;
+  border-radius: 8px;
+  border: 1px solid var(--border-color-primary);
+  padding: 0.5rem;
+  font-size: var(--fs-subtle);
+  background: var(--background-subtle);
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--green);
+  }
+}
+
+.or {
+  padding: 0.5rem;
+  border: 1px solid transparent;
+}
+
+@media (min-width: 640px) {
+  .filters {
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .fieldsetInputs {
+    display: flex;
+  }
 }

@@ -1,4 +1,4 @@
-import NavSecondary from '@/components/navSecondary';
+import NavSecondary, { NavItem } from '@/components/navSecondary';
 import { getProjectName } from '@/utils/supabase/server';
 
 export default async function ProjectLayout({
@@ -10,7 +10,7 @@ export default async function ProjectLayout({
 }>) {
   const projectID = (await params).id;
   const projectName = await getProjectName(projectID);
-  const navItems = [
+  const navItems: NavItem[] = [
     {
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -23,6 +23,7 @@ export default async function ProjectLayout({
       ),
       text: 'Overview',
       href: `/dashboard/projects/${projectID}`,
+      exact: true,
     },
     {
       icon: (

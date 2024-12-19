@@ -4,7 +4,7 @@ import styles from './reports.module.css';
 import DateTime from '@/components/datetime';
 import ReportsTable from './reportsTable';
 
-export default async function URLsPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ReportsPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
 
   const supabase = await createClient();

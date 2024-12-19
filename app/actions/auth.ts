@@ -28,16 +28,9 @@ export const signUpAction = async (formData: FormData): Promise<void> => {
     return encodedRedirect('error', '/sign-up', error.message);
   } else {
     if (data.user) {
-      const { error: permError } = await supabase.from('permissions').insert({
-        user_id: data.user.id,
-        plan: 'free',
-      });
-      if (permError) {
-        return encodedRedirect('error', '/sign-up', permError.message);
-      }
       return encodedRedirect(
         'success',
-        '/sign-up',
+        '/sign-in',
         'Thanks for signing up! Please check your email for a verification link.'
       );
     } else {
