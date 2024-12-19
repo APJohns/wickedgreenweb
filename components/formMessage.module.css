@@ -15,6 +15,11 @@
   display: flex;
   justify-content: center;
   animation: fadeOut 1s linear 5s forwards;
+  pointer-events: none;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .success,
@@ -24,6 +29,7 @@
   border: 2px solid var(--foreground);
   padding: 1rem 2rem;
   max-width: 640px;
+  pointer-events: all;
 }
 
 .success {
