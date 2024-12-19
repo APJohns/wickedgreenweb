@@ -18,11 +18,17 @@ export default async function Singup(props: { searchParams: Promise<Message> }) 
       <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
         <label className="form-control">
           <div className="form-control-label">Email</div>
-          <input name="email" placeholder="you@example.com" required />
+          <input
+            type="email"
+            className="form-control-input inline"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
         </label>
         <label className="form-control">
           <div className="form-control-label">Password</div>
-          <input type="password" name="password" minLength={6} required />
+          <input type="password" className="form-control-input inline" name="password" minLength={6} required />
         </label>
         <button type="submit" className="form-submit">
           Sign up
