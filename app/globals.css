@@ -495,7 +495,7 @@ textarea {
 @media (min-width: 768px) {
   .content-area {
     grid-template-columns: auto 1fr;
-    gap: 4rem;
+    gap: 2rem;
     padding: 2rem calc(var(--page-padding) - 0.5rem) 2rem var(--page-padding);
 
     main {
@@ -522,6 +522,12 @@ textarea {
     > div {
       overflow: unset;
     }
+  }
+}
+
+@media (min-width: 1024px) {
+  .content-area {
+    gap: 4rem;
   }
 }
 
