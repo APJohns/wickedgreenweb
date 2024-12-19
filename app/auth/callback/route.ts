@@ -12,7 +12,16 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const { data } = await supabase.auth.exchangeCodeForSession(code);
+    if (data.user?.id) {
+      const { error: permError } = await supabase.from('permissions').insert({
+        user_id: data.user?.id,
+        plan: 'free',
+      });
+      if (permError) {
+        console.error(permError.message);
+      }
+    }
   }
 
   if (redirectTo) {
