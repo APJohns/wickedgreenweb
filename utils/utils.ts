@@ -51,3 +51,19 @@ export function formatCO2(co2: number) {
 export const cleanValue = (value: string | undefined): string | undefined => {
   return value !== undefined ? value.trim() : undefined;
 };
+
+export const getValidationErrors = (password: string): string | null => {
+  if (password.toLowerCase() === password || password.toUpperCase() === password) {
+    return 'Passwords must contain both upper and lower case letters';
+  }
+
+  if (password.search(/[0-9]/) < 0 || password.search(/[A-Za-z]/) < 0) {
+    return 'Passwords must contain a mix of numbers and letters';
+  }
+
+  if (password.search(/[[!@#$%^&*(),.?&quot;:{}|&lt;&gt;]/) < 0) {
+    return 'Passwords must contain a special characters';
+  }
+
+  return null;
+};

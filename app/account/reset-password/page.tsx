@@ -1,5 +1,6 @@
 import { resetPasswordAction } from '@/app/actions/auth';
 import { FormMessage, Message } from '@/components/formMessage';
+import PwRequirements from '@/components/pwRequirements';
 
 export default async function ResetPassword(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
@@ -10,12 +11,13 @@ export default async function ResetPassword(props: { searchParams: Promise<Messa
         <p>Please enter your new password below.</p>
         <label className="form-control">
           <div className="form-control-label">New password</div>
-          <input type="password" name="password" required />
+          <input type="password" name="password" minLength={8} required />
         </label>
         <label className="form-control">
           <div className="form-control-label">Confirm password</div>
-          <input type="password" name="confirmPassword" required />
+          <input type="password" name="confirmPassword" minLength={8} required />
         </label>
+        <PwRequirements />
         <button className="form-submit">Reset password</button>
         <FormMessage message={searchParams} />
       </form>
