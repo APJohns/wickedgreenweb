@@ -48,10 +48,14 @@ export default async function NewProjectPage(props: {
           <input type="text" name="name" className="form-control-input" />
         </label>
         <Select label="Report frequency" name="reportFrequency" defaultValue="weekly" inline>
-          <option value="daily">Daily</option>
+          <option value="daily" disabled={plan === 'free'}>
+            Daily
+          </option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
         </Select>
+        {/* TODO: Change language to "Upgrade to Pro" when Pro is available */}
+        {plan === 'free' && <p className="text-subtle">Daily reports unavailable on free tier</p>}
         <button type="submit" className="form-submit">
           Create project
         </button>
