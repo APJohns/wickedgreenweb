@@ -107,6 +107,10 @@ export const addURLAction = async (formData: FormData) => {
       return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Error parsing sitemap');
     }
 
+    if (sitemapURLs.length === 0) {
+      return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'No URLs in sitemap');
+    }
+
     if (existingURLs.length + sitemapURLs.length > PLANS[plan.toUpperCase() as keyof typeof PLANS].URLS) {
       return encodedRedirect('error', `/dashboard/projects/${projectID}/urls/add`, 'Too many URLs in sitemap');
     }
