@@ -15,13 +15,15 @@
   margin-top: 0;
   padding-right: var(--space-lg);
   appearance: none;
+  min-width: min-content;
 }
 
 .chevron {
+  pointer-events: none;
   grid-column: 1;
   grid-row: 1;
   align-self: center;
   justify-self: end;
-  height: 1rem;
   margin-right: var(--space-xs);
+  height: 1rem;
 }
