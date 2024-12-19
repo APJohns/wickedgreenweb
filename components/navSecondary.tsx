@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-interface NavItem {
+export interface NavItem {
   icon?: JSX.Element;
   text: string;
   href: string;
+  exact?: boolean;
 }
 
 interface Props {
@@ -18,6 +19,10 @@ interface Props {
 export default function NavSecondary(props: Props) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  const doesURLMatch = (href: string, exact: boolean) => {
+    return exact ? pathname === href : pathname.includes(href);
+  };
 
   useEffect(() => {
     setIsOpen(false);
@@ -68,7 +73,10 @@ export default function NavSecondary(props: Props) {
           <ul className="nav-list">
             {props.navItems.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className={`nav-link icon-action${item.href === pathname ? ' active' : ''}`}>
+                <Link
+                  href={item.href}
+                  className={`nav-link icon-action${doesURLMatch(item.href, item.exact || false) ? ' active' : ''}`}
+                >
                   {item.icon}
                   {item.text}
                 </Link>
