@@ -15,6 +15,11 @@ export const createProjectAction = async (formData: FormData) => {
     return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid report frequency');
   }
 
+  const plan = await getPlan();
+  if (reportFrequency === 'daily' && plan === 'free') {
+    return encodedRedirect('error', `/dashboard/projects/new`, 'Daily reports unavailable in free tier');
+  }
+
   const supabase = await createClient();
 
   const { data, error: urlError } = await supabase.from('projects').select('name');
