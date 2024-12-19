@@ -14,11 +14,17 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
       <div>
         <label className="form-control">
           <div className="form-control-label">Email</div>
-          <input name="email" placeholder="you@example.com" required />
+          <input
+            type="email"
+            className="form-control-input inline"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
         </label>
         <label className="form-control">
           <div className="form-control-label">Password</div>
-          <input type="password" name="password" required />
+          <input type="password" className="form-control-input inline" name="password" required />
         </label>
         <Link href="/forgot-password">Forgot Password?</Link>
         <button type="submit" className="form-submit">
