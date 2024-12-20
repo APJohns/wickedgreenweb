@@ -9,7 +9,6 @@ import StatCardGroup from '@/components/statCardGroup';
 import { createClient, getProjectName } from '@/utils/supabase/server';
 import DateTime from '@/components/datetime';
 import { FormMessage, Message } from '@/components/formMessage';
-import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
