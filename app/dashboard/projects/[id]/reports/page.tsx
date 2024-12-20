@@ -43,16 +43,16 @@ export default async function ReportsPage({
 
   switch (reportFrequency?.report_frequency) {
     case 'daily':
-      nextBatch.setDate(nextBatch.getDate() + 1);
+      nextBatch.setUTCDate(nextBatch.getUTCDate() + 1);
       break;
     case 'weekly':
       while (nextBatch.getDay() !== 1) {
-        nextBatch.setDate(nextBatch.getDate() + 1);
+        nextBatch.setUTCDate(nextBatch.getUTCDate() + 1);
       }
       break;
     case 'monthly':
-      nextBatch.setMonth(nextBatch.getMonth() + 1);
-      nextBatch.setDate(1);
+      nextBatch.setUTCMonth(nextBatch.getUTCMonth() + 1);
+      nextBatch.setUTCDate(1);
       break;
 
     default:
