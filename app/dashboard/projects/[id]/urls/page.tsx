@@ -54,7 +54,7 @@ export default async function URLsPage(props: { params: Promise<{ id: string }>;
           Add URL
         </Link>
       </div>
-      {data && data.length > 0 && <ManageURLs urls={data} />}
+      {data && data.length > 0 && <ManageURLs urls={data} projectID={projectID} />}
       {data?.length === 0 && (
         <>
           <p>Welcome! Let&apos;s add some URLs to this project.</p>

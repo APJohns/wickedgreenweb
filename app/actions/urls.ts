@@ -161,6 +161,7 @@ export const addURLAction = async (formData: FormData) => {
 };
 
 export const deleteURLsAction = async (formData: FormData) => {
+  const projectID = formData.get('projectID')?.toString().trim();
   const supabase = await createClient();
   formData.forEach(async (isOn, urlID) => {
     if (isOn === 'on') {
@@ -170,5 +171,5 @@ export const deleteURLsAction = async (formData: FormData) => {
       }
     }
   });
-  return encodedRedirect('success', `/dashboard`, `Deleted URL(s)`);
+  return encodedRedirect('success', `/dashboard/projects${projectID ? `/${projectID}/urls` : ''}`, `Deleted URL(s)`);
 };
