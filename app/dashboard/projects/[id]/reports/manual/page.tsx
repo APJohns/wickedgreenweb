@@ -1,6 +1,11 @@
 import { manualReport } from '@/app/actions/reports';
 import { PLANS } from '@/utils/constants';
 import { createClient, getPlan } from '@/utils/supabase/server';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Manual report | Wicked Green Web',
+};
 
 export default async function ManualReportPage({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;

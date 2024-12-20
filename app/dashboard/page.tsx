@@ -3,6 +3,11 @@ import { FormMessage, Message } from '@/components/formMessage';
 import { createClient } from '@/utils/supabase/server';
 import { slugify } from '@/utils/utils';
 import styles from './dashboard.module.css';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard | Wicked Green Web',
+};
 
 export default async function DashboardPage(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;

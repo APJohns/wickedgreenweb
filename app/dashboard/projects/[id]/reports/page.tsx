@@ -1,9 +1,18 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, getProjectName } from '@/utils/supabase/server';
 import Link from 'next/link';
 import styles from './reports.module.css';
 import DateTime from '@/components/datetime';
 import ReportsTable from './reportsTable';
 import { FormMessage, Message } from '@/components/formMessage';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const projectID = (await params).id;
+  const projectName = await getProjectName(projectID);
+
+  return {
+    title: `Reports - ${projectName} | Wicked Green Web`,
+  };
+}
 
 export default async function ReportsPage({
   params,

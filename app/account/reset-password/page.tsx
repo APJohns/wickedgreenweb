@@ -1,6 +1,11 @@
 import { resetPasswordAction } from '@/app/actions/auth';
 import { FormMessage, Message } from '@/components/formMessage';
 import PwRequirements from '@/components/pwRequirements';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Reset password | Wicked Green Web',
+};
 
 export default async function ResetPassword(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;

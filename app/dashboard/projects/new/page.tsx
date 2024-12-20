@@ -5,6 +5,11 @@ import { notFound } from 'next/navigation';
 import styles from './newProject.module.css';
 import Select from '@/components/select';
 import { PLANS } from '@/utils/constants';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'New project | Wicked Green Web',
+};
 
 export default async function NewProjectPage(props: {
   searchParams: Promise<Message>;
