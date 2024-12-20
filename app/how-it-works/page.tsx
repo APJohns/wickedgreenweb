@@ -1,4 +1,9 @@
+import { Metadata } from 'next';
 import styles from './page.module.css';
+
+export const metadata: Metadata = {
+  title: 'How it works | Wicked Green Web',
+};
 
 export default function Page() {
   return (

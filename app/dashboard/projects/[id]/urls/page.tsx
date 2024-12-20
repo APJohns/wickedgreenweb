@@ -1,7 +1,16 @@
-import { createClient } from '@/utils/supabase/server';
+import { createClient, getProjectName } from '@/utils/supabase/server';
 import Link from 'next/link';
 import ManageURLs from './manageURLs';
 import { FormMessage, Message } from '@/components/formMessage';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const projectID = (await params).id;
+  const projectName = await getProjectName(projectID);
+
+  return {
+    title: `URLs - ${projectName} | Wicked Green Web`,
+  };
+}
 
 export default async function URLsPage(props: { params: Promise<{ id: string }>; searchParams: Promise<Message> }) {
   const projectID = (await props.params).id;

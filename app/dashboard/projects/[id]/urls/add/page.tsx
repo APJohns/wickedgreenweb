@@ -4,6 +4,11 @@ import styles from './add.module.css';
 import { createClient, getPlan } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import { PLANS } from '@/utils/constants';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Add URL | Wicked Green Web',
+};
 
 export default async function AddUrlPage(props: { searchParams: Promise<Message>; params: Promise<{ id: string }> }) {
   const searchParams = await props.searchParams;

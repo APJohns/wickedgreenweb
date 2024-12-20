@@ -1,8 +1,13 @@
 import Link from 'next/link';
-import styles from './pricing.module.css';
+import styles from './plans.module.css';
 import { PLANS } from '@/utils/constants';
+import { Metadata } from 'next';
 
-export default function PricingPage() {
+export const metadata: Metadata = {
+  title: 'Plans | Wicked Green Web',
+};
+
+export default function PlansPage() {
   return (
     <main>
       <h1>Pricing</h1>

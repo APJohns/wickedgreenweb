@@ -1,6 +1,11 @@
 import { signInAction } from '@/app/actions/auth';
 import { FormMessage, Message } from '@/components/formMessage';
+import { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Sign in | Wicked Green Web',
+};
 
 export default async function Login(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;

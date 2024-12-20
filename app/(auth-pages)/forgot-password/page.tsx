@@ -1,6 +1,11 @@
 import { forgotPasswordAction } from '@/app/actions/auth';
 import { FormMessage, Message } from '@/components/formMessage';
+import { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Forgot password | Wicked Green Web',
+};
 
 export default async function ForgotPassword(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;

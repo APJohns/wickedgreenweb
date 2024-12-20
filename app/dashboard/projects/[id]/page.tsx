@@ -10,6 +10,15 @@ import { createClient, getProjectName } from '@/utils/supabase/server';
 import DateTime from '@/components/datetime';
 import { FormMessage, Message } from '@/components/formMessage';
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const projectID = (await params).id;
+  const projectName = await getProjectName(projectID);
+
+  return {
+    title: `${projectName} | Wicked Green Web`,
+  };
+}
+
 export default async function ProjectPage({
   params,
   searchParams,
