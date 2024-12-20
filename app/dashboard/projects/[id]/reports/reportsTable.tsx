@@ -89,7 +89,7 @@ export default function ReportsTable({ projectID, batches }: Props) {
   }, [batches, defaultDate, updateReports]); */
 
   useEffect(() => {
-    const y = Object.groupBy(batches, ({ created_at }) => new Date(created_at).getFullYear().toString());
+    const y = Object.groupBy(batches, ({ created_at }) => new Date(created_at).getUTCFullYear().toString());
     const sorted = Object.keys(y).toSorted((a, b) => Number(a) - Number(b));
     setBatchYears(sorted);
     setBatchYear(sorted.at(-1) || '');
@@ -98,7 +98,7 @@ export default function ReportsTable({ projectID, batches }: Props) {
 
   useEffect(() => {
     if (years[batchYear]) {
-      const m = Object.groupBy(years[batchYear], ({ created_at }) => new Date(created_at).getMonth() + 1);
+      const m = Object.groupBy(years[batchYear], ({ created_at }) => new Date(created_at).getUTCMonth() + 1);
       const sorted = Object.keys(m).toSorted((a, b) => Number(a) - Number(b));
       setBatchMonths(sorted);
       setBatchMonth(sorted.at(-1) || '');
@@ -108,7 +108,7 @@ export default function ReportsTable({ projectID, batches }: Props) {
 
   useEffect(() => {
     if (months[batchMonth]) {
-      const d = Object.groupBy(months[batchMonth], ({ created_at }) => new Date(created_at).getDate().toString());
+      const d = Object.groupBy(months[batchMonth], ({ created_at }) => new Date(created_at).getUTCDate().toString());
       const sorted = Object.keys(d).toSorted((a, b) => Number(a) - Number(b));
       setBatchDates(sorted);
       setBatchDate(sorted.at(-1) || '');
@@ -130,13 +130,14 @@ export default function ReportsTable({ projectID, batches }: Props) {
 
   useEffect(() => {
     if (batchYear && batchMonth && batchDate && batchTime) {
-      const batchID = batches.find(
-        (batch) =>
+      const batchID = batches.find((batch) => {
+        return (
           new Date(batch.created_at).toISOString() ===
           new Date(
             `${batchYear}-${batchMonth.padStart(2, '0')}-${batchDate.padStart(2, '0')}T${batchTime}`
           ).toISOString()
-      )?.id;
+        );
+      })?.id;
       if (batchID) {
         setBatchID(batchID);
       }
@@ -165,7 +166,7 @@ export default function ReportsTable({ projectID, batches }: Props) {
             <Select label="Month" value={batchMonth} onChange={(e) => setBatchMonth(e.target.value)}>
               {batchMonths.toReversed().map((month) => (
                 <option key={month} value={month}>
-                  {new Date(`2024-${month}-1`).toLocaleDateString(undefined, { month: 'long' })}
+                  {new Date(`2024-${month.padStart(2, '0')}-01`).toLocaleDateString(undefined, { month: 'long' })}
                 </option>
               ))}
             </Select>
