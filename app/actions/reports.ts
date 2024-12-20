@@ -52,13 +52,11 @@ export const manualReport = async (formData: FormData) => {
     } = await supabase.auth.getUser();
 
     try {
-      const res = await fetch(`${process.env.API_URL}/co2/gather?user_id=${user?.id}&project_id=${projectID}`, {
+      await fetch(`${process.env.API_URL}/co2/gather?user_id=${user?.id}&project_id=${projectID}`, {
         headers: {
           Authorization: `Bearer ${process.env.API_TOKEN}`,
         },
       });
-
-      console.log(await res.text());
     } catch (e) {
       console.error(e);
       return encodedRedirect('error', `/dashboard/projects/${projectID}/reports/manual`, `Something went wrong`);
