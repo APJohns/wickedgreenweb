@@ -165,7 +165,7 @@ export default function ReportsTable({ projectID, batches }: Props) {
             <Select label="Month" value={batchMonth} onChange={(e) => setBatchMonth(e.target.value)}>
               {batchMonths.toReversed().map((month) => (
                 <option key={month} value={month}>
-                  {new Date(`2024-${month}-1`).toLocaleDateString(undefined, { month: 'long' })}
+                  {new Date(`2024-${month.padStart(2, '0')}-01`).toLocaleDateString(undefined, { month: 'long' })}
                 </option>
               ))}
             </Select>
