@@ -44,7 +44,7 @@ export default async function RootLayout({
                 </Link>
               </li>
             </ul>
-            {!user && process.env.VERSION === 'BETA' && (
+            {!user && (
               <Link href="/sign-in" className="nav-link">
                 Sign in
               </Link>

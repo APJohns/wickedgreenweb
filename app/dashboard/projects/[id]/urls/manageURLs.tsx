@@ -15,11 +15,13 @@ type URL = U & {
 
 interface Props {
   urls: URL[];
+  projectID: string;
 }
 
 export default function ManageURLs(props: Props) {
   return (
     <form action={deleteURLsAction}>
+      <input type="hidden" name="projectID" value={props.projectID} />
       <div className={styles.tableActions}>
         <Delete />
       </div>
