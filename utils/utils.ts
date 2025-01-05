@@ -1,4 +1,5 @@
 import { redirect } from 'next/navigation';
+import { SWDMV4_PERCENTILES, SWDMV4_RATINGS } from './constants';
 /**
  * Redirects to a specified path with an encoded message as a query parameter.
  * @param {('error' | 'success')} type - The type of message, either 'error' or 'success'.
@@ -67,3 +68,12 @@ export const getValidationErrors = (password: string): string | null => {
 
   return null;
 };
+
+export function getRating(co2: number) {
+  for (const percentile in SWDMV4_RATINGS) {
+    const p = SWDMV4_PERCENTILES[percentile as keyof typeof SWDMV4_PERCENTILES];
+    if (p - co2 > 0) {
+      return SWDMV4_RATINGS[percentile as keyof typeof SWDMV4_RATINGS];
+    }
+  }
+}

@@ -1,10 +1,9 @@
-import { formatBytes, formatCO2 } from '@/utils/utils';
+import { formatBytes, formatCO2, getRating } from '@/utils/utils';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import StatCard from '@/components/statCard';
 import styles from './project.module.css';
 import CO2Chart, { CO2Point } from './co2Chart';
-import { SWDMV4_PERCENTILES, SWDMV4_RATINGS } from '@/utils/constants';
 import StatCardGroup from '@/components/statCardGroup';
 import { createClient, getProjectName } from '@/utils/supabase/server';
 import DateTime from '@/components/datetime';
@@ -93,15 +92,6 @@ export default async function ProjectPage({
   });
 
   averages.sort((a, b) => new Date(a.date).valueOf() - new Date(b.date).valueOf());
-
-  function getRating(co2: number) {
-    for (const percentile in SWDMV4_RATINGS) {
-      const p = SWDMV4_PERCENTILES[percentile as keyof typeof SWDMV4_PERCENTILES];
-      if (p - co2 > 0) {
-        return SWDMV4_RATINGS[percentile as keyof typeof SWDMV4_RATINGS];
-      }
-    }
-  }
 
   const latestCO2 = Array.from(latestBatchReports, (report) => report.co2);
   const bytes = formatBytes(getAverage(Array.from(latestBatchReports, (report) => report.bytes)));

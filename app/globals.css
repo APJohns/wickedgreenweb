@@ -392,44 +392,41 @@ textarea {
   font-size: var(--fs-tiny);
 }
 
-.overlay {
-  .percentile {
-    opacity: 0.3;
-    transition: opacity 0.1s ease-out;
-  }
+.percentile-label {
+  font-size: var(--fs-tiny);
 }
 
 .percentile {
-  opacity: 0;
-  transition: opacity 0.1s ease-out;
+  stroke-dasharray: 8;
+  stroke-width: 2px;
 }
 
 .fifth_percentile {
-  fill: var(--gradeAp);
+  stroke: var(--gradeAp);
 }
 
 .tenth_percentile {
-  fill: var(--gradeA);
+  stroke: var(--gradeA);
 }
 
 .twentieth_percentile {
-  fill: var(--gradeB);
+  stroke: var(--gradeB);
 }
 
 .thirtieth_percentile {
-  fill: var(--gradeC);
+  stroke: var(--gradeC);
 }
 
 .fortieth_percentile {
-  fill: var(--gradeD);
+  stroke: var(--gradeD);
 }
 
 .fiftieth_percentile {
-  fill: var(--gradeE);
+  stroke: var(--gradeE);
 }
 
 .f_percentile {
-  fill: var(--gradeF);
+  stroke: var(--gradeF);
 }
 
 .page-header {

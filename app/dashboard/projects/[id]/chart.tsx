@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { SWDMV4_PERCENTILES } from '@/utils/constants';
+import { SWDMV4_PERCENTILES, SWDMV4_RATINGS } from '@/utils/constants';
 import { CO2Point } from './co2Chart';
 
 interface LineChartProps {
@@ -83,29 +83,34 @@ export default function Chart(props: LineChartProps): JSX.Element {
           .attr('stroke-opacity', 0.1)
       );
 
-    let prevHeight = y(0);
     for (const percentile in SWDMV4_PERCENTILES) {
       const p = SWDMV4_PERCENTILES[percentile as keyof typeof SWDMV4_PERCENTILES];
       if (next >= p) {
         svg
-          .append('rect')
+          .append('line')
           .attr('class', 'percentile ' + percentile.toLowerCase())
-          .attr('width', width - marginLeft - marginRight)
-          .attr('height', prevHeight - y(p))
-          .attr('x', marginLeft)
-          .attr('y', y(p));
-        prevHeight = y(p);
+          .attr('x1', marginLeft)
+          .attr('y1', y(p))
+          .attr('x2', width - marginRight)
+          .attr('y2', y(p));
+        svg
+          .append('text')
+          .attr('class', 'percentile-label')
+          .attr('x', width - marginLeft)
+          .attr('y', y(p))
+          .attr('dy', '1em')
+          .text(SWDMV4_RATINGS[percentile as keyof typeof SWDMV4_RATINGS]);
       }
     }
 
     if (next > SWDMV4_PERCENTILES.FIFTIETH_PERCENTILE) {
       svg
-        .append('rect')
-        .attr('class', 'percentile f_percentile')
-        .attr('width', width - marginLeft - marginRight)
-        .attr('height', y(SWDMV4_PERCENTILES.FIFTIETH_PERCENTILE) - y(next))
-        .attr('x', marginLeft)
-        .attr('y', y(next));
+        .append('text')
+        .attr('class', 'percentile-label')
+        .attr('x', width - marginLeft)
+        .attr('y', y(SWDMV4_PERCENTILES.FIFTIETH_PERCENTILE))
+        .attr('dy', '-0.5em')
+        .text('F');
     }
 
     // Append a path for the line.
