@@ -114,7 +114,13 @@ export default function Chart(props: LineChartProps): JSX.Element {
     }
 
     // Append a path for the line.
-    svg.append('path').attr('class', 'line').attr('fill', 'none').attr('stroke-width', 1).attr('d', line(props.data));
+    svg
+      .append('path')
+      .attr('class', 'line')
+      .attr('fill', 'none')
+      .attr('stroke-width', 1)
+      .attr('stroke-linejoin', 'round')
+      .attr('d', line(props.data));
 
     // Append points
     svg
@@ -123,10 +129,9 @@ export default function Chart(props: LineChartProps): JSX.Element {
       .enter()
       .append('circle')
       .attr('class', 'point')
-      .attr('stroke-width', 1.5)
       .attr('cx', (d) => x(new Date(d.date)))
       .attr('cy', (d) => y(d.co2))
-      .attr('r', 3);
+      .attr('r', 2);
   }, [props.data, width, height]);
 
   useEffect(() => {

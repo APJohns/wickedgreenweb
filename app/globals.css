@@ -374,9 +374,7 @@ textarea {
 }
 
 .point {
-  fill: var(--background);
-  stroke: var(--foreground);
-  stroke-width: 2px;
+  fill: var(--foreground);
 }
 
 .line {
