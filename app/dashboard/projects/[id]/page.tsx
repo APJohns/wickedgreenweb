@@ -132,12 +132,16 @@ export default async function ProjectPage({
         <StatCard heading="Page weight" headingLevel="h3" unit={bytes.unit}>
           {bytes.value}
         </StatCard>
-        <StatCard heading="Annual change" headingLevel="h3" unit="%" info="this year">
-          {totalChange?.toFixed(2)}
-        </StatCard>
-        <StatCard heading="Net change" headingLevel="h3" unit="%" info="since start">
-          {annualChange?.toFixed(2)}
-        </StatCard>
+        {annualChange && (
+          <StatCard heading="Annual change" headingLevel="h3" unit="%" info="this year">
+            {annualChange?.toFixed(2)}
+          </StatCard>
+        )}
+        {totalChange && (
+          <StatCard heading="Net change" headingLevel="h3" unit="%" info="since start">
+            {totalChange?.toFixed(2)}
+          </StatCard>
+        )}
       </StatCardGroup>
       <div className={styles.chartGroup}>
         <CO2Chart data={averages} />
