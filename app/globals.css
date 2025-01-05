@@ -378,28 +378,26 @@ textarea {
 }
 
 .line {
-  stroke: var(--foreground);
+  stroke: var(--green);
 }
 
 .domain {
   color: var(--foreground-subtle);
 }
 
-.tick {
-  color: var(--foreground-subtle);
-  font-size: var(--fs-tiny);
-}
-
+.tick,
 .percentile-label {
+  color: var(--foreground-subtle);
   font-size: var(--fs-tiny);
 }
 
 .percentile {
   stroke-dasharray: 8;
-  stroke-width: 2px;
+  stroke-width: 1px;
+  stroke: var(--foreground-subtle);
 }
 
-.fifth_percentile {
+/* .fifth_percentile {
   stroke: var(--gradeAp);
 }
 
@@ -425,7 +423,7 @@ textarea {
 
 .f_percentile {
   stroke: var(--gradeF);
-}
+} */
 
 .page-header {
   display: grid;

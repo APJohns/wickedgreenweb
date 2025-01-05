@@ -98,6 +98,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
           .attr('x', width - marginLeft)
           .attr('y', y(p))
           .attr('dy', '1em')
+          .attr('fill', 'currentColor')
           .text(SWDMV4_RATINGS[percentile as keyof typeof SWDMV4_RATINGS]);
       }
     }
@@ -109,6 +110,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
         .attr('x', width - marginLeft)
         .attr('y', y(SWDMV4_PERCENTILES.FIFTIETH_PERCENTILE))
         .attr('dy', '-0.5em')
+        .attr('fill', 'currentColor')
         .text('F');
     }
 
@@ -117,12 +119,12 @@ export default function Chart(props: LineChartProps): JSX.Element {
       .append('path')
       .attr('class', 'line')
       .attr('fill', 'none')
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 2)
       .attr('stroke-linejoin', 'round')
       .attr('d', line(props.data));
 
     // Append points
-    svg
+    /* svg
       .selectAll('points')
       .data(props.data)
       .enter()
@@ -130,7 +132,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
       .attr('class', 'point')
       .attr('cx', (d) => x(new Date(d.date)))
       .attr('cy', (d) => y(d.co2))
-      .attr('r', 2);
+      .attr('r', 3); */
   }, [props.data, width, height]);
 
   useEffect(() => {
