@@ -78,7 +78,6 @@ export default function Chart(props: LineChartProps): JSX.Element {
       .call((g) =>
         g
           .selectAll('.tick line')
-          .clone()
           .attr('x2', width - marginLeft - marginRight)
           .attr('stroke-opacity', 0.1)
       );
