@@ -97,13 +97,16 @@ export default async function ProjectPage({
   const bytes = formatBytes(getAverage(Array.from(latestBatchReports, (report) => report.bytes)));
   let totalChange: number | null = null;
   let annualChange: number | null = null;
-  const earliestAllTime = averages.at(-1);
-  const earliestThisYear = averages.filter((d) => new Date(d.date).getFullYear() === new Date().getFullYear()).at(-1);
-  if (earliestAllTime) {
-    totalChange = (averages[0].co2 / earliestAllTime.co2) * 100 - 100;
-  }
-  if (earliestThisYear) {
-    annualChange = (averages[0].co2 / earliestThisYear.co2) * 100 - 100;
+  const latestAverage = averages.at(-1);
+  const earliestAllTime = averages[0];
+  const earliestThisYear = averages.filter((d) => new Date(d.date).getFullYear() === new Date().getFullYear())[0];
+  if (latestAverage) {
+    if (earliestAllTime) {
+      totalChange = ((latestAverage.co2 - earliestAllTime.co2) / earliestAllTime.co2) * 100;
+    }
+    if (earliestThisYear) {
+      annualChange = ((latestAverage.co2 - earliestThisYear.co2) / earliestThisYear.co2) * 100;
+    }
   }
 
   return (
@@ -134,11 +137,13 @@ export default async function ProjectPage({
         </StatCard>
         {annualChange && (
           <StatCard heading="Annual change" headingLevel="h3" unit="%" info="this year">
+            {annualChange > 0 && '+'}
             {annualChange?.toFixed(2)}
           </StatCard>
         )}
         {totalChange && (
           <StatCard heading="Net change" headingLevel="h3" unit="%" info="since start">
+            {totalChange > 0 && '+'}
             {totalChange?.toFixed(2)}
           </StatCard>
         )}
