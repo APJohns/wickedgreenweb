@@ -135,13 +135,13 @@ export default async function ProjectPage({
         <StatCard heading="Page weight" headingLevel="h3" unit={bytes.unit}>
           {bytes.value}
         </StatCard>
-        {annualChange && (
+        {annualChange !== null && (
           <StatCard heading="Annual change" headingLevel="h3" unit="%" info="this year">
             {annualChange > 0 && '+'}
             {annualChange?.toFixed(2)}
           </StatCard>
         )}
-        {totalChange && (
+        {totalChange !== null && (
           <StatCard heading="Net change" headingLevel="h3" unit="%" info="since start">
             {totalChange > 0 && '+'}
             {totalChange?.toFixed(2)}
