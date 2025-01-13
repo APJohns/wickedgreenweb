@@ -16,7 +16,7 @@ export const SWDMV4_RATINGS = {
   FIFTIETH_PERCENTILE: 'E',
 };
 
-export const FREQUENCIES = ['daily', 'weekly', 'monthly'];
+export const FREQUENCIES = ['daily', 'weekly', 'monthly', 'manually'];
 
 export const PLANS = {
   FREE: {
