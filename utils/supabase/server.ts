@@ -32,6 +32,15 @@ export const createClient = async () => {
   );
 };
 
+export const getProjects = cache(async (userID: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from('projects').select().eq('user_id', userID).order('name');
+  if (error) {
+    console.error(error);
+  }
+  return data;
+});
+
 export const getProjectName = cache(async (id: string): Promise<string> => {
   const supabase = await createClient();
 
@@ -68,10 +77,10 @@ export const getURLReports = cache(async (projectID: string) => {
   return data;
 });
 
-export const getPlan = cache(async () => {
+export const getPlan = cache(async (userID: string) => {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from('permissions').select().single();
+  const { data, error } = await supabase.from('permissions').select().eq('user_id', userID).single();
   if (error) {
     console.error(error);
   }

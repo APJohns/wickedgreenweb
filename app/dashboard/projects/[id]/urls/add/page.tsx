@@ -13,9 +13,13 @@ export const metadata: Metadata = {
 export default async function AddUrlPage(props: { searchParams: Promise<Message>; params: Promise<{ id: string }> }) {
   const searchParams = await props.searchParams;
   const projectID = (await props.params).id;
-  const plan = await getPlan();
 
   const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const plan = await getPlan(user?.id as string);
   const { count, error } = await supabase.from('urls').select('*', { count: 'exact', head: true });
 
   if (error) {

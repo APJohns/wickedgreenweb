@@ -15,12 +15,15 @@ export const createProjectAction = async (formData: FormData) => {
     return encodedRedirect('error', `/dashboard/projects/new`, 'Invalid report frequency');
   }
 
-  const plan = await getPlan();
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const plan = await getPlan(user?.id as string);
   if (reportFrequency === 'daily' && plan === 'free') {
     return encodedRedirect('error', `/dashboard/projects/new`, 'Daily reports unavailable in free tier');
   }
-
-  const supabase = await createClient();
 
   const { data, error: urlError } = await supabase.from('projects').select('name');
   if (urlError) {
@@ -31,10 +34,6 @@ export const createProjectAction = async (formData: FormData) => {
       return encodedRedirect('error', `/dashboard/projects/new`, 'Project with the same name already exists');
     }
   });
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   if (user) {
     const { data, error } = await supabase
@@ -73,7 +72,13 @@ export const updateProjectAction = async (formData: FormData) => {
     return encodedRedirect('error', `/dashboard/projects/${projectID}/settings`, 'Invalid report frequency');
   }
   if (projectID) {
-    const plan = await getPlan();
+    const supabase = await createClient();
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const plan = await getPlan(user?.id as string);
     const updatedProject: TablesUpdate<'projects'> = {};
     if (reportFrequency) {
       if (reportFrequency === 'daily' && plan === 'free') {
@@ -85,7 +90,6 @@ export const updateProjectAction = async (formData: FormData) => {
       }
       updatedProject.report_frequency = reportFrequency;
     }
-    const supabase = await createClient();
     const { error } = await supabase.from('projects').update(updatedProject).eq('id', projectID);
     if (error) {
       return encodedRedirect(

@@ -30,7 +30,11 @@ export default async function SettingsPage({
     notFound();
   }
 
-  const plan = await getPlan();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const plan = await getPlan(user?.id as string);
 
   return (
     <>
