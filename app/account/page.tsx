@@ -11,7 +11,7 @@ export default async function AccountPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const plan = await getPlan();
+  const plan = await getPlan(user?.id as string);
 
   const { count: urlCount, error: urlError } = await supabase.from('urls').select('*', { count: 'exact', head: true });
 

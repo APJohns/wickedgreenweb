@@ -12,7 +12,11 @@ export default async function ManualReportPage({ params }: { params: Promise<{ i
 
   const supabase = await createClient();
 
-  const plan = await getPlan();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const plan = await getPlan(user?.id as string);
   const limit = plan === 'free' ? PLANS.FREE.MANUAL_REPORTS : PLANS.PRO.MANUAL_REPORTS;
 
   const today = new Date();

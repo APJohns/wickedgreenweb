@@ -16,9 +16,13 @@ export default async function NewProjectPage(props: {
   params: Promise<{ id: string }>;
 }) {
   const searchParams = await props.searchParams;
-  const plan = await getPlan();
 
   const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const plan = await getPlan(user?.id as string);
   const { count, error } = await supabase.from('projects').select('*', { count: 'exact', head: true });
 
   if (error) {

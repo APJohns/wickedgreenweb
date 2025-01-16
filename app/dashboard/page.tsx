@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FormMessage, Message } from '@/components/formMessage';
-import { createClient } from '@/utils/supabase/server';
+import { createClient, getProjects } from '@/utils/supabase/server';
 import { slugify } from '@/utils/utils';
 import styles from './dashboard.module.css';
 import { Metadata } from 'next';
@@ -13,10 +13,12 @@ export default async function DashboardPage(props: { searchParams: Promise<Messa
   const searchParams = await props.searchParams;
 
   const supabase = await createClient();
-  const { data, error } = await supabase.from('projects').select().order('name');
-  if (error) {
-    console.error(error);
-  }
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const data = await getProjects(user?.id as string);
 
   return (
     <main>

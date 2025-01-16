@@ -25,7 +25,10 @@ export const addURLAction = async (formData: FormData) => {
     console.error(urlError);
   }
   const existingURLs = dbURLs ? Array.from(dbURLs, (d) => d.url) : [];
-  const plan = await getPlan();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const plan = await getPlan(user?.id as string);
 
   const validateURL = (unvalidatedURL: string, quiet = false) => {
     let url = '';
