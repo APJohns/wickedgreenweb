@@ -1,11 +1,3 @@
-.deleteModalTrigger {
-  margin-top: 1rem;
-  border: 0;
-  color: var(--gradeF);
-  background: none;
-  cursor: pointer;
-}
-
 .modal {
   margin: auto;
   border: 1px solid var(--border-color-primary);

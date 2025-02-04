@@ -2,7 +2,8 @@
 
 import { deleteProjectAction } from '@/app/actions/projects';
 import { useRef } from 'react';
-import styles from '@/components/modal.module.css';
+import modalStyles from '@/components/modal.module.css';
+import styles from './settings.module.css';
 
 interface Props {
   projectID: string;
@@ -14,7 +15,7 @@ export default function Delete(props: Props) {
     <>
       <button
         type="button"
-        className={`icon-action ${styles.deleteModalTrigger}`}
+        className={`icon-action button-subtle button-style-warning ${styles.deleteModalTrigger}`}
         onClick={() => dialogRef.current?.showModal()}
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -26,19 +27,19 @@ export default function Delete(props: Props) {
         </svg>
         Delete project
       </button>
-      <dialog ref={dialogRef} className={styles.modal}>
-        <h3 className={styles.modalHeading}>Delete project</h3>
+      <dialog ref={dialogRef} className={modalStyles.modal}>
+        <h3 className={modalStyles.modalHeading}>Delete project</h3>
         <form action={deleteProjectAction}>
-          <div className={styles.modalBody}>
+          <div className={modalStyles.modalBody}>
             <p>Are you sure you want to delete this project?</p>
             <p>This action cannot be undone and all reports under this project will be deleted.</p>
           </div>
           <input type="hidden" name="projectID" value={props.projectID} />
-          <div className={styles.modalActions}>
-            <button type="button" className={styles.modalActionCancel} onClick={() => dialogRef.current?.close()}>
+          <div className={modalStyles.modalActions}>
+            <button type="button" className={modalStyles.modalActionCancel} onClick={() => dialogRef.current?.close()}>
               Cancel
             </button>
-            <button type="submit" className={`${styles.modalActionAffirm} ${styles.negative}`}>
+            <button type="submit" className={`${modalStyles.modalActionAffirm} ${modalStyles.negative}`}>
               Delete
             </button>
           </div>

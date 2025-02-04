@@ -6,6 +6,17 @@ import { createClient, getPlan } from '@/utils/supabase/server';
 import { encodedRedirect } from '@/utils/utils';
 import { JSDOM } from 'jsdom';
 
+export const getGreenCheck = async (url: string): Promise<{ inputURL: string; green: boolean }> => {
+  // Check if host is green
+  console.log('Getting host information from greencheck API');
+  const res = await fetch(`https://api.thegreenwebfoundation.org/greencheck/${new URL(url).host.replace('www.', '')}`);
+  const data = await res.json();
+  return {
+    inputURL: url,
+    ...data,
+  };
+};
+
 export const addURLAction = async (formData: FormData) => {
   const rawUrl = formData.get('url')?.toString().trim();
   const sitemap = formData.get('sitemap')?.toString().trim();
@@ -55,15 +66,6 @@ export const addURLAction = async (formData: FormData) => {
       }
     }
     return url;
-  };
-
-  const getGreenCheck = async (url: string): Promise<{ green: boolean }> => {
-    // Check if host is green
-    console.log('Getting host information from greencheck API');
-    const res = await fetch(
-      `https://api.thegreenwebfoundation.org/greencheck/${new URL(url).host.replace('www.', '')}`
-    );
-    return await res.json();
   };
 
   if (rawUrl) {
@@ -175,4 +177,37 @@ export const deleteURLsAction = async (formData: FormData) => {
     }
   });
   return encodedRedirect('success', `/dashboard/projects${projectID ? `/${projectID}/urls` : ''}`, `Deleted URL(s)`);
+};
+
+export interface URLsToUpdate {
+  id: string;
+  url: string;
+}
+
+export const updateGreenHosting = async (urls: URLsToUpdate[]) => {
+  const supabase = await createClient();
+  const recheckHosting = async (url: URLsToUpdate) => {
+    const hosting = await getGreenCheck(url.url);
+    const { data, error } = await supabase
+      .from('urls')
+      .update({
+        green_hosting_factor: hosting.green ? 1 : 0,
+      })
+      .eq('id', url.id)
+      .select('id, green_hosting_factor')
+      .single();
+
+    if (error) {
+      console.error(error);
+      return null;
+    } else {
+      return data;
+    }
+  };
+
+  const checkHosting = urls.map((url) => {
+    return recheckHosting(url);
+  });
+
+  return await Promise.all(checkHosting);
 };

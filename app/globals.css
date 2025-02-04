@@ -333,6 +333,30 @@ textarea {
   }
 }
 
+.button-subtle {
+  cursor: pointer;
+  border: 1px solid var(--border-color-primary);
+  border-radius: 8px;
+  padding: 0.25rem 0.5rem;
+  background: var(--background-subtle);
+  font-size: var(--fs-subtle);
+
+  &:hover {
+    background: var(--background);
+  }
+}
+
+.button-style-warning {
+  border-color: var(--gradeF);
+  color: var(--gradeF);
+  background: none;
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--gradeF);
+  }
+}
+
 .chart-card {
   display: flex;
   flex-direction: column;
