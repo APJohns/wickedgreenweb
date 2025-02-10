@@ -62,6 +62,7 @@ export default async function NewProjectPage(props: {
           </option>
           <option value="weekly">Weekly</option>
           <option value="monthly">Monthly</option>
+          <option value="manually">Manually</option>
         </Select>
         {/* TODO: Change language to "Upgrade to Pro" when Pro is available */}
         {plan === 'free' && <p className="text-subtle">Daily reports unavailable on free tier</p>}
