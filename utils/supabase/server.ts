@@ -1,3 +1,5 @@
+'use server';
+
 import { Database } from '@/database.types';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
@@ -77,13 +79,19 @@ export const getURLReports = cache(async (projectID: string) => {
   return data;
 });
 
-export const getPlan = cache(async (userID: string) => {
+export const getPlan = cache(async (userID?: string) => {
   const supabase = await createClient();
-
-  const { data, error } = await supabase.from('permissions').select().eq('user_id', userID).single();
-  if (error) {
-    console.error(error);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    const { data, error } = await supabase.from('permissions').select().eq('user_id', user.id).single();
+    if (error) {
+      console.error(error);
+    }
+    if (!data) notFound();
+    return data.plan;
+  } else {
+    return null;
   }
-  if (!data) notFound();
-  return data.plan;
 });

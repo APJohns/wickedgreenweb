@@ -67,3 +67,13 @@ export const manualReport = async (formData: FormData) => {
     return encodedRedirect('error', `/dashboard/projects/${projectID}/reports/manual`, `Invalid project ID`);
   }
 };
+
+export const getReportFrequency = async (projectID: string) => {
+  const supabase = await createClient();
+  const { data: reportFrequency } = await supabase
+    .from('projects')
+    .select('report_frequency')
+    .eq('id', projectID)
+    .single();
+  return reportFrequency;
+};
