@@ -20,15 +20,12 @@
 
 .tryItOut {
   border-radius: 0.5rem;
-  padding-top: 6rem;
-  padding-bottom: 7rem;
+  padding: 4rem 2rem 5rem;
   background: var(--green-subtle);
 }
 
-@media (min-width: 640px) {
-  .title {
-    & svg {
-      height: 10rem;
-    }
+@media (min-width: 768px) {
+  .tryItOut {
+    padding: 6rem 2rem 7rem;
   }
 }

@@ -1,9 +1,8 @@
 .urlForm {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr;
   gap: 1rem;
-  justify-items: start;
   align-items: end;
   margin: auto;
   max-width: 768px;
@@ -21,7 +20,6 @@
 .urlFormControl {
   display: flex;
   margin-top: 0.5rem;
-  border: 1px solid var(--border-color-primary);
   border-radius: 0.5rem;
   width: 100%;
   background: var(--background);
@@ -32,6 +30,7 @@
   border: 0;
   padding: 0.5rem 1rem;
   border-radius: 0 calc(0.5rem - 1px) calc(0.5rem - 1px) 0;
+  width: 100%;
   background: var(--background);
 }
 
@@ -47,7 +46,6 @@
   border-radius: 0.5rem;
   background: #f4f4f4;
   padding: 0.5rem 1rem;
-  border: 1px solid transparent;
   color: var(--black);
 
   &:disabled {
@@ -56,6 +54,12 @@
 
   &:hover:not(:disabled) {
     cursor: pointer;
-    border: 1px solid var(--border-color-primary);
+  }
+}
+
+@media (min-width: 768px) {
+  .urlForm {
+    grid-template-columns: 1fr auto;
+    justify-items: start;
   }
 }

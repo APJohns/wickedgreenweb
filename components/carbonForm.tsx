@@ -17,8 +17,12 @@ export default function CarbonForm() {
       if (inputRef.current) {
         try {
           new URL(addHTTPS(inputRef.current.value));
-          setIsSubmitting(true);
-          formRef.current?.submit();
+          if (inputRef.current.value.split('.').filter((d) => d).length <= 1) {
+            setErrorMessage('Invalid URL');
+          } else {
+            setIsSubmitting(true);
+            formRef.current?.submit();
+          }
         } catch {
           setErrorMessage('Invalid URL');
         }
@@ -44,10 +48,14 @@ export default function CarbonForm() {
           />
         </div>
       </label>
-      {errorMessage && <p id="errorMessage">{errorMessage}</p>}
       <button type="submit" className={styles.urlFormSubmit} disabled={isSubmitting}>
         Calculate
       </button>
+      {errorMessage && (
+        <p id="errorMessage" className="fs-subtle">
+          {errorMessage}
+        </p>
+      )}
     </form>
   );
 }
