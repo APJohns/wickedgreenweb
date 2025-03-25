@@ -1,9 +1,21 @@
 .urlForm {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr auto;
   gap: 1rem;
-  justify-items: center;
+  justify-items: start;
+  align-items: end;
+  margin: auto;
+  max-width: 768px;
+}
+
+.urlFormControlWithAddon {
+  width: 100%;
+  text-align: left;
+}
+
+.urlFormLabel {
+  font-size: var(--fs-md);
 }
 
 .urlFormControl {
@@ -11,9 +23,7 @@
   margin-top: 0.5rem;
   border: 1px solid var(--border-color-primary);
   border-radius: 0.5rem;
-  width: 75dvw;
-  min-width: 300px;
-  max-width: 600px;
+  width: 100%;
   background: var(--background);
 }
 

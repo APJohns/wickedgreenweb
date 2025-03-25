@@ -1,13 +1,3 @@
-.innerOrbit {
-  transform-origin: center center;
-  animation: rotate 2s linear infinite;
-}
-
-.outerOrbit {
-  transform-origin: center center;
-  animation: rotate 2s linear infinite reverse;
-}
-
 .svgFill {
   fill: var(--foreground);
 }
@@ -19,6 +9,16 @@
 .loader {
   & svg {
     vertical-align: middle;
+  }
+
+  .innerOrbit {
+    transform-origin: center center;
+    animation: rotate 2s linear infinite;
+  }
+
+  .outerOrbit {
+    transform-origin: center center;
+    animation: rotate 2s linear infinite reverse;
   }
 }
 

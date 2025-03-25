@@ -1,7 +1,8 @@
 :root {
   --black: #171717;
-  --white: #ffffff;
+  --white: #f6f6f6;
   --green: #5bc871;
+  --green-subtle: #cde4d2;
   --gradeAp: var(--green);
   --gradeA: #b1de3f;
   --gradeB: #ebf138;
@@ -19,12 +20,15 @@
   --border-color-primary: #ccc;
 
   --fs-big: 2.5rem;
+  --fs-lg: 2rem;
+  --fs-md: 1.5rem;
   --fs-body: 1.25rem;
   --fs-subtle: 1.125rem;
   --fs-small: 1rem;
   --fs-tiny: 0.75rem;
 
   --font-weight-normal: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
   --page-padding: 2rem;
@@ -79,8 +83,8 @@ select {
   font-family: var(--font-family-body);
 }
 
-main,
-.content-area {
+.content-area,
+.page-padding {
   overflow-x: auto;
   padding: 0 var(--page-padding);
 }
@@ -184,6 +188,23 @@ textarea {
   font-family: inherit;
 }
 
+.nav-primary {
+  .nav-list {
+    display: grid;
+    grid-template-columns: 1fr auto auto 1fr;
+    align-items: center;
+    justify-items: center;
+  }
+
+  & li:first-child {
+    justify-self: start;
+  }
+
+  & li:last-child {
+    justify-self: end;
+  }
+}
+
 .nav {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -199,6 +220,7 @@ textarea {
 
 .nav-link {
   position: relative;
+  display: block;
   text-decoration: none;
   color: var(--foreground);
 
@@ -207,6 +229,16 @@ textarea {
     text-decoration: underline;
     text-decoration-color: var(--green);
     text-decoration-thickness: 2px;
+  }
+
+  &.logo {
+    height: 4rem;
+
+    & svg {
+      display: block;
+      width: auto;
+      height: 100%;
+    }
   }
 }
 
@@ -218,6 +250,30 @@ textarea {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.cta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1.5rem;
+  width: fit-content;
+  color: var(--foreground);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  background: var(--green);
+
+  & svg {
+    height: 1rem;
+  }
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--background-inverse);
+  }
 }
 
 .dropdown {

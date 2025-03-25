@@ -28,8 +28,8 @@ export default function CarbonForm() {
 
   return (
     <form ref={formRef} action="report" className={styles.urlForm} onSubmit={onSubmit}>
-      <label>
-        <div className="visually-hidden">URL</div>
+      <label className={styles.urlFormControlWithAddon}>
+        <div className={styles.urlFormLabel}>Try it out</div>
         <div className={styles.urlFormControl}>
           <div className={styles.urlFormInputAddon}>https://</div>
           <input

@@ -35,7 +35,7 @@ export default async function NewProjectPage(props: {
 
   if (plan === 'free' && count >= PLANS.FREE.PROJECTS) {
     return (
-      <main>
+      <main className="page-padding">
         <h1>New project</h1>
         {/* <p>
           <Link href="/pricing">Upgrade to Pro</Link> to add more projects.
@@ -49,7 +49,7 @@ export default async function NewProjectPage(props: {
   }
 
   return (
-    <main>
+    <main className="page-padding">
       <h1>New project</h1>
       <form action={createProjectAction} className={styles.newProjectForm}>
         <label className={`form-control ${styles.name}`}>
