@@ -2,11 +2,8 @@ import type { Metadata } from 'next';
 import { Figtree, Space_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
-import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
-import Dropdown from '@/components/dropdown';
-import { signOutAction } from '@/app/actions/auth';
-import Logo from '@/components/logo';
+import NavPrimary from '@/components/navPrimary';
 
 const figtree = Figtree({ weight: ['400', '600', '700'], subsets: ['latin'], variable: '--font-family-body' });
 
@@ -32,59 +29,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${figtree.className} ${figtree.variable} ${spaceMono.variable}`}>
         <header>
-          <nav className="nav nav-primary">
-            <ul className="nav-list">
-              <li>
-                <Link href="/" className="nav-link logo">
-                  <span className="visually-hidden">Home</span>
-                  <Logo hasSRText={false} />
-                </Link>
-              </li>
-              <li>
-                <Link href="/plans" className="nav-link">
-                  Plans
-                </Link>
-              </li>
-              <li>
-                <Link href="/how-it-works" className="nav-link">
-                  How it works
-                </Link>
-              </li>
-              <li>
-                {!user && (
-                  <Link href="/sign-in" className="nav-link">
-                    Sign in
-                  </Link>
-                )}
-                {user && (
-                  <Dropdown triggerText="Account">
-                    <li>
-                      <Link href="/dashboard" className="dropdown-item">
-                        Dashboard
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="/account" className="dropdown-item">
-                        Account settings
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="https://forms.gle/uYqhTrC33fTRTXTY9" target="_blank" className="dropdown-item">
-                        Give feedback
-                      </Link>
-                    </li>
-                    <li>
-                      <form action={signOutAction}>
-                        <button type="submit" className="dropdown-item">
-                          Sign out
-                        </button>
-                      </form>
-                    </li>
-                  </Dropdown>
-                )}
-              </li>
-            </ul>
-          </nav>
+          <NavPrimary isLoggedIn={!!user} />
         </header>
         {children}
         <Analytics />
