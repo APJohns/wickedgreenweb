@@ -1,3 +1,7 @@
+.main {
+  padding-bottom: 4rem;
+}
+
 .backLink {
   display: flex;
   align-items: center;

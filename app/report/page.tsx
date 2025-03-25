@@ -36,7 +36,7 @@ export default async function Report({
   const pageWeight = formatBytes(data.report.variables.bytes);
 
   return (
-    <main className={styles.main}>
+    <main className={'page-padding ' + styles.main}>
       <h1>Report</h1>
       <Link href={url} className={styles.url}>
         {url}
