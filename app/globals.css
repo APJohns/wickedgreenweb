@@ -127,6 +127,7 @@ select {
   border: 0;
   border-bottom: 1px solid var(--border-color-primary);
   padding: 0.5rem 0;
+  color: var(--foreground);
   background: none;
   cursor: pointer;
 
