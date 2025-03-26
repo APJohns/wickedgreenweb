@@ -269,6 +269,7 @@ textarea {
   background: transparent;
   cursor: pointer;
   width: fit-content;
+  font-weight: var(--font-weight-normal);
 
   &:hover,
   &.active {
@@ -444,8 +445,9 @@ textarea {
   border: 1px solid var(--border-color-primary);
   border-radius: 8px;
   padding: 0.25rem 0.5rem;
-  background: var(--background-subtle);
+  color: var(--foreground);
   font-size: var(--fs-subtle);
+  background: var(--background-subtle);
 
   &:hover {
     background: var(--background);
