@@ -36,26 +36,8 @@
   margin-top: auto;
 }
 
-.cta {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 2rem;
-  border-radius: 1rem;
-  padding: 0.5rem 1.5rem;
-  color: var(--foreground-inverse);
-  font-weight: var(--font-weight-bold);
-  text-decoration: none;
-  background: var(--green);
-
-  & svg {
-    height: 1rem;
-  }
-
-  &:hover {
-    background: var(--background-inverse);
-  }
+.planCTA {
+  width: 100%;
 }
 
 .ctaSoon {

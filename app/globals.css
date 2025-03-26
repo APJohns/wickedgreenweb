@@ -1,7 +1,8 @@
 :root {
   --black: #171717;
-  --white: #ffffff;
+  --white: #f6f6f6;
   --green: #5bc871;
+  --green-subtle: #cde4d2;
   --gradeAp: var(--green);
   --gradeA: #b1de3f;
   --gradeB: #ebf138;
@@ -15,16 +16,20 @@
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
   --background-subtle: hsl(0, 0%, 94%);
+  --background-accent: var(--green-subtle);
 
   --border-color-primary: #ccc;
 
   --fs-big: 2.5rem;
+  --fs-lg: 2rem;
+  --fs-md: 1.5rem;
   --fs-body: 1.25rem;
   --fs-subtle: 1.125rem;
   --fs-small: 1rem;
   --fs-tiny: 0.75rem;
 
   --font-weight-normal: 400;
+  --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
   --page-padding: 2rem;
@@ -41,12 +46,14 @@
   :root {
     --black: #040208;
     --white: #ededed;
+    --green-subtle: hsl(133, 30%, 25%);
     --background: var(--black);
     --foreground: var(--white);
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
     --foreground-subtle: #7d7d7d;
     --background-subtle: hsl(260, 10%, 8%);
+    --background-accent: var(--green-subtle);
     --border-color-primary: #444;
   }
 }
@@ -79,8 +86,8 @@ select {
   font-family: var(--font-family-body);
 }
 
-main,
-.content-area {
+.content-area,
+.page-padding {
   overflow-x: auto;
   padding: 0 var(--page-padding);
 }
@@ -184,11 +191,67 @@ textarea {
   font-family: inherit;
 }
 
-.nav {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  padding: 2rem var(--page-padding);
+@keyframes slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.nav-primary {
+  position: relative;
+
+  .nav-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 1rem var(--page-padding);
+    background: var(--background);
+    z-index: 30;
+
+    .menu-toggle svg {
+      transition: transform 0.2s;
+    }
+
+    .menu-toggle.open svg {
+      transform: rotate(90deg);
+      transition: transform 0.2s;
+    }
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border-color-primary);
+    box-shadow: 0.5rem 0 0.5rem var(--border-color-primary);
+    padding: 1rem var(--page-padding);
+    width: 100dvw;
+    background: var(--background);
+    transform: translateY(-200%);
+    transition: transform 0.2s ease-in-out;
+    z-index: 20;
+
+    &.open {
+      transform: translateY(0);
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+
+  .on-lg {
+    display: none;
+  }
 }
 
 .nav-list {
@@ -199,8 +262,13 @@ textarea {
 
 .nav-link {
   position: relative;
+  display: block;
   text-decoration: none;
   color: var(--foreground);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  width: fit-content;
 
   &:hover,
   &.active {
@@ -208,6 +276,20 @@ textarea {
     text-decoration-color: var(--green);
     text-decoration-thickness: 2px;
   }
+
+  &.logo {
+    height: 4rem;
+
+    & svg {
+      display: block;
+      width: auto;
+      height: 100%;
+    }
+  }
+}
+
+.account-action {
+  display: none;
 }
 
 .visually-hidden {
@@ -218,6 +300,30 @@ textarea {
   position: absolute;
   white-space: nowrap;
   width: 1px;
+}
+
+.cta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1.5rem;
+  width: fit-content;
+  color: var(--black);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  background: var(--green);
+
+  & svg {
+    height: 1rem;
+  }
+
+  &:hover {
+    color: var(--foreground-inverse);
+    background: var(--background-inverse);
+  }
 }
 
 .dropdown {
@@ -268,23 +374,23 @@ textarea {
   li:last-of-type .dropdown-item {
     border-radius: 0 0 calc(0.5rem - 1px) calc(0.5rem - 1px);
   }
-}
 
-.dropdown-item {
-  display: block;
-  border: 0;
-  padding: 0.5rem 1.25rem;
-  width: 100%;
-  color: var(--foreground);
-  text-decoration: none;
-  text-align: left;
-  line-height: 1.5;
-  background: var(--background);
-  cursor: pointer;
+  .dropdown-item {
+    display: block;
+    border: 0;
+    padding: 0.5rem 1.25rem;
+    width: 100%;
+    color: var(--foreground);
+    text-decoration: none;
+    text-align: left;
+    line-height: 1.5;
+    background: var(--background);
+    cursor: pointer;
 
-  &:hover {
-    color: var(--background);
-    background: var(--green);
+    &:hover {
+      color: var(--background);
+      background: var(--green);
+    }
   }
 }
 
@@ -518,6 +624,44 @@ textarea {
 
     main {
       padding-top: 0;
+    }
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav-primary {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+
+    .nav-menu {
+      position: static;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      transform: translateY(0);
+      border: 0;
+      padding: 0;
+      width: 100%;
+      box-shadow: none;
+
+      .nav-list {
+        flex-direction: row;
+        gap: 2rem;
+      }
+    }
+
+    .nav-list .account-item {
+      display: none;
+    }
+
+    .account-action {
+      display: block;
+      padding: 0 var(--page-padding);
+      margin-left: auto;
     }
   }
 

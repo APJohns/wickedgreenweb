@@ -3,18 +3,42 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
-  justify-items: center;
+  align-items: end;
+  margin: auto;
+  max-width: 768px;
+}
+
+.urlFormControlWithAddon {
+  width: 100%;
+  text-align: left;
+}
+
+.urlFormLabel {
+  font-size: var(--fs-md);
+}
+
+.urlFormControl {
+  display: flex;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  background: var(--background);
 }
 
 .urlFormInput {
-  margin-top: 0.5rem;
-  border: 1px solid var(--border-color-primary);
-  border-radius: 0.5rem;
+  flex: 1;
+  border: 0;
   padding: 0.5rem 1rem;
-  width: 75dvw;
-  min-width: 300px;
-  max-width: 600px;
+  border-radius: 0 calc(0.5rem - 1px) calc(0.5rem - 1px) 0;
+  width: 100%;
   background: var(--background);
+}
+
+.urlFormInputAddon {
+  border: 0;
+  border-radius: calc(0.5rem - 1px) 0 0 calc(0.5rem - 1px);
+  padding: 0.5rem 1rem;
+  background: var(--background-subtle);
 }
 
 .urlFormSubmit {
@@ -22,7 +46,6 @@
   border-radius: 0.5rem;
   background: #f4f4f4;
   padding: 0.5rem 1rem;
-  border: 1px solid transparent;
   color: var(--black);
 
   &:disabled {
@@ -31,6 +54,12 @@
 
   &:hover:not(:disabled) {
     cursor: pointer;
-    border: 1px solid var(--border-color-primary);
+  }
+}
+
+@media (min-width: 768px) {
+  .urlForm {
+    grid-template-columns: 1fr auto;
+    justify-items: start;
   }
 }

@@ -1,8 +1,12 @@
 import styles from './loader.module.css';
 
-export default function Loader() {
+interface Props {
+  isLoading?: boolean;
+}
+
+export default function Loader({ isLoading = true }: Props) {
   return (
-    <div className={styles.loader}>
+    <div className={isLoading ? styles.loader : undefined}>
       <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="40" cy="40" r="12" fill="black" className={styles.svgFill} />
         <g className={styles.outerOrbit}>

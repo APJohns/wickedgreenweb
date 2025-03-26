@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function PlansPage() {
   return (
-    <main>
-      <h1>Pricing</h1>
+    <main className="page-padding">
+      <h1>Plans</h1>
       <p>Wicked Green Web is in beta. Plan details and pricing are subject to change.</p>
       <div className={styles.plans}>
         <div className={styles.plan}>
@@ -22,11 +22,11 @@ export default function PlansPage() {
           <ul className={styles.featuresList}>
             <li>{PLANS.FREE.PROJECTS} project</li>
             <li>{PLANS.FREE.URLS} URLs</li>
-            <li>{PLANS.FREE.MANUAL_REPORTS} manual report runs</li>
+            <li>{PLANS.FREE.MANUAL_REPORTS} manual reports per month</li>
             <li>Weekly & monthly reports</li>
           </ul>
           <div className={styles.action}>
-            <Link href="sign-up" className={styles.cta}>
+            <Link href="sign-up" className={`cta ${styles.planCTA}`}>
               Get started
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,7 @@ export default function PlansPage() {
           <ul className={styles.featuresList}>
             <li>{PLANS.PRO.PROJECTS} projects</li>
             <li>{PLANS.PRO.URLS} URLs</li>
-            <li>{PLANS.PRO.MANUAL_REPORTS} Manual reports</li>
+            <li>{PLANS.PRO.MANUAL_REPORTS} manual reports per month</li>
             <li>Daily reports</li>
             <li>Configure model variables</li>
           </ul>

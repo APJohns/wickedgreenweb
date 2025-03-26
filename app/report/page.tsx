@@ -2,7 +2,7 @@ import Link from 'next/link';
 import styles from './page.module.css';
 import CarbonContext from '@/components/carbonContext';
 import StatCard from '@/components/statCard';
-import { formatBytes, formatCO2 } from '@/utils/utils';
+import { addHTTPS, formatBytes, formatCO2 } from '@/utils/utils';
 import StatCardGroup from '@/components/statCardGroup';
 
 export const maxDuration = 60;
@@ -18,9 +18,10 @@ export default async function Report({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const url = (await searchParams).url;
+  const urlData = (await searchParams).url as string;
+  const url = addHTTPS(urlData);
   let data;
-  if (url) {
+  if (urlData) {
     const res = await fetch(`${process.env.API_URL}/co2?url=${url}`, {
       headers: {
         Authorization: `Bearer ${process.env.API_TOKEN}`,
@@ -35,13 +36,11 @@ export default async function Report({
   const pageWeight = formatBytes(data.report.variables.bytes);
 
   return (
-    <main className={styles.main}>
+    <main className={'page-padding ' + styles.main}>
       <h1>Report</h1>
-      {typeof url === 'string' && (
-        <Link href={url} className={styles.url}>
-          {url}
-        </Link>
-      )}
+      <Link href={url} className={styles.url}>
+        {url}
+      </Link>
       {data.report && <p className={styles.rating}>{data.report.co2.rating}</p>}
       <StatCardGroup>
         {data.report && (

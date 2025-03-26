@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function ResetPassword(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
   return (
-    <main>
+    <main className="page-padding">
       <form action={resetPasswordAction}>
         <h1>Reset password</h1>
         <p>Please enter your new password below.</p>
