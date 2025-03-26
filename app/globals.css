@@ -200,27 +200,27 @@ textarea {
   }
 }
 
-.nav-header {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  padding: 1rem var(--page-padding);
-  background: var(--background);
-  z-index: 30;
-
-  .menu-toggle svg {
-    transition: transform 0.2s;
-  }
-
-  .menu-toggle.open svg {
-    transform: rotate(90deg);
-    transition: transform 0.2s;
-  }
-}
-
 .nav-primary {
   position: relative;
+
+  .nav-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 1rem var(--page-padding);
+    background: var(--background);
+    z-index: 30;
+
+    .menu-toggle svg {
+      transition: transform 0.2s;
+    }
+
+    .menu-toggle.open svg {
+      transform: rotate(90deg);
+      transition: transform 0.2s;
+    }
+  }
 
   .nav-menu {
     position: absolute;
