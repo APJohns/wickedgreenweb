@@ -21,7 +21,7 @@
 .tryItOut {
   border-radius: 0.5rem;
   padding: 4rem 2rem 5rem;
-  background: var(--green-subtle);
+  background: var(--background-accent);
 }
 
 @media (min-width: 768px) {

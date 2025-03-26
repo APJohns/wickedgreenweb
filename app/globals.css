@@ -16,6 +16,7 @@
   --foreground-inverse: var(--white);
   --foreground-subtle: #747474;
   --background-subtle: hsl(0, 0%, 94%);
+  --background-accent: var(--green-subtle);
 
   --border-color-primary: #ccc;
 
@@ -45,12 +46,14 @@
   :root {
     --black: #040208;
     --white: #ededed;
+    --green-subtle: hsl(133, 30%, 25%);
     --background: var(--black);
     --foreground: var(--white);
     --background-inverse: var(--white);
     --foreground-inverse: var(--black);
     --foreground-subtle: #7d7d7d;
     --background-subtle: hsl(260, 10%, 8%);
+    --background-accent: var(--green-subtle);
     --border-color-primary: #444;
   }
 }
@@ -207,12 +210,12 @@ textarea {
   z-index: 30;
 
   .menu-toggle svg {
-    transition: transform 0.2s, padding 0.2s;
+    transition: transform 0.2s;
   }
 
   .menu-toggle.open svg {
     transform: rotate(90deg);
-    transition: transform 0.2s, padding 0.2s;
+    transition: transform 0.2s;
   }
 }
 
@@ -231,12 +234,12 @@ textarea {
     width: 100dvw;
     background: var(--background);
     transform: translateY(-200%);
-    transition: transform 0.2s, padding 0.2s;
+    transition: transform 0.2s ease-in-out;
     z-index: 20;
 
     &.open {
       transform: translateY(0);
-      transition: transform 0.2s, padding 0.2s;
+      transition: transform 0.2s ease-in-out;
     }
 
     .nav-list {
@@ -308,7 +311,7 @@ textarea {
   border-radius: 1rem;
   padding: 0.5rem 1.5rem;
   width: fit-content;
-  color: var(--foreground);
+  color: var(--black);
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
   background: var(--green);
