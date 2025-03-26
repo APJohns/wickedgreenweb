@@ -4,18 +4,24 @@ import { signOutAction } from '@/app/actions/auth';
 import Link from 'next/link';
 import Dropdown from './dropdown';
 import Logo from './logo';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   isLoggedIn?: boolean;
 }
 
 export default function NavPrimary({ isLoggedIn = false }: Props) {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
 
   const accountNavItems = (
     <>
