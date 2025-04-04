@@ -5,7 +5,7 @@ import styles from './formMessage.module.css';
 
 export type Message = { success: string } | { error: string } | { message: string };
 
-export function FormMessage({ message }: { message: Message }) {
+export function FormMessage({ message }: { message: Message | Promise<Message> }) {
   const [isVisible, setIsVisible] = useState(true);
   useEffect(() => {
     const hide = setTimeout(() => {
