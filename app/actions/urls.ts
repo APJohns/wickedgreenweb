@@ -5,6 +5,37 @@ import { PLANS } from '@/utils/constants';
 import { createClient, getPlan } from '@/utils/supabase/server';
 import { encodedRedirect } from '@/utils/utils';
 import { JSDOM } from 'jsdom';
+import { cache } from 'react';
+
+export const getURLCount = async () => {
+  const supabase = await createClient();
+  const { count, error } = await supabase.from('urls').select('*', { count: 'exact', head: true });
+  if (error) {
+    console.error(error);
+  }
+  return count;
+};
+
+export const getURLs = cache(async (projectID: string) => {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('urls')
+    .select(
+      `
+      id,
+      url,
+      green_hosting_factor,
+      projects!inner(id),
+      reports(count)
+    `
+    )
+    .eq('projects.id', projectID)
+    .order('url', { ascending: true });
+  if (error) {
+    console.error(error);
+  }
+  return data;
+});
 
 export const getGreenCheck = async (url: string): Promise<{ inputURL: string; green: boolean }> => {
   // Check if host is green

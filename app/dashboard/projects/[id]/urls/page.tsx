@@ -1,42 +1,56 @@
-import { createClient, getProjectName } from '@/utils/supabase/server';
+'use client';
+
+// import { getProjectName } from '@/utils/supabase/server';
 import Link from 'next/link';
 import ManageURLs from './manageURLs';
 import { FormMessage, Message } from '@/components/formMessage';
+import { use, useEffect, useState } from 'react';
+import { getURLs } from '@/app/actions/urls';
+import { Tables } from '@/database.types';
+import Loader from '@/components/loader';
 
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+/* export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const projectID = (await params).id;
   const projectName = await getProjectName(projectID);
 
   return {
     title: `URLs - ${projectName} | Wicked Green Web`,
   };
+} */
+
+interface URLs extends Pick<Tables<'urls'>, 'id' | 'url' | 'green_hosting_factor'> {
+  reports: {
+    count: number;
+  }[];
+  projects: {
+    id: string;
+  };
 }
 
-export default async function URLsPage(props: { params: Promise<{ id: string }>; searchParams: Promise<Message> }) {
-  const projectID = (await props.params).id;
-  const searchParams = await props.searchParams;
+export default function URLsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<Message>;
+}) {
+  const projectID = use(params).id;
+  const messageParams = use(searchParams);
 
-  const supabase = await createClient();
-  const { data, error } = await supabase
-    .from('urls')
-    .select(
-      `
-      id,
-      url,
-      green_hosting_factor,
-      projects!inner(id),
-      reports(count)
-    `
-    )
-    .eq('projects.id', projectID)
-    .order('url', { ascending: true });
-  if (error) {
-    console.error(error);
-  }
+  const [urls, setURLs] = useState<URLs[] | null>();
+
+  useEffect(() => {
+    if (projectID) {
+      const setup = async () => {
+        setURLs(await getURLs(projectID));
+      };
+      setup();
+    }
+  }, [projectID]);
 
   return (
     <>
-      <FormMessage message={searchParams} />
+      <FormMessage message={messageParams} />
       <div className="page-header">
         <div className="page-header-location">
           <h1>URLs</h1>
@@ -54,8 +68,9 @@ export default async function URLsPage(props: { params: Promise<{ id: string }>;
           Add URL
         </Link>
       </div>
-      {data && data.length > 0 && <ManageURLs urls={data} projectID={projectID} />}
-      {data?.length === 0 && (
+      {urls === undefined && <Loader />}
+      {urls && urls.length > 0 && <ManageURLs urls={urls} projectID={projectID} />}
+      {urls?.length === 0 && (
         <>
           <p>Welcome! Let&apos;s add some URLs to this project.</p>
           <Link href={`/dashboard/projects/${projectID}/urls/add`}>Add URLs</Link>

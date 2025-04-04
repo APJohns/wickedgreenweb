@@ -1,36 +1,41 @@
-import { addURLAction } from '@/app/actions/urls';
+'use client';
+
+import { addURLAction, getURLCount } from '@/app/actions/urls';
 import { FormMessage, Message } from '@/components/formMessage';
-import styles from './add.module.css';
-import { createClient, getPlan } from '@/utils/supabase/server';
+import { getPlan } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import { PLANS } from '@/utils/constants';
-import { Metadata } from 'next';
+// import { Metadata } from 'next';
+import { use, useEffect, useState } from 'react';
+import styles from './add.module.css';
 
-export const metadata: Metadata = {
+/* export const metadata: Metadata = {
   title: 'Add URL | Wicked Green Web',
-};
+}; */
 
-export default async function AddUrlPage(props: { searchParams: Promise<Message>; params: Promise<{ id: string }> }) {
-  const searchParams = await props.searchParams;
-  const projectID = (await props.params).id;
+export default function AddUrlPage(props: { searchParams: Promise<Message>; params: Promise<{ id: string }> }) {
+  const searchParams = use(props.searchParams);
+  const projectID = use(props.params).id;
 
-  const supabase = await createClient();
+  const [count, setCount] = useState(0);
+  const [limit, setLimit] = useState(0);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const plan = await getPlan(user?.id as string);
-  const { count, error } = await supabase.from('urls').select('*', { count: 'exact', head: true });
+  useEffect(() => {
+    const setup = async () => {
+      const plan = await getPlan();
+      const planKey = plan.toUpperCase() as keyof typeof PLANS;
+      setLimit(PLANS[planKey].URLS);
+      const count = await getURLCount();
+      if (!count) {
+        notFound();
+      } else {
+        setCount(count);
+      }
+    };
+    setup();
+  }, []);
 
-  if (error) {
-    console.error(error);
-  }
-
-  if (count === undefined || count === null) {
-    notFound();
-  }
-
-  if (plan === 'free' && count >= PLANS.FREE.URLS) {
+  if (count >= limit) {
     return (
       <>
         <h1>Add URLs</h1>
@@ -38,8 +43,8 @@ export default async function AddUrlPage(props: { searchParams: Promise<Message>
           <Link href="/pricing">Upgrade to Pro</Link> to add more URLs.
         </p> */}
         <p>
-          Features are limited as we roll out Wicked Green Web. You may only have 10 URLs. We&apos;ll update you when
-          this changes.
+          Features are limited as we roll out Wicked Green Web. You may only have {PLANS.FREE.URLS} URLs. We&apos;ll
+          update you when this changes.
         </p>
       </>
     );
@@ -48,6 +53,9 @@ export default async function AddUrlPage(props: { searchParams: Promise<Message>
   return (
     <>
       <h1>Add URLs</h1>
+      <p className="text-subtle">
+        {count} of {limit} urls used
+      </p>
       <form action={addURLAction}>
         <label className="form-control">
           <div className="form-control-label">Single URL</div>
