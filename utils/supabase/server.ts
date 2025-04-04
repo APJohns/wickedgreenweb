@@ -92,6 +92,6 @@ export const getPlan = cache(async (userID?: string) => {
     if (!data) notFound();
     return data.plan;
   } else {
-    return null;
+    return '';
   }
 });
