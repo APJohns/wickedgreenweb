@@ -19,7 +19,6 @@ export default function TypesBarChart({ data, className }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const [w, setWidth] = useState(600);
-  const [h, setHeight] = useState(300);
 
   useEffect(() => {
     if (ref.current) {
@@ -28,7 +27,7 @@ export default function TypesBarChart({ data, className }: Props) {
 
     const margin = { top: 0, right: 10, bottom: 40, left: 60 };
     const width = w - margin.left - margin.right;
-    const height = h - margin.top - margin.bottom;
+    const height = 300 - margin.top - margin.bottom;
 
     let scale = 1;
     let unit = 'bytes';
@@ -102,7 +101,7 @@ export default function TypesBarChart({ data, className }: Props) {
       .attr('fill', 'currentColor')
       .attr('text-anchor', 'middle')
       .text(`Weight (${unit})`);
-  }, [data, w, h]);
+  }, [data, w]);
 
   useEffect(() => {
     const resizeChart = () => {
