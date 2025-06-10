@@ -56,6 +56,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
     svg
       .append('g')
       .attr('transform', `translate(0,${height - marginBottom})`)
+      .attr('class', 'subtle-ticks')
       .call(
         d3
           .axisBottom(x)
@@ -68,6 +69,7 @@ export default function Chart(props: LineChartProps): JSX.Element {
     svg
       .append('g')
       .attr('transform', `translate(${marginLeft},0)`)
+      .attr('class', 'subtle-ticks')
       .call(
         d3
           .axisLeft(y)
