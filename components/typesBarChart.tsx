@@ -96,7 +96,7 @@ export default function TypesBarChart({ data, className }: Props) {
       .attr('transform', `translate(${width / 2}, ${height})`)
       .attr('class', 'axis-label')
       .append('text')
-      .attr('dy', '2.25rem')
+      .attr('dy', 36)
       .attr('class', styles.axisLabel)
       .attr('fill', 'currentColor')
       .attr('text-anchor', 'middle')
