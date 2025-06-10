@@ -26,13 +26,25 @@ export default function TypesBarChart({ data, className }: Props) {
       ref.current.innerHTML = '';
     }
 
-    const margin = { top: 0, right: 60, bottom: 40, left: 60 };
+    const margin = { top: 0, right: 10, bottom: 40, left: 60 };
     const width = w - margin.left - margin.right;
     const height = h - margin.top - margin.bottom;
 
+    let scale = 1;
+    let unit = 'bytes';
+
+    const maxValue = Math.max(...Array.from(data, (d) => d.bytes));
+    if (maxValue >= 900000) {
+      scale = 1000000;
+      unit = 'Mbs';
+    } else if (maxValue >= 900) {
+      scale = 1000;
+      unit = 'Kbs';
+    }
+
     const asKb = data.map((d) => ({
       ...d,
-      bytes: d.bytes / 1000,
+      bytes: d.bytes / scale,
     }));
 
     const svg = d3
@@ -89,7 +101,7 @@ export default function TypesBarChart({ data, className }: Props) {
       .attr('class', styles.axisLabel)
       .attr('fill', 'currentColor')
       .attr('text-anchor', 'middle')
-      .text('Weight (Kb)');
+      .text(`Weight (${unit})`);
   }, [data, w, h]);
 
   useEffect(() => {

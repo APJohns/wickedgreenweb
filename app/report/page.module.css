@@ -53,11 +53,11 @@
 }
 
 .cardInfo {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-sm);
 }
 
 .cardChart {
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-sm);
   background: var(--background-subtle);
 }
 
@@ -83,4 +83,14 @@
 
 .unit {
   font-size: var(--fs-body);
+}
+
+@media (min-width: 768px) {
+  .cardInfo {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .cardChart {
+    padding: var(--space-md) var(--space-lg);
+  }
 }
