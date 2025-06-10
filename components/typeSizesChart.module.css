@@ -1,0 +1,4 @@
+.axisLabel {
+  font-size: var(--fs-tiny);
+  color: var(--foreground-subtle);
+}

@@ -518,8 +518,15 @@ textarea {
   color: var(--foreground-subtle);
 }
 
-.tick,
-.percentile-label {
+.tick {
+  font-size: var(--fs-small);
+  font-family: var(--font-family-body);
+}
+
+.subtle-ticks .tick,
+.percentile-label,
+.axis-label {
+  font-family: var(--font-family-mono);
   color: var(--foreground-subtle);
   font-size: var(--fs-tiny);
 }

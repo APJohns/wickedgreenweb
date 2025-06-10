@@ -4,6 +4,7 @@ import CarbonContext from '@/components/carbonContext';
 import StatCard from '@/components/statCard';
 import { addHTTPS, formatBytes, formatCO2 } from '@/utils/utils';
 import StatCardGroup from '@/components/statCardGroup';
+import TypesBarChart from '@/components/typesBarChart';
 
 export const maxDuration = 60;
 
@@ -33,6 +34,46 @@ export default async function Report({
     data = await res.json();
   }
 
+  interface Resource {
+    url: string;
+    transferSize: number;
+    mimeType: string;
+  }
+
+  const typeTotals = {
+    HTML: 0,
+    CSS: 0,
+    JS: 0,
+    Fonts: 0,
+    Images: 0,
+    Other: 0,
+  };
+
+  data.requestData.resources.forEach((resource: Resource) => {
+    if (resource.mimeType.includes('html')) {
+      typeTotals.HTML += resource.transferSize;
+    } else if (resource.mimeType.includes('css')) {
+      typeTotals.CSS += resource.transferSize;
+    } else if (resource.mimeType.includes('javascript')) {
+      typeTotals.JS += resource.transferSize;
+    } else if (resource.mimeType.includes('font')) {
+      typeTotals.Fonts += resource.transferSize;
+    } else if (resource.mimeType.includes('image')) {
+      typeTotals.Images += resource.transferSize;
+    } else {
+      typeTotals.Other += resource.transferSize;
+    }
+  });
+
+  const chartData = Object.keys(typeTotals)
+    .map((type) => {
+      return {
+        type,
+        bytes: typeTotals[type as keyof typeof typeTotals],
+      };
+    })
+    .sort((a, b) => b.bytes - a.bytes);
+
   const pageWeight = formatBytes(data.report.variables.bytes);
 
   return (
@@ -57,12 +98,6 @@ export default async function Report({
           </StatCard>
         )}
 
-        {data.report && (
-          <StatCard heading="Page weight" unit={pageWeight.unit}>
-            {pageWeight.value}
-          </StatCard>
-        )}
-
         {data.hosting && (
           <StatCard heading="Hosting">
             {data.hosting.green ? 'Green' : 'Dirty'}
@@ -84,6 +119,18 @@ export default async function Report({
           </StatCard>
         )}
       </StatCardGroup>
+      <div className={styles.card}>
+        <div className={styles.cardInfo}>
+          <h2 className={styles.cardTitle}>Page weight</h2>
+          <p className={styles.statValue}>
+            {pageWeight.value}
+            <span className={styles.unit}> {pageWeight.unit}</span>
+          </p>
+        </div>
+        <div className={styles.cardChart}>
+          <TypesBarChart data={chartData} />
+        </div>
+      </div>
       <CarbonContext co2={data.report.co2.total} intensity={data.report.variables.gridIntensity.device.value} />
       <Link href="/" className={styles.backLink}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
