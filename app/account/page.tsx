@@ -45,7 +45,7 @@ export default async function AccountPage() {
   const planKey = plan.toUpperCase() as keyof typeof PLANS;
 
   return (
-    <main className="page-padding">
+    <main className="page-padding page-padding-v">
       <h1>Account</h1>
       <dl className={styles.descriptionList}>
         <dt>Email:</dt>

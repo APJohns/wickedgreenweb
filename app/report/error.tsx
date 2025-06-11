@@ -10,7 +10,7 @@ export default function Error({ error }: { error: Error & { digest?: string } })
   }, [error]);
 
   return (
-    <main className={'page-padding ' + styles.main}>
+    <main className={'page-padding page-padding-v ' + styles.main}>
       <h1>Error</h1>
       <p>{error.message}</p>
       <Link href="/">Try again?</Link>

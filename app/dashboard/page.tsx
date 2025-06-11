@@ -21,7 +21,7 @@ export default async function DashboardPage(props: { searchParams: Promise<Messa
   const data = await getProjects(user?.id as string);
 
   return (
-    <main className="page-padding">
+    <main className="page-padding page-padding-v">
       <div className="page-header">
         <div className="page-header-location">
           <h1>Projects</h1>

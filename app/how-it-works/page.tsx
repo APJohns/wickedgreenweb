@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className={`page-padding ${styles.articleStyling} ${styles.article}`}>
+    <main className={`page-padding page-padding-v ${styles.articleStyling} ${styles.article}`}>
       <h1>How it works</h1>
       <h2>Sustainability Web Model</h2>
       <p>
