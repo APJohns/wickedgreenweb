@@ -33,6 +33,7 @@
   --font-weight-bold: 700;
 
   --page-padding: 2rem;
+  --page-padding-v: 1rem;
 
   --space-xs: 0.5rem;
   --space-sm: 1rem;
@@ -90,6 +91,11 @@ select {
 .page-padding {
   overflow-x: auto;
   padding: 0 var(--page-padding);
+}
+
+.page-padding-v {
+  padding-top: var(--page-padding-v);
+  padding-bottom: var(--page-padding-v);
 }
 
 .content-area {
@@ -203,6 +209,7 @@ textarea {
 
 .nav-primary {
   position: relative;
+  background: var(--background-subtle);
 
   .nav-header {
     position: relative;
@@ -210,7 +217,7 @@ textarea {
     grid-template-columns: 1fr auto;
     align-items: center;
     padding: 1rem var(--page-padding);
-    background: var(--background);
+    background: var(--background-subtle);
     z-index: 30;
 
     .menu-toggle svg {
@@ -233,7 +240,7 @@ textarea {
     box-shadow: 0.5rem 0 0.5rem var(--border-color-primary);
     padding: 1rem var(--page-padding);
     width: 100dvw;
-    background: var(--background);
+    background: var(--background-subtle);
     transform: translateY(-200%);
     transition: transform 0.2s ease-in-out;
     z-index: 20;

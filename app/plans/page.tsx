@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function PlansPage() {
   return (
-    <main className="page-padding">
+    <main className="page-padding page-padding-v">
       <h1>Plans</h1>
       <p>Wicked Green Web is in beta. Plan details and pricing are subject to change.</p>
       <div className={styles.plans}>

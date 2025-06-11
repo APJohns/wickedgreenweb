@@ -3,5 +3,5 @@ export default function AuthLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main className="page-padding">{children}</main>;
+  return <main className="page-padding page-padding-v">{children}</main>;
 }
