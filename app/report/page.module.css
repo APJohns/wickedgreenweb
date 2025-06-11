@@ -16,12 +16,12 @@
 }
 
 .url {
-  display: block;
+  display: inline-block;
   color: var(--foreground);
 }
 
 .rating {
-  display: inline-block;
+  display: block;
   margin-top: 2rem;
   font-size: 5rem;
   font-weight: var(--font-weight-bold);
