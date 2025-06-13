@@ -5,6 +5,7 @@ import StatCard from '@/components/statCard';
 import { addHTTPS, formatBytes, formatCO2 } from '@/utils/utils';
 import StatCardGroup from '@/components/statCardGroup';
 import TypesBarChart from '@/components/typesBarChart';
+import { AVERAGE_CO2 } from '@/utils/constants';
 
 export const maxDuration = 60;
 
@@ -76,6 +77,8 @@ export default async function Report({
 
   const pageWeight = formatBytes(data.report.variables.bytes);
 
+  const againstAverage = ((data.report.co2.total - AVERAGE_CO2) / AVERAGE_CO2) * 100;
+
   return (
     <main className={'page-padding page-padding-v ' + styles.main}>
       <h1>Report</h1>
@@ -83,6 +86,12 @@ export default async function Report({
         {url}
       </Link>
       {data.report && <p className={styles.rating}>{data.report.co2.rating}</p>}
+      {data.report && (
+        <p>
+          {Math.abs(againstAverage).toFixed(1)}%{againstAverage <= 0 ? <strong> less</strong> : <strong> more</strong>}{' '}
+          CO<sub>2</sub> than the average page
+        </p>
+      )}
       <StatCardGroup>
         {data.report && (
           <StatCard
