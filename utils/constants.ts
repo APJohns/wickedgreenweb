@@ -1,3 +1,5 @@
+export const AVERAGE_CO2 = 0.36;
+
 export const SWDMV4_PERCENTILES = {
   FIFTH_PERCENTILE: 0.04, // A+
   TENTH_PERCENTILE: 0.079, // A
