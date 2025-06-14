@@ -19,9 +19,16 @@
 
 .contextList {
   margin-top: 1rem;
-  padding-left: 2rem;
+  padding-left: 0;
+  list-style: none;
 
   & output {
     font-weight: var(--font-weight-bold);
   }
+}
+
+.emojiListItem {
+  font-size: 1.5em;
+  vertical-align: middle;
+  margin-right: 0.5rem;
 }
