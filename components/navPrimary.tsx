@@ -82,8 +82,8 @@ export default function NavPrimary({ isLoggedIn = false }: Props) {
             </Link>
           </li>
           <li>
-            <Link href="/how-it-works" className="nav-link">
-              How it works
+            <Link href="/faq" className="nav-link">
+              FAQ
             </Link>
           </li>
           {!isLoggedIn && (
