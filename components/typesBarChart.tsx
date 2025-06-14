@@ -3,6 +3,7 @@
 import * as d3 from 'd3';
 import { useEffect, useRef, useState } from 'react';
 import styles from './typeSizesChart.module.css';
+import { formatBytes } from '@/utils/utils';
 
 interface Data {
   bytes: number;
@@ -120,7 +121,20 @@ export default function TypesBarChart({ data, className }: Props) {
 
   return (
     <div ref={containerRef} className={styles.barChartContainer + ' ' + className}>
-      <svg ref={ref} className={styles.barChart} />
+      <svg ref={ref} className={styles.barChart} aria-hidden="true" />
+      <dl className="visually-hidden">
+        {data.map((d) => {
+          const formattedBytes = formatBytes(d.bytes);
+          return (
+            <>
+              <dt>{d.type}</dt>
+              <dd>
+                {formattedBytes.value} {formattedBytes.unit}
+              </dd>
+            </>
+          );
+        })}
+      </dl>
     </div>
   );
 }
