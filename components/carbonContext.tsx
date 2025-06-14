@@ -65,16 +65,24 @@ export default function CarbonContext(props: Props) {
       </p>
       <ul className={styles.contextList}>
         <li>
-          <span className={styles.emojiListItem}>⚡️</span>{' '}
+          <span className={styles.emojiListItem} aria-hidden="true">
+            ⚡️
+          </span>{' '}
           <output htmlFor={visitsInputID}>{formatNumber((props.co2 / props.intensity) * visits)}</output>&thinsp;kWh of
           energy
         </li>
         <li>
-          <span className={styles.emojiListItem}>🫖</span> Boiling{' '}
-          <output htmlFor={visitsInputID}>{formatNumber(props.co2 * visits * carbonContext.tea)}</output> cups of tea
+          <span className={styles.emojiListItem} aria-hidden="true">
+            🫖
+          </span>{' '}
+          Boiling <output htmlFor={visitsInputID}>{formatNumber(props.co2 * visits * carbonContext.tea)}</output> cups
+          of tea
         </li>
         <li>
-          <span className={styles.emojiListItem}>🚗</span> Driving a gas car for{' '}
+          <span className={styles.emojiListItem} aria-hidden="true">
+            🚗
+          </span>{' '}
+          Driving a gas car for{' '}
           <output htmlFor={visitsInputID}>{formatNumber((props.co2 * visits) / carbonContext.car)}</output> miles
         </li>
       </ul>
