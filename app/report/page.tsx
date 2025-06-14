@@ -128,27 +128,19 @@ export default async function Report({
           </StatCard>
         )}
       </StatCardGroup>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '1rem',
-        }}
-      >
-        <div className={styles.card}>
-          <div className={styles.cardInfo}>
-            <h2 className={styles.cardTitle}>Page weight</h2>
-            <p className={styles.statValue}>
-              {pageWeight.value}
-              <span className={styles.unit}> {pageWeight.unit}</span>
-            </p>
-          </div>
-          <div className={styles.cardChart}>
-            <TypesBarChart data={chartData} />
-          </div>
+      <div className={styles.card}>
+        <div className={styles.cardInfo}>
+          <h2 className={styles.cardTitle}>Page weight</h2>
+          <p className={styles.statValue}>
+            {pageWeight.value}
+            <span className={styles.unit}> {pageWeight.unit}</span>
+          </p>
         </div>
-        <CarbonContext co2={data.report.co2.total} intensity={data.report.variables.gridIntensity.device.value} />
+        <div className={styles.cardChart}>
+          <TypesBarChart data={chartData} />
+        </div>
       </div>
+      <CarbonContext co2={data.report.co2.total} intensity={data.report.variables.gridIntensity.device.value} />
       <Link href="/" className={styles.backLink}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
